@@ -2,8 +2,29 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Fabric</key>
+	<dict>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict>
+					<key>customerSecret</key>
+					<string>XLCrashlyticsCustomerSecret</string>
+					<key>customerKey</key>
+					<string>XLFabricAPIKey</string>
+				</dict>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+		<key>APIKey</key>
+		<string>XLFabricAPIKey</string>
+	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

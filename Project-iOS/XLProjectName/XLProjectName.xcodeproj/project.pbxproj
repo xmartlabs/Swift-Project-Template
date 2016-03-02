@@ -298,6 +298,7 @@
 				DC47F16F71998B02D5AAB204 /* Embed Pods Frameworks */,
 				7D7B44A655DDFEDD1216A0EE /* Copy Pods Resources */,
 				283020A11C8611A100E6EBC2 /* ShellScript */,
+				283020B61C8752C300E6EBC2 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -445,6 +446,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT/XLProjectName/Helpers/R-Swift\"";
+		};
+		283020B61C8752C300E6EBC2 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#\"${PODS_ROOT}/Fabric/run\" XLFabricAPIKey";
 		};
 		6588B9F26E52AD75409D1CC9 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -688,6 +702,7 @@
 			baseConfigurationReference = 5B5428E1F88CA43202CA5CDD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = XLProjectName/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XLOrganizationIdentifier.XLProjectName;
@@ -700,6 +715,7 @@
 			baseConfigurationReference = 07D33F5B22E367732FA2BFF0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = XLProjectName/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = XLOrganizationIdentifier.XLProjectName;

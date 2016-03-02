@@ -21,5 +21,11 @@ struct Constants {
         static let NotFoundCode = 404
         static let ServerError = 500
     }
+    
+    struct Debug {
+        static let crashlytics = false
+    }
 }
+
+
 

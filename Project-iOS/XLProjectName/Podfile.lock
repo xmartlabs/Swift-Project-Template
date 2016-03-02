@@ -1,12 +1,15 @@
 PODS:
   - Alamofire (3.2.0)
   - AlamofireImage (2.3.1):
-    - Alamofire (~> 3.1)
+    - Alamofire (~> 3.2)
   - Argo (2.2.0)
   - AsyncSwift (1.7.2)
+  - Crashlytics (3.7.0):
+    - Fabric (~> 1.6.3)
   - Curry (1.4.0)
   - Device (0.0.7)
   - DynamicColor (2.3.0)
+  - Fabric (1.6.6)
   - KeychainAccess (2.3.3)
   - Nimble (3.1.0)
   - Quick (0.9.1)
@@ -23,9 +26,11 @@ DEPENDENCIES:
   - AlamofireImage (~> 2.0)
   - Argo (~> 2.0)
   - AsyncSwift (~> 1.0)
+  - Crashlytics
   - Curry (~> 1.0)
   - Device (~> 0.0)
   - DynamicColor (~> 2.0)
+  - Fabric
   - KeychainAccess (~> 2.0)
   - Nimble (~> 3.1)
   - Quick (~> 0.9)
@@ -36,12 +41,14 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 4da478599fccddff361205c8929333d7fe18dceb
-  AlamofireImage: 8256f88835f58257a76ea2738d3773be5057f7ed
+  AlamofireImage: e52336282757bbe1644f075d6cb85f19c891f939
   Argo: 4f52a32b4cd913c204e5a45f420b3fccad3e3f24
   AsyncSwift: 46a78bceb11f0e5bb52747f740d9692ec78d2d7c
+  Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Curry: 294533187eedbf52db60a1e70c29b4f5c9f621c0
   Device: a476728f5aee9abf5b9573e3fa8c77de030d0b12
   DynamicColor: 18badd22ee5edeefcbe0a8f5887a86640c592a1c
+  Fabric: 1abc1e59f11fa39ede6f690ef7309d8563e3ec59
   KeychainAccess: 9b7e49e48277e329b1b3195e54697ed313d30acf
   Nimble: 79d40f4d69d47314229bbabacaa02b8838c779b9
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
