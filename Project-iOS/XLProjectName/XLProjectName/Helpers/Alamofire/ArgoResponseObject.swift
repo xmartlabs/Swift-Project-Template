@@ -9,7 +9,8 @@
 import Foundation
 import Argo
 import Alamofire
-
+import Crashlytics
+import Fabric
 
 extension Request {
     
@@ -21,11 +22,14 @@ extension Request {
             switch result {
             case .Success(let value):
                 if let _ = response {
-                    print(JSONStringify(value))
+                    let json = JSONStringify(value)
+                    print(json)
                     let decodedData = T.decode(result.value != nil ? JSON.parse(result.value!) : JSON.Null)
                     switch decodedData {
                     case let .Failure(argoError):
-                        return .Failure(Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description))
+                        let nsError = Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description)
+                        Crashlytics.sharedInstance().recordError(nsError, withAdditionalUserInfo: ["json": json])
+                        return .Failure(nsError)
                     case let .Success(object):
                         return .Success(object)                        
                     }
@@ -53,7 +57,8 @@ extension Request {
             switch result {
             case .Success(let value):
                 if let _ = response {
-                    print(JSONStringify(value))
+                    let json = JSONStringify(value)
+                    print(json)
                     if let representation = value as? [[String: AnyObject]] {
                         var result = [T]()
                         for userRepresentation in representation {
@@ -61,7 +66,9 @@ extension Request {
                             
                             switch decodedData {
                             case let .Failure(argoError):
-                                return .Failure(Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description))
+                                let nsError = Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description)
+                                Crashlytics.sharedInstance().recordError(nsError, withAdditionalUserInfo: ["json": json])
+                                return .Failure(nsError)
                             case let .Success(object):
                                 result.append(object)
                             }
