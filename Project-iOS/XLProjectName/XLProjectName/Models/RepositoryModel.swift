@@ -26,7 +26,7 @@ class Repository {
     let createdAt: NSDate
     
     
-    init(id: Int, name: String, description: String?, company: String?, language: String?, openIssues: Int?, stargazersCount: Int?, forksCount: Int?, url: NSURL, createdAt: NSDate){
+    init(id: Int, name: String, description: String?, company: String?, language: String?, openIssues: Int?, stargazersCount: Int?, forksCount: Int?, url: NSURL, createdAt: NSDate) {
         self.id = id
         self.name = name
         self.description = description

@@ -26,6 +26,3 @@ struct Constants {
         static let crashlytics = false
     }
 }
-
-
-

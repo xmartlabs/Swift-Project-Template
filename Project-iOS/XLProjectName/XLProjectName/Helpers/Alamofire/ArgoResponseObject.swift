@@ -90,4 +90,3 @@ extension Request {
         return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
 }
-

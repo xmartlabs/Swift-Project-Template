@@ -11,4 +11,3 @@ func JSONStringify(value: AnyObject, prettyPrinted: Bool = true) -> String {
     }
     return ""
 }
-

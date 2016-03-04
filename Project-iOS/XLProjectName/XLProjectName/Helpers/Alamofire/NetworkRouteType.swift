@@ -49,7 +49,7 @@ extension NetworkRouteType {
         }
     }
     
-    var parameters: [String: AnyObject]?{
+    var parameters: [String: AnyObject]? {
         return nil
     }
 }

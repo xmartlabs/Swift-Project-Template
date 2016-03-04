@@ -21,7 +21,7 @@ class User {
     let username: String?
     var followers: [User]?
     
-    init(id: Int, email: String?, avatar: NSURL?, company: String?, username: String?){
+    init(id: Int, email: String?, avatar: NSURL?, company: String?, username: String?) {
         self.id = id
         self.email = email
         self.avatar = avatar
@@ -43,4 +43,3 @@ extension User: Decodable {
             //<*> j <||? "followers" // parse arrays of objects
     }
 }
-
