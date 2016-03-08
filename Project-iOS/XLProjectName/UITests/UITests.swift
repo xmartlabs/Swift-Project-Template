@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import Nimble
 
 class UITests: XCTestCase {
         
@@ -28,9 +29,47 @@ class UITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testRespositoryView() {
         // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Optionally use Nimble expect and related functions to verify your tests produce the correct results.
+        
+        let app = XCUIApplication()
+        
+        // fill organization and repository text fiels
+        let organizationTextField = app.textFields["organization"]
+        organizationTextField.tap()
+        organizationTextField.typeText("xmartlabs")
+        
+        let repositoryTextField = app.textFields["repository"]
+        repositoryTextField.tap()
+        repositoryTextField.typeText("eureka")
+        
+        // tap show repo button
+        let seerepobuttonButton = app.buttons["seeRepoButton"]
+        seerepobuttonButton.tap()
+        let repositoryTitleElement = app.staticTexts["RepositoryTitle"]
+        
+        // validate that detail repository view label shows Eureka
+        expect(repositoryTitleElement.label) == "Eureka"
+        
+        // tap back button
+        let backButton = app.navigationBars["XLProjectName.Repository"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0)
+        backButton.tap()
+        
+        // delete repository text field text
+        repositoryTextField.tap()
+        let deleteKey = app.keyboards.keys["delete"]
+        for _ in 1...6 { deleteKey.tap() }
+        
+        // set xlform to respository text field
+        repositoryTextField.tap()
+        repositoryTextField.typeText("xlform")
+        
+        // tap show button
+        seerepobuttonButton.tap()
+        
+        // validate that detail repository view label shows XLForm
+        expect(repositoryTitleElement.label) == "XLForm"
+        
     }
-    
 }

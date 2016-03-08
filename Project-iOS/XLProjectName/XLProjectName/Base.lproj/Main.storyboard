@@ -63,7 +63,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="xmartlabs" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ogi-YH-fTv">
                                 <rect key="frame" x="204" y="287" width="133" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="organization" label=""/>
+                                <accessibility key="accessibilityConfiguration" identifier="organization" label="organizationTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -97,7 +97,7 @@
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="eureka" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0mG-fL-iVj">
                                 <rect key="frame" x="359" y="287" width="132" height="30"/>
-                                <accessibility key="accessibilityConfiguration" identifier="repository" label=""/>
+                                <accessibility key="accessibilityConfiguration" identifier="repository" label="RepositoryTextField"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>

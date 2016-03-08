@@ -22,12 +22,20 @@ pod 'RxCocoa', '~> 2.0'
 pod 'Fabric'
 pod 'Crashlytics'
 
-target :unit_tests, :exclusive => true do
-  link_with 'UnitTests'
-  pod 'Quick', '~> 0.9'
-  pod 'Nimble', '~> 3.1'
+def testing_pods
+    pod 'Quick', '~> 0.9'
+    pod 'Nimble', '~> 3.1'
 end
 
+target :unit_tests, :exclusive => true do
+  link_with 'UnitTests'
+  testing_pods
+end
+
+target :ui_tests, :exclusive => true do
+    link_with 'UITests'
+    testing_pods
+end
 
 post_install do |installer|
     puts 'Removing static analyzer support'
