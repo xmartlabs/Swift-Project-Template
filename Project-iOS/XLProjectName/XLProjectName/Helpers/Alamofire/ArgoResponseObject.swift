@@ -10,7 +10,6 @@ import Foundation
 import Argo
 import Alamofire
 import Crashlytics
-import Fabric
 
 extension Request {
     
@@ -28,7 +27,6 @@ extension Request {
                     switch decodedData {
                     case let .Failure(argoError):
                         let nsError = Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description)
-                        Crashlytics.sharedInstance().recordError(nsError, withAdditionalUserInfo: ["json": json])
                         return .Failure(nsError)
                     case let .Success(object):
                         return .Success(object)                        
@@ -47,6 +45,7 @@ extension Request {
 }
 
 extension Request {
+    
     public func responseCollection<T: Decodable where T == T.DecodedType >(completionHandler: Response<[T], NSError> -> Void) -> Self {
         let responseSerializer = ResponseSerializer<[T], NSError> { request, response, data, error in
             guard error == nil else { return .Failure(error!) }
@@ -89,4 +88,5 @@ extension Request {
         }
         return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
     }
+
 }

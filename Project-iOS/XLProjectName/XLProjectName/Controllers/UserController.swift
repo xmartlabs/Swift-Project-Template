@@ -7,7 +7,9 @@
 //
 
 import UIKit
+
 import AlamofireImage
+import RxSwift
 
 let cellIdentifier = "cell"
 
@@ -23,17 +25,26 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     let rowHeight: CGFloat = 40.0
     
     var followerImages = [String: UIImage]()
+
+    let disposeBag = DisposeBag()
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
         followersTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-        guard let username = user.username else { return }
-        NetworkManager.getFollowers(username, completionCallback: { [weak self] users, error in
-            guard let users = users else { return }
-            self?.user.followers = users
-            self?.followersTable.reloadData()
-            self?.adjustTableHeight()
-        })
+        
+        guard let username = user.username else {
+            return
+        }
+        
+        NetworkManager.userService().getFollowers(username)
+            .observeOn(MainScheduler.instance)
+            .subscribeNext() { [weak self] followers in
+                self?.user.followers = followers
+                self?.followersTable.reloadData()
+                self?.adjustTableHeight()
+            }
+            .addDisposableTo(disposeBag)
     }
     
     public override func viewWillAppear(animated: Bool) {
@@ -77,12 +88,15 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         if let image = followerImages[follower.username!] {
             cell.imageView?.image = image
         } else if let avatar = follower.avatar {
-            NetworkManager.request(.GET, avatar).responseImage { [weak self] response in
-                if let image = response.result.value {
+            NetworkManager.request(.GET, avatar)
+                .validate()
+                .rx_image()
+                .observeOn(MainScheduler.instance)
+                .subscribeNext() { [weak self] image in
                     self?.followerImages[follower.username!] = image
                     tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }
-            }
+                .addDisposableTo(disposeBag)
         }
         return cell
     }

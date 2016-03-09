@@ -7,11 +7,11 @@
 //
 
 import UIKit
-import Alamofire
+import RxSwift
 
 public class LoginController: UIViewController {
     
-//MARK: Outlets
+// MARK: - Outlets
     
     // TextFields
     @IBOutlet weak var usernameTextField: UITextField!
@@ -25,7 +25,9 @@ public class LoginController: UIViewController {
     @IBOutlet weak var seeProfileButton: UIButton!
     
     
-//MARK: Life cycle & iOS Framework invocations
+    let disposeBag = DisposeBag()
+    
+// MARK: - Life cycle & iOS Framework invocations
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,20 +46,23 @@ public class LoginController: UIViewController {
         }
     }
     
-// MARK: Actions
+// MARK: - Actions
     
     func loginTapped(sender: UIButton) {
         guard let username = usernameTextField.text, let password = passwordTextField.text where !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password", message: nil)
             return
         }
-        NetworkManager.login(username, pass: password, completionCallback: { [weak self] user, error in
-            if let _ = user {
-                self?.showError("Great", message: "You have been successfully logged in")
-            } else {
+
+        NetworkManager.userService().login(username, pass: password)
+            .observeOn(MainScheduler.instance)
+            .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
             }
-        })
+            .subscribeNext() { [weak self] user in
+                self?.showError("Great", message: "You have been successfully logged in")
+            }
+            .addDisposableTo(disposeBag)
     }
     
     func seeRepoTapped(sender: UIButton) {
@@ -66,14 +71,16 @@ public class LoginController: UIViewController {
             showError("Please enter the repository and organization name", message: nil)
             return
         }
-        NetworkManager.request(NetworkRepository.GetInfo(owner: owner, repo: repo))
-            .validate()
-            .responseObject { [weak self] (response: Response<Repository, NSError>) in
-                NetworkManager.handleResponse(response,
-                    onSuccess: { (repository) -> Void in
-                        self?.performSegueWithIdentifier(R.segue.loginController.pushToRepoController, sender: repository)
-                })
-        }
+
+        NetworkManager.repositoryService().getRepository(owner, repositoryId: repo)
+            .observeOn(MainScheduler.instance)
+            .doOnError() { [weak self] error in
+                self?.showError("Error", message: (error as NSError).localizedDescription)
+            }
+            .subscribeNext() { [weak self] repository in
+                self?.performSegueWithIdentifier(R.segue.loginController.pushToRepoController, sender: repository)
+            }
+            .addDisposableTo(disposeBag)
     }
     
     func seeProfileTapped(sender: AnyObject) {
@@ -81,21 +88,24 @@ public class LoginController: UIViewController {
             showError("Please enter the username", message: nil)
             return
         }
-        NetworkManager.request(NetworkUser.GetInfo(username: user))
-            .validate()
-            .responseObject { [weak self] (response: Response<User, NSError>) in
-                NetworkManager.handleResponse(response,
-                    onSuccess: { (user) -> Void in
-                        self?.performSegueWithIdentifier(R.segue.loginController.pushToUserController, sender: user)
-                })
+
+        NetworkManager.userService().getInfo(user)
+            .observeOn(MainScheduler.instance)
+            .doOnError() { [weak self] _ in
+                self?.showError("Error", message: "Sorry user login does not work correctly")
             }
+            .subscribeNext() { [weak self] user in
+                self?.performSegueWithIdentifier(R.segue.loginController.pushToUserController, sender: user)
+            }
+            .addDisposableTo(disposeBag)
     }
         
-//MARK: Helpers
+// MARK: - Helpers
     
     func showError(title: String, message: String?) {
         let alertVC = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alertVC.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
         presentViewController(alertVC, animated: true, completion: nil)
     }
+
 }
