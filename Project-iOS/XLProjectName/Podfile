@@ -28,12 +28,12 @@ def testing_pods
     pod 'Nimble', '~> 3.1'
 end
 
-target :unit_tests, :exclusive => true do
+target :unit_tests do
   link_with 'UnitTests'
   testing_pods
 end
 
-target :ui_tests, :exclusive => true do
+target :ui_tests do
     link_with 'UITests'
     testing_pods
 end
