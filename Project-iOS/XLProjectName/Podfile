@@ -19,6 +19,7 @@ pod 'RxAlamofire', '~> 1.1'
 pod 'RxCocoa', '~> 2.0'
 pod 'RxSwift', '~> 2.0'
 #pod 'RealmSwift'
+#pod 'Intercom'
 
 pod 'Fabric'
 pod 'Crashlytics'

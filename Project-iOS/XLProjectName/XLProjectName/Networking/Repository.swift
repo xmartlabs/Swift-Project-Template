@@ -31,22 +31,3 @@ enum NetworkRepository: NetworkRouteType {
     }
 
 }
-
-class RepositoryService {
-    
-    func getRepository(ownerId: String, repositoryId: String) -> Observable<Repository> {
-        return NetworkManager.request(NetworkRepository.GetInfo(owner: ownerId, repo: repositoryId))
-            .validate()
-            .rx_object()
-            .doOnError(NetworkManager.generalErrorHandler)
-    }
-    
-}
-
-extension NetworkManager {
-    
-    static func repositoryService() -> RepositoryService {
-        return RepositoryService()
-    }
-    
-}
