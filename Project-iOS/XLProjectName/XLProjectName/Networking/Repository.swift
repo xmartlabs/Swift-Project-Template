@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import Foundation
-import Alamofire
 
+import Alamofire
+import RxSwift
 
 
 enum NetworkRepository: NetworkRouteType {
@@ -30,18 +30,23 @@ enum NetworkRepository: NetworkRouteType {
         }
     }
 
-//    var parameters: [String: AnyObject]?{
-//        return nil
-//    }
-    
-    
-//    var encoding: Alamofire.ParameterEncoding {
-//        switch method {
-//        case .POST, .PUT:
-//            return .JSON
-//        default:
-//            return .URL
-//        }
-//    }
+}
 
+class RepositoryService {
+    
+    func getRepository(ownerId: String, repositoryId: String) -> Observable<Repository> {
+        return NetworkManager.request(NetworkRepository.GetInfo(owner: ownerId, repo: repositoryId))
+            .validate()
+            .rx_object()
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+    
+}
+
+extension NetworkManager {
+    
+    static func repositoryService() -> RepositoryService {
+        return RepositoryService()
+    }
+    
 }

@@ -8,7 +8,8 @@
 
 import Foundation
 import Alamofire
-//import AlamofireObjectMapper
+import RxSwift
+import RxAlamofire
 
 enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
 
@@ -19,7 +20,7 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
     var method: Alamofire.Method {
         switch self {
         case .Login:
-            return .POST
+            return .GET
         case .GetInfo, .Followers:
             return .GET
         }
@@ -27,8 +28,8 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
     
     var path: String {
         switch self {
-        case  let .Login( username, _):
-            return "users/\(username)"
+        case  .Login(_, _):
+            return ""
         case .GetInfo(let user):
             return "users/\(user)"
         case .Followers(let user):
@@ -36,53 +37,55 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
         }
     }
     
-//    var parameters: [String: AnyObject]? {
-//        return nil
-//    }
-    
-    //MARK: CustomUrlRequestSetup
+    // MARK: - CustomUrlRequestSetup
     
     func customUrlRequestSetup(request: NSMutableURLRequest) {
         if case let .Login(username, password) = self {
             let utf8 = "\(username):\(password)".dataUsingEncoding(NSUTF8StringEncoding)
             let base64 = utf8?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-            guard let encodedString = base64 else { return }
+            
+            guard let encodedString = base64 else {
+                return
+            }
+            
             request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
         }
-        
     }
+
+}
+
+class UserService {
+
+    func login(username: String, pass: String) -> Observable<User> {
+        return NetworkManager.request(NetworkUser.Login(username: username, password: pass))
+            .validate()
+            .rx_JSON()
+            .doOnError(NetworkManager.generalErrorHandler)
+            .flatMap() { _ in
+                return self.getInfo(username)
+            }
+    }
+    
+    func getInfo(username: String) -> Observable<User> {
+        return NetworkManager.request(NetworkUser.GetInfo(username: username))
+            .validate()
+            .rx_object()
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+
+    func getFollowers(username: String) -> Observable<[User]> {
+        return NetworkManager.request(NetworkUser.Followers(username: username))
+            .validate()
+            .rx_objectCollection()
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+
 }
 
 extension NetworkManager {
-    static func login(username: String, pass: String, completionCallback: (User?, NSError?) -> Void) {
-        NetworkManager.request(NetworkUser.Login(username: username, password: pass))
-            .validate()
-//            .responseJSON(completionHandler: { (response: Response<AnyObject, NSError>) in
-//                print(response.result.value)
-//                print(response.request?.allHTTPHeaderFields)
-//                print(response.response)
-//            })
-            .responseObject { (response: Response<User, NSError>) in
-                NetworkManager.handleResponse(response,
-                    onSuccess: { user in
-                        //todo: Save user to DB here
-                        completionCallback(user, nil)
-                    }, onFailure: { (error, urlResponse, jsonData) -> Void in
-                        completionCallback(nil, error)
-                    })
-                }
-            
+    
+    static func userService() -> UserService {
+        return UserService()
     }
     
-    static func getFollowers(username: String, completionCallback: ([User]?, NSError?) -> Void) {
-        NetworkManager.request(NetworkUser.Followers(username: username))
-            .validate()
-            .responseCollection { response in
-                NetworkManager.handleResponse(response,
-                    onSuccess: { users in
-                        //todo: Save users to DB here
-                        completionCallback(users,  nil)
-                    })
-            }
-    }
 }

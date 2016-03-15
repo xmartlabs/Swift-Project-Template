@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 import Argo
+import Crashlytics
 
 public class NetworkManager {
 
@@ -23,7 +24,7 @@ public class NetworkManager {
 
     static func request(URLRequest: URLRequestConvertible) -> Alamofire.Request {
         let request = networkManager.request(URLRequest)
-        debugPrint(request)
+        DBLog(request.debugDescription)
         return request
     }
     
@@ -34,28 +35,29 @@ public class NetworkManager {
         encoding: ParameterEncoding = .URL,
         headers: [String: String]? = nil) -> Alamofire.Request {
         let request = networkManager.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers)
-        debugPrint(request)
+        DBLog(request.debugDescription)
         return request
     }
     
-    
-    
-    public static func handleResponse<T: Decodable where T == T.DecodedType>(response: Response<T, NSError>, onSuccess: ((T) -> Void)? = nil, onFailure: ((NSError, NSHTTPURLResponse?, AnyObject?) -> Void)? = nil) {
-        switch response.result {
-        case .Success(let value):
-            onSuccess?(value)
-        case .Failure(let error):
-            onFailure?(error, response.response, response.data?.toJSON())
+    public static func generalErrorHandler(error: ErrorType) {
+        // Trick to get the userInfo data (note that ErrorType always can be casted to NSError)
+        let nserror =  ((error as Any) as? NSError) ?? (error as NSError)
+
+        if nserror.code == NSURLErrorNotConnectedToInternet {
+            // No internet connection, do something
+            DBLog("No internet access")
+        } else if nserror.domain == Alamofire.Error.Domain {
+            if nserror.code == Alamofire.Error.Code.StatusCodeValidationFailed.rawValue {
+                // HTTP status code error (401, 404, etc)
+                DBLog("Service error")
+            } else {
+                // Some error with the response
+                DBLog("Response error")
+            }
         }
-    }
-    
-    public static func handleResponse<T: Decodable where T == T.DecodedType>(response: Response<[T], NSError>, onSuccess: (([T]) -> Void)? = nil, onFailure: ((NSError, NSHTTPURLResponse?, AnyObject?) -> Void)? = nil) {
-        switch response.result {
-        case .Success(let value):
-            onSuccess?(value)
-        case .Failure(let error):
-            onFailure?(error, response.response, response.data?.toJSON())
-        }
+        
+        CLSNSLogv("Service call error: %@", getVaList([nserror]))
+        Crashlytics.sharedInstance().recordError(nserror)
     }
     
 }
