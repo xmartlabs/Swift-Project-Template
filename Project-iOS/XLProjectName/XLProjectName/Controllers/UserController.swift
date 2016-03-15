@@ -37,9 +37,9 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
             return
         }
         
-        NetworkManager.userService().getFollowers(username)
-            .observeOn(MainScheduler.instance)
-            .subscribeNext() { [weak self] followers in
+        NetworkUser.Followers(username: username)
+            .observe()
+            .subscribeNext() { [weak self] (followers: [User]) in
                 self?.user.followers = followers
                 self?.followersTable.reloadData()
                 self?.adjustTableHeight()

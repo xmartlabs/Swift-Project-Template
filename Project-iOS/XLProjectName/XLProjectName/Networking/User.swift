@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import RxSwift
 import RxAlamofire
+import Argo
 
 enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
 
@@ -28,7 +29,7 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
     
     var path: String {
         switch self {
-        case  .Login(_, _):
+        case .Login(_, _):
             return ""
         case .GetInfo(let user):
             return "users/\(user)"
@@ -51,41 +52,4 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
             request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
         }
     }
-
-}
-
-class UserService {
-
-    func login(username: String, pass: String) -> Observable<User> {
-        return NetworkManager.request(NetworkUser.Login(username: username, password: pass))
-            .validate()
-            .rx_JSON()
-            .doOnError(NetworkManager.generalErrorHandler)
-            .flatMap() { _ in
-                return self.getInfo(username)
-            }
-    }
-    
-    func getInfo(username: String) -> Observable<User> {
-        return NetworkManager.request(NetworkUser.GetInfo(username: username))
-            .validate()
-            .rx_object()
-            .doOnError(NetworkManager.generalErrorHandler)
-    }
-
-    func getFollowers(username: String) -> Observable<[User]> {
-        return NetworkManager.request(NetworkUser.Followers(username: username))
-            .validate()
-            .rx_objectCollection()
-            .doOnError(NetworkManager.generalErrorHandler)
-    }
-
-}
-
-extension NetworkManager {
-    
-    static func userService() -> UserService {
-        return UserService()
-    }
-    
 }

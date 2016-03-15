@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import RxSwift
+import Argo
 
 protocol NetworkRouteType: URLRequestConvertible {
     var method: Alamofire.Method { get }
@@ -26,7 +28,7 @@ extension NetworkRouteType {
         let mutableURLRequest = NSMutableURLRequest(URL: Constants.Network.baseUrl.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
-        //        mutableURLRequest.setValue(<#T##value: AnyObject?##AnyObject?#>, forKey: <#T##String#>)
+        //        mutableURLRequest.setValue(value: AnyObject?, forKey: String)
         
         
         //        public static func addAuthHeader(request: NSMutableURLRequest, username: String, password: String) {
@@ -52,4 +54,29 @@ extension NetworkRouteType {
     var parameters: [String: AnyObject]? {
         return nil
     }
+    
+    func observe<T: Decodable where T == T.DecodedType>(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<T> {
+        return NetworkManager.request(self)
+            .validate()
+            .rx_object()
+            .observeOn(scheduler)
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+    
+    func observe<T: Decodable where T == T.DecodedType>(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<[T]> {
+        return NetworkManager.request(self)
+            .validate()
+            .rx_objectCollection()
+            .observeOn(scheduler)
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+    
+    func observe(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<AnyObject> {
+        return NetworkManager.request(self)
+            .validate()
+            .rx_JSON()
+            .observeOn(scheduler)
+            .doOnError(NetworkManager.generalErrorHandler)
+    }
+
 }

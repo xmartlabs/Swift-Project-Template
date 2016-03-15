@@ -54,12 +54,15 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkManager.userService().login(username, pass: password)
-            .observeOn(MainScheduler.instance)
+        NetworkUser.Login(username: username, password: password)
+            .observe()
             .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
             }
-            .subscribeNext() { [weak self] user in
+            .flatMap() { _ in
+                return NetworkUser.GetInfo(username: username).observe()
+            }
+            .subscribeNext() { [weak self] (user: User) in
                 self?.showError("Great", message: "You have been successfully logged in")
             }
             .addDisposableTo(disposeBag)
@@ -72,12 +75,12 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkManager.repositoryService().getRepository(owner, repositoryId: repo)
-            .observeOn(MainScheduler.instance)
+        NetworkRepository.GetInfo(owner: owner, repo: repo)
+            .observe()
             .doOnError() { [weak self] error in
                 self?.showError("Error", message: (error as NSError).localizedDescription)
             }
-            .subscribeNext() { [weak self] repository in
+            .subscribeNext() { [weak self] (repository: Repository) in
                 self?.performSegueWithIdentifier(R.segue.loginController.pushToRepoController, sender: repository)
             }
             .addDisposableTo(disposeBag)
@@ -89,12 +92,12 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkManager.userService().getInfo(user)
-            .observeOn(MainScheduler.instance)
+        NetworkUser.GetInfo(username: user)
+            .observe()
             .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
             }
-            .subscribeNext() { [weak self] user in
+            .subscribeNext() { [weak self] (user: User) in
                 self?.performSegueWithIdentifier(R.segue.loginController.pushToUserController, sender: user)
             }
             .addDisposableTo(disposeBag)
