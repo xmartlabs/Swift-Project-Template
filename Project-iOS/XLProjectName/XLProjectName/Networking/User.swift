@@ -8,9 +8,6 @@
 
 import Foundation
 import Alamofire
-import RxSwift
-import RxAlamofire
-import Argo
 
 enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
 

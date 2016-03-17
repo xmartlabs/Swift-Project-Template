@@ -7,10 +7,7 @@
 //
 
 import Foundation
-
 import Alamofire
-import RxSwift
-
 
 enum NetworkRepository: NetworkRouteType {
     

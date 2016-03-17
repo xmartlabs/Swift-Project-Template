@@ -16,7 +16,7 @@ extension NSDate: Decodable {
     public class func decode(j: JSON) -> Decoded<NSDate> {
         switch j {
         case .String(let dateString):
-            return  dateString.toDate(DateFormat.ISO8601).map(pure) ?? .typeMismatch("NSDate", actual: j)
+            return  dateString.toDate(DateFormat.ISO8601Format(.Full)).map(pure) ?? .typeMismatch("NSDate", actual: j)
         default: return .typeMismatch("NSDate", actual: j)
         }
     }

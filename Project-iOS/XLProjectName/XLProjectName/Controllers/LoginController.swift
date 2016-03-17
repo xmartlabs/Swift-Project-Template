@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import XLSwiftKit
 
 public class LoginController: UIViewController {
     
@@ -50,7 +51,7 @@ public class LoginController: UIViewController {
     
     func loginTapped(sender: UIButton) {
         guard let username = usernameTextField.text, let password = passwordTextField.text where !username.isEmpty && !password.isEmpty else {
-            showError("Please enter the username and password", message: nil)
+            showError("Please enter the username and password")
             return
         }
 
@@ -71,7 +72,7 @@ public class LoginController: UIViewController {
     func seeRepoTapped(sender: UIButton) {
         //validate
         guard let repo = repositoryTextField.text, let owner = organizationTextField.text where !repo.isEmpty && !owner.isEmpty else {
-            showError("Please enter the repository and organization name", message: nil)
+            showError("Please enter the repository and organization name")
             return
         }
 
@@ -88,7 +89,7 @@ public class LoginController: UIViewController {
     
     func seeProfileTapped(sender: AnyObject) {
         guard let user = userToSeeTextField.text where !user.isEmpty else {
-            showError("Please enter the username", message: nil)
+            showError("Please enter the username")
             return
         }
 
@@ -101,14 +102,6 @@ public class LoginController: UIViewController {
                 self?.performSegueWithIdentifier(R.segue.loginController.pushToUserController, sender: user)
             }
             .addDisposableTo(disposeBag)
-    }
-        
-// MARK: - Helpers
-    
-    func showError(title: String, message: String?) {
-        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        alertVC.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
-        presentViewController(alertVC, animated: true, completion: nil)
     }
 
 }

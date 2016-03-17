@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import RxAlamofire
 import RxSwift
 import Argo
 
