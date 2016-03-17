@@ -55,7 +55,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         companyLabel.text = user.company ?? "None"
         followersTable.delegate = self
         followersTable.dataSource = self
-        if let avatar = user?.avatar {
+        if let avatar = user?.avatarUrl {
             avatarImageView.af_setImageWithURL(avatar)
         }
         for label in [nameLabel, emailLabel, companyLabel] {
@@ -87,7 +87,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         
         if let image = followerImages[follower.username!] {
             cell.imageView?.image = image
-        } else if let avatar = follower.avatar {
+        } else if let avatar = follower.avatarUrl {
             NetworkManager.request(.GET, avatar)
                 .validate()
                 .rx_image()

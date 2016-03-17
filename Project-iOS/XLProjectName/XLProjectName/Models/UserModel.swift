@@ -9,22 +9,36 @@
 import Foundation
 import Argo
 import Curry
+import RealmSwift
 
 
 
-class User {
+class User: Object {
     
-    let id: Int
-    let email: String?
-    let avatar: NSURL?
-    let company: String?
-    let username: String?
+    dynamic var id: Int = Int.min
+    dynamic var email: String?
+    dynamic var company: String?
+    dynamic var username: String?
+    dynamic var avatarUrlString: String?
+    
     var followers: [User]?
     
-    init(id: Int, email: String?, avatar: NSURL?, company: String?, username: String?) {
+    var avatarUrl: NSURL? {
+        return NSURL(string: self.avatarUrlString ?? "")
+    }
+    
+    /**
+     Return property names that should be ignored by Realm. Realm will not persist these properties.
+     */
+    override static func ignoredProperties() -> [String] {
+        return ["followers"]
+    }
+    
+    convenience init(id: Int, email: String?, avatarUrlString: String?, company: String?, username: String?) {
+        self.init()
         self.id = id
         self.email = email
-        self.avatar = avatar
+        self.avatarUrlString = avatarUrlString
         self.company = company
         self.username = username
     }
@@ -36,7 +50,7 @@ extension User: Decodable {
         let a = curry(User.init)
             <^> j <| "id"
             <*> j <|? "email"
-            <*> (j <| "avatar_url" >>- { NSURL.decode($0) })
+            <*> j <|? "avatar_url"  //>>- { NSURL.decode($0) })
         return a
             <*> j <|? "name" // Custom types that also conform to Decodable just work
             <*> j <|? "login" // Parse nested objects

@@ -19,7 +19,7 @@ pod 'RxAlamofire', '~> 2.2'
 pod 'RxCocoa', '~> 2.0'
 pod 'RxSwift', '~> 2.0'
 pod 'XLSwiftKit', :git => 'git@github.com:xmartlabs/XLSwiftKit.git', :branch => 'master'
-#pod 'RealmSwift'
+pod 'RealmSwift'
 #pod 'Intercom'
 
 pod 'Fabric'

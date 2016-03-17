@@ -30,7 +30,7 @@ public class RepositoryController: UIViewController {
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = repository.name
-        descriptionLabel.text = repository.description
+        descriptionLabel.text = repository.desc
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .Center
         starImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")
