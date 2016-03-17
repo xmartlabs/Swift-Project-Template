@@ -2,8 +2,8 @@
 //  Device.swift
 //  XLProjectName
 //
-//  Created by Martin Barreto on 3/15/16.
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
+//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
 //
 
 import Foundation

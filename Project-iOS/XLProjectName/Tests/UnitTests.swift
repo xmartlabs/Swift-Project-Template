@@ -2,8 +2,8 @@
 //  Tests.swift
 //  Tests
 //
-//  Created by Martin Barreto on 2/17/16.
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
+//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
 //
 
 import XCTest

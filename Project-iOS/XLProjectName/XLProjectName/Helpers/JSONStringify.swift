@@ -1,4 +1,10 @@
-// Author - Santosh Rajan
+//
+//  JSONStringify.swift
+//  XLProjectName
+//
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
+//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
+//
 
 import Foundation
 

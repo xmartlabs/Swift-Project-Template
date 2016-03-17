@@ -2,8 +2,8 @@
 //  NetworkUser.swift
 //  XLProjectName
 //
-//  Created by Martin Barreto on 2/19/16
-//  Copyright (c) 2016 Xmartlabs SRL. All rights reserved.
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
+//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
