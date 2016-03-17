@@ -21,7 +21,7 @@ class User: Object {
     dynamic var username: String?
     dynamic var avatarUrlString: String?
     
-    var followers: [User]?
+    var followers = List<User>()
     
     var avatarUrl: NSURL? {
         return NSURL(string: self.avatarUrlString ?? "")
@@ -54,6 +54,6 @@ extension User: Decodable {
         return a
             <*> j <|? "name" // Custom types that also conform to Decodable just work
             <*> j <|? "login" // Parse nested objects
-            //<*> j <||? "followers" // parse arrays of objects
+            //<*> j <||| "followers" // parse realm list objects
     }
 }

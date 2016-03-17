@@ -10,6 +10,7 @@ import UIKit
 
 import AlamofireImage
 import RxSwift
+import RealmSwift
 
 let cellIdentifier = "cell"
 
@@ -40,7 +41,8 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         NetworkUser.Followers(username: username)
             .observe()
             .subscribeNext() { [weak self] (followers: [User]) in
-                self?.user.followers = followers
+                self?.user.followers.removeAll()
+                self?.user.followers.appendContentsOf(followers)
                 self?.followersTable.reloadData()
                 self?.adjustTableHeight()
             }
@@ -65,7 +67,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return user?.followers?.count ?? 0
+        return user?.followers.count ?? 0
     }
     
     public func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -81,7 +83,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         
         guard let cell = _cell else { return UITableViewCell() }
         
-        guard let follower = user?.followers?[indexPath.row] where follower.username != nil else { return cell }
+        guard let follower = user?.followers[indexPath.row] where follower.username != nil else { return cell }
         
         cell.textLabel?.text = follower.username
         
@@ -102,7 +104,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func adjustTableHeight() {
-        guard let followersCount = user?.followers?.count else { return }
+        guard let followersCount = user?.followers.count else { return }
         tableHeightConstraint.constant = min(view.frame.height - followersTable.frame.origin.y, CGFloat(followersCount) * rowHeight)
     }
 }
