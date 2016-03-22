@@ -18,10 +18,11 @@ class User: Object {
     dynamic var id: Int = Int.min
     dynamic var email: String?
     dynamic var company: String?
-    dynamic var username: String?
+    dynamic var username: String = ""
     dynamic var avatarUrlString: String?
     
-    var followers = List<User>()
+    let followers = List<User>()
+    let repositories = List<Repository>()
     
     var avatarUrl: NSURL? {
         return NSURL(string: self.avatarUrlString ?? "")
@@ -31,10 +32,10 @@ class User: Object {
      Return property names that should be ignored by Realm. Realm will not persist these properties.
      */
     override static func ignoredProperties() -> [String] {
-        return ["followers"]
+        return []
     }
-    
-    convenience init(id: Int, email: String?, avatarUrlString: String?, company: String?, username: String?) {
+
+    convenience init(id: Int, email: String?, avatarUrlString: String?, company: String?, username: String) {
         self.init()
         self.id = id
         self.email = email
@@ -53,7 +54,7 @@ extension User: Decodable {
             <*> j <|? "avatar_url"  //>>- { NSURL.decode($0) })
         return a
             <*> j <|? "name" // Custom types that also conform to Decodable just work
-            <*> j <|? "login" // Parse nested objects
-            //<*> j <||| "followers" // parse realm list objects
+            <*> j <| "login" // Parse nested objects
+            //<*> j <||| "followers" // parse realm objects, actually not needed since List<T> is a constant and we are not able to assign it.
     }
 }

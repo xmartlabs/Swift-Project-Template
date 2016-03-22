@@ -23,7 +23,8 @@ struct R {
   }
   
   struct reuseIdentifier {
-    
+    static let cell: ReuseIdentifier<UITableViewCell> = ReuseIdentifier(identifier: "Cell")
+    static let cellIdentifier: ReuseIdentifier<UITableViewCell> = ReuseIdentifier(identifier: "cellIdentifier")
   }
   
   struct segue {
@@ -39,11 +40,20 @@ struct R {
         return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToUserController, segue: segue)
       }
     }
+    
+    struct userController {
+      static let showUserRepositories: StoryboardSegueIdentifier<UIStoryboardSegue, UserController, RepositoriesController> = StoryboardSegueIdentifier(identifier: "showUserRepositories")
+      
+      static func showUserRepositories(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, UserController, RepositoriesController>? {
+        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.userController.showUserRepositories, segue: segue)
+      }
+    }
   }
   
   struct storyboard {
     static let launchScreen = _R.storyboard.launchScreen()
     static let main = _R.storyboard.main()
+    static let vCTemplates = _R.storyboard.vCTemplates()
     
     static func launchScreen(_: Void) -> UIStoryboard {
       return UIStoryboard(resource: R.storyboard.launchScreen)
@@ -51,6 +61,10 @@ struct R {
     
     static func main(_: Void) -> UIStoryboard {
       return UIStoryboard(resource: R.storyboard.main)
+    }
+    
+    static func vCTemplates(_: Void) -> UIStoryboard {
+      return UIStoryboard(resource: R.storyboard.vCTemplates)
     }
   }
 }
@@ -64,7 +78,7 @@ struct _R {
   
   struct storyboard {
     struct launchScreen: StoryboardResourceWithInitialControllerType {
-      typealias InitialController = UIViewController
+      typealias InitialController = UINavigationController
       
       let bundle = _R.hostingBundle
       let name = "LaunchScreen"
@@ -75,6 +89,11 @@ struct _R {
       
       let bundle = _R.hostingBundle
       let name = "Main"
+    }
+    
+    struct vCTemplates: StoryboardResourceType {
+      let bundle = _R.hostingBundle
+      let name = "VCTemplates"
     }
   }
 }

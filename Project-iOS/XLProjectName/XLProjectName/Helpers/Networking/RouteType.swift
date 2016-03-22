@@ -12,7 +12,7 @@ import RxAlamofire
 import RxSwift
 import Argo
 
-protocol NetworkRouteType: URLRequestConvertible {
+protocol RouteType: URLRequestConvertible {
     var method: Alamofire.Method { get }
     var path: String { get }
     var parameters: [String: AnyObject]? { get }
@@ -23,7 +23,7 @@ protocol CustomUrlRequestSetup {
     func customUrlRequestSetup(urlRequest: NSMutableURLRequest)
 }
 
-extension NetworkRouteType {
+extension RouteType {
     
     var URLRequest: NSMutableURLRequest {
         let mutableURLRequest = NSMutableURLRequest(URL: Constants.Network.baseUrl.URLByAppendingPathComponent(path))

@@ -22,6 +22,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var followersTable: UITableView!
     @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var repositoriesButton: UIButton!
     var user: User!
     let rowHeight: CGFloat = 40.0
     
@@ -32,13 +33,15 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        repositoriesButton.addTarget(self, action: #selector(UserController.seeRepositories(_:)), forControlEvents: .TouchUpInside)
+        
         followersTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         
-        guard let username = user.username else {
-            return
-        }
+//        guard let username = user.username else {
+//            return
+//        }
         
-        NetworkUser.Followers(username: username)
+        NetworkUser.Followers(username: user.username)
             .observe()
             .subscribeNext() { [weak self] (followers: [User]) in
                 self?.user.followers.removeAll()
@@ -83,11 +86,11 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         
         guard let cell = _cell else { return UITableViewCell() }
         
-        guard let follower = user?.followers[indexPath.row] where follower.username != nil else { return cell }
+        guard let follower = user?.followers[indexPath.row] else { return cell }
         
         cell.textLabel?.text = follower.username
         
-        if let image = followerImages[follower.username!] {
+        if let image = followerImages[follower.username] {
             cell.imageView?.image = image
         } else if let avatar = follower.avatarUrl {
             NetworkManager.request(.GET, avatar)
@@ -95,7 +98,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
                 .rx_image()
                 .observeOn(MainScheduler.instance)
                 .subscribeNext() { [weak self] image in
-                    self?.followerImages[follower.username!] = image
+                    self?.followerImages[follower.username] = image
                     tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }
                 .addDisposableTo(disposeBag)
@@ -103,8 +106,20 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         return cell
     }
     
+    // Mark: Actions
+    func seeRepositories(buton: UIButton) {
+        self.performSegueWithIdentifier(R.segue.userController.showUserRepositories, sender: user)
+    }
+    
+    // Mark: Helpers
+    
     func adjustTableHeight() {
         guard let followersCount = user?.followers.count else { return }
         tableHeightConstraint.constant = min(view.frame.height - followersTable.frame.origin.y, CGFloat(followersCount) * rowHeight)
+    }
+    
+    
+    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        (segue.destinationViewController as? RepositoriesController)?.user = sender as? User
     }
 }

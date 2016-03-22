@@ -9,17 +9,18 @@
 import Foundation
 import Alamofire
 
-enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
+enum NetworkUser: RouteType, CustomUrlRequestSetup {
 
     case Login(username: String, password: String)
     case GetInfo(username: String)
     case Followers(username: String)
+    case Repositories(username: String)
     
     var method: Alamofire.Method {
         switch self {
         case .Login:
             return .GET
-        case .GetInfo, .Followers:
+        case .GetInfo, .Followers, .Repositories:
             return .GET
         }
     }
@@ -32,6 +33,8 @@ enum NetworkUser: NetworkRouteType, CustomUrlRequestSetup {
             return "users/\(user)"
         case .Followers(let user):
             return "users/\(user)/followers"
+        case .Repositories(let user):
+            return "users/\(user)/repos"
         }
     }
     

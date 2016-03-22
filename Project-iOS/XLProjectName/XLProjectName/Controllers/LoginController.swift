@@ -33,9 +33,9 @@ public class LoginController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         passwordTextField.secureTextEntry = true
-        logInButton.addTarget(self, action: "loginTapped:", forControlEvents: .TouchUpInside)
-        seeRepoButton.addTarget(self, action: "seeRepoTapped:", forControlEvents: .TouchUpInside)
-        seeProfileButton.addTarget(self, action: "seeProfileTapped:", forControlEvents: .TouchUpInside)
+        logInButton.addTarget(self, action: #selector(LoginController.loginTapped(_:)), forControlEvents: .TouchUpInside)
+        seeRepoButton.addTarget(self, action: #selector(LoginController.seeRepoTapped(_:)), forControlEvents: .TouchUpInside)
+        seeProfileButton.addTarget(self, action: #selector(LoginController.seeProfileTapped(_:)), forControlEvents: .TouchUpInside)
     }
     
     public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
