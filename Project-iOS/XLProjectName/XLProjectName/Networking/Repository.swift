@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkRepository: NetworkRouteType {
+enum NetworkRepository: RouteType {
     
     case GetInfo(owner: String, repo: String)
 

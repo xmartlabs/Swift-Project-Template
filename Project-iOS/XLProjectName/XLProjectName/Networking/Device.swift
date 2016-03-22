@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-enum NetworkDevice: NetworkRouteType {
+enum NetworkDevice: RouteType {
 
     case Update(token: String)
     case Remove

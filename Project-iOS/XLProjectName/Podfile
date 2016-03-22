@@ -20,7 +20,11 @@ pod 'RxCocoa', '~> 2.0'
 pod 'RxSwift', '~> 2.0'
 pod 'XLSwiftKit', :git => 'git@github.com:xmartlabs/XLSwiftKit.git', :branch => 'master'
 pod 'RealmSwift'
+pod 'WebLinking'
 #pod 'Intercom'
+
+# Swift type modelling the success/failure of arbitrary operations. This is a Swift µframework providing Result<Value, Error>.
+pod 'Result'
 
 pod 'Fabric'
 pod 'Crashlytics'

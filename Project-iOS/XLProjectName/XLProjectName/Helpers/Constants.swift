@@ -38,7 +38,7 @@ struct Constants {
     }
 }
 
-func DBLog(message: String, file: String = __FILE__, line: Int = __LINE__, function: String = __FUNCTION__) {
+func DBLog(message: String, file: String = #file, line: Int = #line, function: String = #function) {
 #if DEBUG
     let fileURL = NSURL(fileURLWithPath: file)
     let fileName = fileURL.URLByDeletingPathExtension?.lastPathComponent ?? ""
