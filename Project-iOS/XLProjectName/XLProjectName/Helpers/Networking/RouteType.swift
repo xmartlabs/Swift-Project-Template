@@ -75,7 +75,7 @@ extension RouteType {
     func observe(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<AnyObject> {
         return NetworkManager.request(self)
             .validate()
-            .rx_JSON()
+            .rx_anyObject()
             .observeOn(scheduler)
             .doOnError(NetworkManager.generalErrorHandler)
     }

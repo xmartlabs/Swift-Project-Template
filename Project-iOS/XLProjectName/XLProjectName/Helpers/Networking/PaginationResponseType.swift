@@ -31,4 +31,5 @@ struct PaginationResponse<E: Decodable where E.DecodedType == E>: PaginationResp
     let elements: [E]
     var previousPage: String?
     var nextPage: String?
+    
 }

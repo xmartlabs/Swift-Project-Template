@@ -21,6 +21,7 @@ PODS:
   - Realm/Headers (0.98.5)
   - RealmSwift (0.98.5):
     - Realm (= 0.98.5)
+  - Result (1.0.2)
   - RxAlamofire (2.2):
     - RxAlamofire/Core (= 2.2)
   - RxAlamofire/Core (2.2):
@@ -30,6 +31,7 @@ PODS:
     - RxSwift (~> 2.2)
   - RxSwift (2.2.0)
   - SwiftDate (3.0.8)
+  - WebLinking (1.0.0)
   - XLSwiftKit (1.0.0)
 
 DEPENDENCIES:
@@ -47,10 +49,12 @@ DEPENDENCIES:
   - Quick (~> 0.9)
   - R.swift (~> 1.0)
   - RealmSwift
+  - Result
   - RxAlamofire (~> 2.2)
   - RxCocoa (~> 2.0)
   - RxSwift (~> 2.0)
   - SwiftDate (~> 3.0)
+  - WebLinking
   - XLSwiftKit (from `git@github.com:xmartlabs/XLSwiftKit.git`, branch `master`)
 
 EXTERNAL SOURCES:
@@ -80,10 +84,12 @@ SPEC CHECKSUMS:
   R.swift.Library: 775f3086e07313ed1a1dfddca8418317f5a87397
   Realm: db08379969e45cea2edd1c3c0a090fe9e22d2d2f
   RealmSwift: cb11ad1c35e15dc982f2dbf5afe2a3124193a358
+  Result: dd3dd71af3fa2e262f1a999e14fba2c25ec14f16
   RxAlamofire: 250b7846cedbd189d6190e4f83caa01ee1f1eceb
   RxCocoa: 42efb7a7145a8d1d5878e94ce48a580d29e0c796
   RxSwift: b8a749f2204c6c7a5c29b306a9c3bc11d5b87c5b
   SwiftDate: 971f8b9394f664f2226b9c3ab64e801a7291c612
+  WebLinking: d5b5ab4f7305bcf29821deb5cecd775f6c37efae
   XLSwiftKit: 34ff733bc7b36608cfa9f8519fe3913f8da99967
 
 COCOAPODS: 0.39.0

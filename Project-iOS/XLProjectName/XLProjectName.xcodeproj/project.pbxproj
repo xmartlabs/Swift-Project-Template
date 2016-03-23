@@ -42,6 +42,7 @@
 		28D65F951C99D8AF008ED705 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D65F941C99D8AF008ED705 /* UIDevice.swift */; };
 		28FEB24C1C9875F60027D470 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FEB24B1C9875F60027D470 /* UIApplication.swift */; };
 		28FEB24E1C98BE840027D470 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FEB24D1C98BE840027D470 /* Device.swift */; };
+		549E41AC1CA2DE5D00AC1531 /* Alamofire+ObservableType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549E41AB1CA2DE5D00AC1531 /* Alamofire+ObservableType.swift */; };
 		6744CBE2C1D4F470FD70FAA5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE8DAF3DF9D8499BA58B7A /* Pods.framework */; };
 		B20183FA1C906CC5005E8176 /* Request+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20183F91C906CC5005E8176 /* Request+RxSwift.swift */; };
 		B23A40F01C972C2B004AB8DC /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23A40EF1C972C2B004AB8DC /* NSDate.swift */; };
@@ -109,6 +110,7 @@
 		28D65F941C99D8AF008ED705 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		28FEB24B1C9875F60027D470 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		28FEB24D1C98BE840027D470 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		549E41AB1CA2DE5D00AC1531 /* Alamofire+ObservableType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Alamofire+ObservableType.swift"; path = "Helpers/Alamofire/Alamofire+ObservableType.swift"; sourceTree = "<group>"; };
 		5B5428E1F88CA43202CA5CDD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5ED97A6C9BE0ABAD71732508 /* Pods-ui_tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ui_tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ui_tests/Pods-ui_tests.release.xcconfig"; sourceTree = "<group>"; };
 		683AAEDEA98454FC0952E65C /* Pods-unit_tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-unit_tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-unit_tests/Pods-unit_tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		283020AB1C8632C200E6EBC2 /* Alamofire */ = {
 			isa = PBXGroup;
 			children = (
+				549E41AB1CA2DE5D00AC1531 /* Alamofire+ObservableType.swift */,
 				283020B21C871B2600E6EBC2 /* ArgoResponseObject.swift */,
 				283020AE1C8633CE00E6EBC2 /* NetworkManager.swift */,
 				B20183F91C906CC5005E8176 /* Request+RxSwift.swift */,
@@ -702,6 +705,7 @@
 				283020B51C8728D100E6EBC2 /* NSData.swift in Sources */,
 				281BF1A31C7B8EEF00809E3F /* User.swift in Sources */,
 				2867E82B1C74C7D400FCEBBD /* AppDelegate.swift in Sources */,
+				549E41AC1CA2DE5D00AC1531 /* Alamofire+ObservableType.swift in Sources */,
 				28029C391CA0FB570017297C /* UIScrollView.swift in Sources */,
 				283020A91C86166A00E6EBC2 /* NSDateArgo.swift in Sources */,
 				28C282491C7798B0003ECA4F /* RepositoryModel.swift in Sources */,

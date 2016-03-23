@@ -28,7 +28,7 @@ extension PaginationRequestType {
     
     var method: Alamofire.Method { return route.method }
     var path: String { return route.path }
-    var parameters: [String: AnyObject]? { return route.parameters?.merge(["page": page]) }
+    //var parameters: [String: AnyObject]? { return route.parameters?.merge(["page": page]) }
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
 }
 
