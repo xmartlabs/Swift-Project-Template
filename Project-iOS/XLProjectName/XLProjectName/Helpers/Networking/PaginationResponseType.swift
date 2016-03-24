@@ -22,8 +22,12 @@ protocol PaginationResponseType {
 
 extension PaginationResponseType {
     
-    var hasPreviousPage: Bool { return previousPage != nil }
-    var hasNextPage: Bool { return nextPage != nil }
+    var hasPreviousPage: Bool {
+        return previousPage != nil
+    }
+    var hasNextPage: Bool {
+        return nextPage != nil
+    }
 }
 
 struct PaginationResponse<E: Decodable where E.DecodedType == E>: PaginationResponseType {
@@ -31,4 +35,5 @@ struct PaginationResponse<E: Decodable where E.DecodedType == E>: PaginationResp
     let elements: [E]
     var previousPage: String?
     var nextPage: String?
+    
 }

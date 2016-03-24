@@ -46,3 +46,5 @@ func DBLog(message: String, file: String = #file, line: Int = #line, function: S
 #endif
     // Nothing to do if not debugging
 }
+
+final class Route {}

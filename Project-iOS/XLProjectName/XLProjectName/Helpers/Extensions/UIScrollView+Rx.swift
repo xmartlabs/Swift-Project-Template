@@ -1,5 +1,5 @@
 //
-//  UIScrollView.swift
+//  UIScrollView+Rx.swift
 //  XLProjectName
 //
 //  Created by Xmartlabs SRL on 3/22/16. ( http://xmartlabs.com )

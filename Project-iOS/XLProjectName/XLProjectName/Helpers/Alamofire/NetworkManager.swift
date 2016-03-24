@@ -23,7 +23,7 @@ public class NetworkManager {
     }()
 
     static func request(URLRequest: URLRequestConvertible) -> Alamofire.Request {
-        let request = networkManager.request(URLRequest)
+        let request = networkManager.request(URLRequest).validate()
         DBLog(request.debugDescription)
         return request
     }
