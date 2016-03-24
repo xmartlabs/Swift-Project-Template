@@ -1,5 +1,5 @@
 //
-//  NetworkRouteType.swift
+//  RequestType.swift
 //  XLProjectName
 //
 //  Created by Xmartlabs SRL ( http://xmartlabs.com )
@@ -12,18 +12,18 @@ import RxAlamofire
 import RxSwift
 import Argo
 
-protocol RouteType: URLRequestConvertible {
+protocol RequestType: URLRequestConvertible {
     var method: Alamofire.Method { get }
     var path: String { get }
     var parameters: [String: AnyObject]? { get }
     var encoding: Alamofire.ParameterEncoding { get }
 }
 
-protocol CustomUrlRequestSetup {
-    func customUrlRequestSetup(urlRequest: NSMutableURLRequest)
+protocol URLRequestSetup {
+    func urlRequestSetup(urlRequest: NSMutableURLRequest)
 }
 
-extension RouteType {
+extension RequestType {
     
     var URLRequest: NSMutableURLRequest {
         let mutableURLRequest = NSMutableURLRequest(URL: Constants.Network.baseUrl.URLByAppendingPathComponent(path))
@@ -39,7 +39,7 @@ extension RouteType {
         //            request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
         //        }
         let urlRequest = encoding.encode(mutableURLRequest, parameters: parameters).0
-        (self as? CustomUrlRequestSetup)?.customUrlRequestSetup(urlRequest)
+        (self as? URLRequestSetup)?.urlRequestSetup(urlRequest)
         return urlRequest
     }
     
@@ -55,29 +55,8 @@ extension RouteType {
     var parameters: [String: AnyObject]? {
         return nil
     }
-    
-    func observe<T: Decodable where T == T.DecodedType>(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<T> {
-        return NetworkManager.request(self)
-            .validate()
-            .rx_object()
-            .observeOn(scheduler)
-            .doOnError(NetworkManager.generalErrorHandler)
+        
+    var request: Alamofire.Request {
+        return NetworkManager.request(URLRequest).validate()
     }
-    
-    func observe<T: Decodable where T == T.DecodedType>(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<[T]> {
-        return NetworkManager.request(self)
-            .validate()
-            .rx_objectCollection()
-            .observeOn(scheduler)
-            .doOnError(NetworkManager.generalErrorHandler)
-    }
-    
-    func observe(scheduler: ImmediateSchedulerType = MainScheduler.instance) -> Observable<AnyObject> {
-        return NetworkManager.request(self)
-            .validate()
-            .rx_anyObject()
-            .observeOn(scheduler)
-            .doOnError(NetworkManager.generalErrorHandler)
-    }
-
 }

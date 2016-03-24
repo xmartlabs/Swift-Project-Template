@@ -12,9 +12,8 @@ import AlamofireImage
 import RxSwift
 import RealmSwift
 
-let cellIdentifier = "cell"
-
 public class UserController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var emailLabel: UILabel!
@@ -23,12 +22,13 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var repositoriesButton: UIButton!
-    var user: User!
-    let rowHeight: CGFloat = 40.0
     
-    var followerImages = [String: UIImage]()
-
-    let disposeBag = DisposeBag()
+    var user: User!
+    
+    private let disposeBag = DisposeBag()
+    private var followerImages = [String: UIImage]()
+    private let cellIdentifier = "cell"
+    private let rowHeight: CGFloat = 40.0
     
     public override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +41,8 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
 //            return
 //        }
         
-        NetworkUser.Followers(username: user.username)
-            .observe()
+        Route.User.Followers(username: user.username).request
+            .rx_collection()
             .subscribeNext() { [weak self] (followers: [User]) in
                 self?.user.followers.removeAll()
                 self?.user.followers.appendContentsOf(followers)

@@ -2,7 +2,7 @@
 //  Alamofire+ObservableType.swift
 //  XLProjectName
 //
-//  Created by Diego Medina on 3/23/16.
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
 //  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import RxSwift
 extension ObservableType {
     
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func doOnError(onError: (NetworkError throws -> Void)) -> RxSwift.Observable<Self.E> {
+    public func doOnNetworkError(onError: (NetworkError throws -> Void)) -> Observable<E> {
         return self.doOnError() { error in
             guard let error = error as? NetworkError else { return }
             try onError(error)
@@ -20,13 +20,12 @@ extension ObservableType {
     }
     
     @warn_unused_result(message="http://git.io/rxs.uo")
-    public func doOnFinished(eventHandler: () throws -> Void) -> RxSwift.Observable<Self.E> {
+    public func doOnFinished(eventHandler: () throws -> Void) -> Observable<E> {
         return self.doOn { event in
             switch event {
-            case .Next(_): return
+            case .Next: return
             default: try eventHandler()
             }
         }
     }
-    
 }

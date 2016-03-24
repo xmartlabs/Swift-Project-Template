@@ -24,7 +24,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     
     private var disposeBag = DisposeBag()
     
-    init(route: RouteType, page: Int) {
+    init(route: RequestType, page: Int) {
         self.request = PaginationRequest(route: route, page: String(1))
         self.bindPaginationRequest(request, nextPage: nil)
     }
@@ -44,7 +44,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
                 } else {
                     return Observable.empty()
                 }
-        }
+            }
         
         let request = Observable
             .of(refreshRequest, nextPageRequest)
@@ -54,7 +54,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
         
         
         let response = request
-            .flatMap { $0.rx_paginationCollection() }
+            .flatMap { $0.rx_collection() }
             .shareReplay(1)
         
         Observable

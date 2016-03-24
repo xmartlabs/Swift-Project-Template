@@ -55,13 +55,13 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkUser.Login(username: username, password: password)
-            .observe()
+        Route.User.Login(username: username, password: password).request
+            .rx_object()
             .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
             }
-            .flatMap() { _ in
-                return NetworkUser.GetInfo(username: username).observe()
+            .flatMap() { (user: User) in
+                return Route.User.GetInfo(username: username).request.rx_object()
             }
             .subscribeNext() { [weak self] (user: User) in
                 self?.showError("Great", message: "You have been successfully logged in")
@@ -76,8 +76,8 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkRepository.GetInfo(owner: owner, repo: repo)
-            .observe()
+        Route.Repository.GetInfo(owner: owner, repo: repo).request
+            .rx_object()
             .doOnError() { [weak self] error in
                 self?.showError("Error", message: (error as NSError).localizedDescription)
             }
@@ -93,8 +93,8 @@ public class LoginController: UIViewController {
             return
         }
 
-        NetworkUser.GetInfo(username: user)
-            .observe()
+        Route.User.GetInfo(username: user).request
+            .rx_object()
             .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
             }

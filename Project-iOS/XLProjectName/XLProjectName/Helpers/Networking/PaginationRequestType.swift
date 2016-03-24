@@ -11,93 +11,60 @@ import Argo
 import Alamofire
 import RxSwift
 import Crashlytics
+import WebLinking
 
-protocol PaginationRequestType: RouteType {
+protocol PaginationRequestType: RequestType {
     
     associatedtype Response: PaginationResponseType
     
     var page: String { get }
-    var route: RouteType { get }
+    var route: RequestType { get }
     var pageSize: Int? { get }
     
     func routeWithPage(page: String) -> Self
-    init(route: RouteType, page: String)
+    init(route: RequestType, page: String)
 }
 
 extension PaginationRequestType {
     
     var method: Alamofire.Method { return route.method }
     var path: String { return route.path }
-    //var parameters: [String: AnyObject]? { return route.parameters?.merge(["page": page]) }
+    var parameters: [String: AnyObject]? {
+        var result = route.parameters ?? [:]
+        result["page"] = page
+        return result
+    }
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
 }
 
 extension PaginationRequestType where Response.Element.DecodedType == Response.Element {
     
-    func rx_paginationCollection() -> Observable<Response> {
-        return Observable.create { subscriber in
-            let request =  self.responsePaginationCollection() { (response: Alamofire.Response<Response, NSError>) in
-                switch response.result {
-                case .Failure(let error):
-                    subscriber.onError(error)
-                case .Success(let entity):
-                    subscriber.onNext(entity)
-                    subscriber.onCompleted()
-                    break
-                }
-            }
-            return AnonymousDisposable {
-                request.cancel()
-            }
-        }
+    func rx_collection() -> Observable<Response> {
+        let myRequest = request
+        return myRequest.rx_collection().map({ elements -> Response in
+            return Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue)
+        })
     }
     
-    func responsePaginationCollection(completionHandler: Alamofire.Response<Response, NSError> -> Void) -> Request {
-        let responseSerializer = ResponseSerializer<Response, NSError> { request, response, data, error in
-            guard error == nil else { return .Failure(error!) }
-            
-            let JSONSerializer = Request.JSONResponseSerializer(options: .AllowFragments)
-            let result = JSONSerializer.serializeResponse(request, response, data, error)
-            
-            switch result {
-            case .Success(let value):
-                if let _ = response {
-                    let json = JSONStringify(value)
-                    print(json)
-                    if let representation = value as? [[String: AnyObject]] {
-                        var result = Array<Response.Element>()
-                        for userRepresentation in representation {
-                            let decodedData = Response.Element.decode(JSON.parse(userRepresentation))
-                            
-                            
-                            
-                            switch decodedData {
-                            case let .Failure(argoError):
-                                let nsError = Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description)
-                                Crashlytics.sharedInstance().recordError(nsError, withAdditionalUserInfo: ["json": json])
-                                return .Failure(nsError)
-                            case let .Success(object):
-                                result.append(object)
-                            }
-                        }
-                        let resp = Response.init(elements: result, previousPage: "", nextPage: "")
-                        return .Success(resp)
-                    }
-                    let failureReason = "Response collection could not be serialized due to nil array"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                    return .Failure(error)
-                } else {
-                    let failureReason = "Response collection could not be serialized due to nil response"
-                    let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                    return .Failure(error)
-                }
+
+    private func responseCollection(completionHandler: Alamofire.Response<Response, NetworkError> -> Void) -> Request {
+        let myRequest = self.request
+        myRequest.responseCollection { (response: Alamofire.Response<[Response.Element], NetworkError>) in
+            switch response.result {
             case .Failure(let error):
-                return .Failure(error)
+                completionHandler(Alamofire.Response(request: myRequest.request,
+                                                    response: myRequest.response,
+                                                        data: response.data,
+                                                      result: .Failure(error)))
+            case .Success(let elements):
+                completionHandler(Alamofire.Response(request: myRequest.request,
+                                                    response: myRequest.response,
+                                                        data: response.data,
+                                                      result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue))))
             }
         }
-        return NetworkManager.request(self).response(responseSerializer: responseSerializer, completionHandler: completionHandler)
+        return myRequest
     }
-
 }
 
 struct PaginationRequest<Element: Decodable where Element.DecodedType == Element>: PaginationRequestType {
@@ -106,9 +73,9 @@ struct PaginationRequest<Element: Decodable where Element.DecodedType == Element
     
     var page: String
     var pageSize: Int?
-    var route: RouteType
+    var route: RequestType
     
-    init(route: RouteType, page: String) {
+    init(route: RequestType, page: String) {
         self.route = route
         self.page = page
     }

@@ -9,22 +9,25 @@
 import Foundation
 import Alamofire
 
-enum NetworkRepository: RouteType {
+extension Route {
     
-    case GetInfo(owner: String, repo: String)
+    enum Repository: RequestType {
+        
+        case GetInfo(owner: String, repo: String)
 
-    var method: Alamofire.Method {
-        switch self {
-        case .GetInfo:
-            return .GET
+        var method: Alamofire.Method {
+            switch self {
+            case .GetInfo:
+                return .GET
+            }
         }
-    }
-    
-    var path: String {
-        switch self {
-        case let .GetInfo(owner, repo):
-            return "repos/\(owner)/\(repo)"
+        
+        var path: String {
+            switch self {
+            case let .GetInfo(owner, repo):
+                return "repos/\(owner)/\(repo)"
+            }
         }
-    }
 
+    }
 }
