@@ -12,10 +12,10 @@ import Alamofire
 
 public enum NetworkError: ErrorType {
     
-    case Networking(error: NSError, code: Error.Code, request: NSURLRequest?, response: NSHTTPURLResponse?, json: AnyObject?)
+    case Networking(error: NSError, code: Int, request: NSURLRequest?, response: NSHTTPURLResponse?, json: AnyObject?)
     case Parsing(error: DecodeError, request: NSURLRequest?, response: NSHTTPURLResponse?, json: AnyObject?)
     
     static func networkingError(alamofireError: NSError, request: NSURLRequest?, response: NSHTTPURLResponse? = nil, json: AnyObject? = nil) -> NetworkError {
-        return NetworkError.Networking(error: alamofireError, code: Error.Code(rawValue: alamofireError.code)!, request: request, response: response, json: json)
+        return NetworkError.Networking(error: alamofireError, code: alamofireError.code, request: request, response: response, json: json)
     }
 }

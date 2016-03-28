@@ -24,7 +24,7 @@ public class NetworkManager {
 
     static func request(URLRequest: URLRequestConvertible) -> Alamofire.Request {
         let request = networkManager.request(URLRequest).validate()
-        DBLog(request.debugDescription)
+        DEBUGLog(request.debugDescription)
         return request
     }
     
@@ -35,7 +35,7 @@ public class NetworkManager {
         encoding: ParameterEncoding = .URL,
         headers: [String: String]? = nil) -> Alamofire.Request {
         let request = networkManager.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers)
-        DBLog(request.debugDescription)
+        DEBUGLog(request.debugDescription)
         return request
     }
     
@@ -45,14 +45,14 @@ public class NetworkManager {
 
         if nserror.code == NSURLErrorNotConnectedToInternet {
             // No internet connection, do something
-            DBLog("No internet access")
+            DEBUGLog("No internet access")
         } else if nserror.domain == Alamofire.Error.Domain {
             if nserror.code == Alamofire.Error.Code.StatusCodeValidationFailed.rawValue {
                 // HTTP status code error (401, 404, etc)
-                DBLog("Service error")
+                DEBUGLog("Service error")
             } else {
                 // Some error with the response
-                DBLog("Response error")
+                DEBUGLog("Response error")
             }
         }
         

@@ -13,20 +13,36 @@ import RxSwift
 
 class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
     
-    let request: PaginationRequest<Element>
+    var request: PaginationRequest<Element>
     
     let refreshTrigger = PublishSubject<Void>()
     let loadNextPageTrigger = PublishSubject<Void>()
-    
+    let queryTrigger = PublishSubject<String>()
     let hasNextPage = Variable<Bool>(false)
     let loading = Variable<Bool>(false)
     let elements = Variable<[Element]>([])
     
     private var disposeBag = DisposeBag()
+    private let queryDisposeBag = DisposeBag()
     
-    init(route: RequestType, page: Int) {
-        self.request = PaginationRequest(route: route, page: String(1))
-        self.bindPaginationRequest(request, nextPage: nil)
+    init(route: RequestType, page: String = "1", query: String = "") {
+        request = PaginationRequest(route: route, page: page, query: query)
+        bindPaginationRequest(request, nextPage: nil)
+        setUpQueryObserver()
+    }
+    
+    private func setUpQueryObserver() {
+        queryTrigger
+            .throttle(0.25, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .doOnNext { [weak self] queryString in
+                guard let mySelf = self else { return }
+                mySelf.bindPaginationRequest(mySelf.request.routeWithQuery(queryString), nextPage: nil)
+            }
+            .map { _ in () }
+            .bindTo(refreshTrigger)
+            .addDisposableTo(queryDisposeBag)
+    
     }
     
     private func bindPaginationRequest(paginationRequest: PaginationRequest<Element>, nextPage: String?) {
@@ -34,7 +50,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
         
         let refreshRequest = refreshTrigger
             .take(1)
-            .map { PaginationRequest<Element>(route: paginationRequest.route, page: String(1)) }
+            .map { paginationRequest.routeWithPage("1") }
         
         let nextPageRequest = loadNextPageTrigger
             .take(1)
@@ -51,7 +67,6 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
             .merge()
             .take(1)
             .shareReplay(1)
-        
         
         let response = request
             .flatMap { $0.rx_collection() }

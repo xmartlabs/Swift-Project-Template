@@ -18,11 +18,12 @@ protocol PaginationRequestType: RequestType {
     associatedtype Response: PaginationResponseType
     
     var page: String { get }
+    var query: String { get }
     var route: RequestType { get }
     var pageSize: Int? { get }
     
     func routeWithPage(page: String) -> Self
-    init(route: RequestType, page: String)
+    init(route: RequestType, query: String, page: String)
 }
 
 extension PaginationRequestType {
@@ -32,6 +33,9 @@ extension PaginationRequestType {
     var parameters: [String: AnyObject]? {
         var result = route.parameters ?? [:]
         result["page"] = page
+        if query != "" {
+            result["q"] = query
+        }
         return result
     }
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
@@ -72,15 +76,22 @@ struct PaginationRequest<Element: Decodable where Element.DecodedType == Element
     typealias Response = PaginationResponse<Element>
     
     var page: String
-    var pageSize: Int?
+    var query: String
     var route: RequestType
     
-    init(route: RequestType, page: String) {
+    var pageSize: Int?
+    
+    init(route: RequestType, query: String = "", page: String = "1") {
         self.route = route
         self.page = page
+        self.query = query
     }
     
     func routeWithPage(page: String) -> PaginationRequest<Element> {
-        return PaginationRequest(route: route, page: page)
+        return PaginationRequest(route: route, page: page, query: query)
+    }
+    
+    func routeWithQuery(query: String) -> PaginationRequest<Element> {
+        return PaginationRequest(route: route, page: page, query: query)
     }
 }

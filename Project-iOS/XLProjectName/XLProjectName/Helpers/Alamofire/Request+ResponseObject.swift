@@ -16,8 +16,7 @@ extension Request {
     public func responseObject<T: Decodable where T == T.DecodedType>(completionHandler: Response<T, NetworkError> -> Void) -> Self {
         let responseSerializer = ResponseSerializer<T, NetworkError> { request, response, data, error in
             return Request.serialize(request, response: response, data: data, error: error) { result, value in
-                let json = JSONStringify(value)
-                print(json)
+                DEBUGJson(value)
                 let decodedData = T.decode(result.value != nil ? JSON.parse(result.value!) : JSON.Null)
                 switch decodedData {
                 case let .Failure(argoError):
@@ -35,15 +34,14 @@ extension Request {
         let responseSerializer = ResponseSerializer<[T], NetworkError> { request, response, data, error in
             return Request.serialize(request, response: response, data: data, error: error) { result, value in
                 if let representation = value as? [[String: AnyObject]] {
-                    let json = JSONStringify(value)
-                    print(json)
+                    DEBUGJson(value)
                     var result = [T]()
                     for userRepresentation in representation {
                         let decodedData = T.decode(JSON.parse(userRepresentation))
                         
                         switch decodedData {
                         case let .Failure(argoError):
-                            Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description), withAdditionalUserInfo: ["json": json])
+                            Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description), withAdditionalUserInfo: ["json": JSONStringify(value)])
                             return .Failure(NetworkError.Parsing(error: argoError, request: request, response: response, json: data))
                         case let .Success(object):
                             result.append(object)
