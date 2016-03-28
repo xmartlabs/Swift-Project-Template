@@ -16,7 +16,7 @@ class RepositoriesController: XLTableViewController {
     var user: User!
     
     lazy var viewModel: PaginationViewModel<Repository>  = { [unowned self] in
-        return PaginationViewModel(route: Route.User.Repositories(username: self.user.username), page: 1)
+        return PaginationViewModel(route: Route.User.Repositories(username: self.user.username))
     }()
     
     
@@ -41,6 +41,10 @@ class RepositoriesController: XLTableViewController {
                 cell.textLabel?.text = repository.name
                 cell.detailTextLabel?.text = "🌟\(repository.stargazersCount)"
             }
+            .addDisposableTo(disposeBag)
+        
+        searchBar.rx_text
+            .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
     }
 

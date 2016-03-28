@@ -35,16 +35,25 @@ struct Constants {
     
     struct Debug {
         static let crashlytics = false
+        static let jsonResponse = false
     }
 }
 
-func DBLog(message: String, file: String = #file, line: Int = #line, function: String = #function) {
+func DEBUGLog(message: String, file: String = #file, line: Int = #line, function: String = #function) {
 #if DEBUG
     let fileURL = NSURL(fileURLWithPath: file)
     let fileName = fileURL.URLByDeletingPathExtension?.lastPathComponent ?? ""
     print("\(NSDate().dblog()) \(fileName)::\(function)[L:\(line)] \(message)")
 #endif
     // Nothing to do if not debugging
+}
+
+func DEBUGJson(value: AnyObject) {
+#if DEBUG
+    if Constants.Debug.jsonResponse {
+        print(JSONStringify(value))
+    }
+#endif
 }
 
 final class Route {}
