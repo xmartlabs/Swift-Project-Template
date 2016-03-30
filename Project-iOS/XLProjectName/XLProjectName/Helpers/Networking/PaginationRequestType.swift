@@ -45,14 +45,16 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
     
     func rx_collection() -> Observable<Response> {
         let myRequest = request
+        let myPage = page
         return myRequest.rx_collection().map({ elements -> Response in
-            return Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue)
+            return Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage)
         })
     }
     
 
     private func responseCollection(completionHandler: Alamofire.Response<Response, NetworkError> -> Void) -> Request {
-        let myRequest = self.request
+        let myRequest = request
+        let myPage = page
         myRequest.responseCollection { (response: Alamofire.Response<[Response.Element], NetworkError>) in
             switch response.result {
             case .Failure(let error):
@@ -64,7 +66,7 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
                 completionHandler(Alamofire.Response(request: myRequest.request,
                                                     response: myRequest.response,
                                                         data: response.data,
-                                                      result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue))))
+                    result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage))))
             }
         }
         return myRequest

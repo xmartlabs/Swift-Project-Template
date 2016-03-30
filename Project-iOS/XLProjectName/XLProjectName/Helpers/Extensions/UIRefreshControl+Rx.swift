@@ -11,10 +11,9 @@ import RxSwift
 import RxCocoa
 import UIKit
 
-extension UIRefreshControl {
+extension UIControl {
     
     var rx_valueChanged: ControlEvent<Void> {
         return rx_controlEvent(.ValueChanged)
     }
-    
 }
