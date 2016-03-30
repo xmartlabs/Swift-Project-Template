@@ -46,6 +46,17 @@ class RepositoriesController: XLTableViewController {
         searchBar.rx_text
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.rx_valueChanged
+            .filter { refreshControl.refreshing }
+            .bindTo(viewModel.refreshOnFinishTrigger)
+            .addDisposableTo(disposeBag)
+        tableView.addSubview(refreshControl)
+        viewModel.finishLoading
+            .asObservable()
+            .subscribeNext { refreshControl.endRefreshing() }
+            .addDisposableTo(disposeBag)
     }
 
 }

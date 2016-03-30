@@ -15,9 +15,14 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     
     var request: PaginationRequest<Element>
     
+    let forceRefreshTrigger = PublishSubject<Void>()
     let refreshTrigger = PublishSubject<Void>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
+
+    let refreshOnFinishTrigger = PublishSubject<Void>()
+    let finishLoading = Variable<Void>()
+    
     let hasNextPage = Variable<Bool>(false)
     let loading = Variable<Bool>(false)
     let elements = Variable<[Element]>([])
@@ -42,15 +47,24 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
             .map { _ in () }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
-    
     }
     
     private func bindPaginationRequest(paginationRequest: PaginationRequest<Element>, nextPage: String?) {
         disposeBag = DisposeBag()
         
+        forceRefreshTrigger
+            .doOnNext { paginationRequest.routeWithPage("1") }
+            .bindTo(refreshTrigger)
+            .addDisposableTo(disposeBag)
+        
+        refreshOnFinishTrigger
+            .doOnNext { paginationRequest.routeWithPage("1") }
+            .bindTo(refreshTrigger)
+            .addDisposableTo(disposeBag)
+        
         let refreshRequest = refreshTrigger
             .take(1)
-            .map { paginationRequest.routeWithPage("1") }
+            .map { paginationRequest.routeWithPage(paginationRequest.page) }
         
         let nextPageRequest = loadNextPageTrigger
             .take(1)
@@ -81,6 +95,15 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
             .bindTo(loading)
             .addDisposableTo(disposeBag)
         
+        Observable
+            .of(
+                refreshOnFinishTrigger.asObservable().map { _ in },
+                response.map { _ in }
+            )
+            .merge()
+            .bindTo(finishLoading)
+            .addDisposableTo(disposeBag)
+                
         Observable
             .combineLatest(elements.asObservable(), response) { elements, response in
                 return response.hasPreviousPage

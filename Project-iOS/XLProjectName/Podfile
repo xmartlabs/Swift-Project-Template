@@ -14,7 +14,7 @@ pod 'Argo', '~> 2.0'
 pod 'KeychainAccess', '~> 2.0'
 pod 'AsyncSwift', '~> 1.0'
 pod 'DynamicColor', '~> 2.0'
-#pod 'Eureka', '~> 1.0'
+pod 'Eureka', '~> 1.5’
 pod 'RxAlamofire', '~> 2.2'
 pod 'RxCocoa', '~> 2.0'
 pod 'RxSwift', '~> 2.0'
