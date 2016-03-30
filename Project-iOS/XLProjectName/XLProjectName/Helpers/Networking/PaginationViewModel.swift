@@ -14,12 +14,14 @@ import RxSwift
 class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
     
     var request: PaginationRequest<Element>
+    typealias LoadingType = (Bool, String)
     
-    let refreshTrigger = PublishSubject<Void>()
+    let refreshTrigger = PublishSubject<Bool>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
+
     let hasNextPage = Variable<Bool>(false)
-    let loading = Variable<Bool>(false)
+    let fullloading = Variable<LoadingType>((false, "1"))
     let elements = Variable<[Element]>([])
     
     private var disposeBag = DisposeBag()
@@ -28,10 +30,10 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     init(route: RequestType, page: String = "1", query: String = "") {
         request = PaginationRequest(route: route, page: page, query: query)
         bindPaginationRequest(request, nextPage: nil)
-        setUpQueryObserver()
+        setUpForceRefresh()
     }
     
-    private func setUpQueryObserver() {
+    private func setUpForceRefresh() {
         queryTrigger
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -39,28 +41,30 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
                 guard let mySelf = self else { return }
                 mySelf.bindPaginationRequest(mySelf.request.routeWithQuery(queryString), nextPage: nil)
             }
-            .map { _ in () }
+            .map { _ in false }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
-    
+        
+        refreshTrigger.filter { $0 == true }
+            .doOnNext { [weak self] queryString in
+                guard let mySelf = self else { return }
+                mySelf.bindPaginationRequest(mySelf.request.routeWithPage("1"), nextPage: nil)
+            }
+            .map { _ in false }
+            .bindTo(refreshTrigger)
+            .addDisposableTo(queryDisposeBag)
     }
     
     private func bindPaginationRequest(paginationRequest: PaginationRequest<Element>, nextPage: String?) {
         disposeBag = DisposeBag()
         
-        let refreshRequest = refreshTrigger
+        let refreshRequest = refreshTrigger.filter { $0 == false }
             .take(1)
-            .map { paginationRequest.routeWithPage("1") }
+            .map { _ in paginationRequest.routeWithPage(paginationRequest.page) }
         
         let nextPageRequest = loadNextPageTrigger
             .take(1)
-            .flatMap { () -> Observable<PaginationRequest<Element>> in
-                if let page = nextPage {
-                    return Observable.of(paginationRequest.routeWithPage(page))
-                } else {
-                    return Observable.empty()
-                }
-            }
+            .flatMap { nextPage.map { Observable.of(paginationRequest.routeWithPage($0)) } ?? Observable.empty() }
         
         let request = Observable
             .of(refreshRequest, nextPageRequest)
@@ -74,13 +78,13 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
         
         Observable
             .of(
-                request.map { _ in true },
-                response.map { _ in false }
+                request.map { (true, $0.page) },
+                response.map { (false, $0.page ?? "1") }
             )
             .merge()
-            .bindTo(loading)
+            .bindTo(fullloading)
             .addDisposableTo(disposeBag)
-        
+                
         Observable
             .combineLatest(elements.asObservable(), response) { elements, response in
                 return response.hasPreviousPage
@@ -101,5 +105,16 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
                 self?.bindPaginationRequest(paginationRequest, nextPage: paginationResponse.nextPage)
             }
             .addDisposableTo(disposeBag)
+    }
+}
+
+extension PaginationViewModel {
+    
+    var loading: Observable<Bool> {
+        return fullloading.asObservable().map { $0.0 }
+    }
+    
+    var firstPageLoading: Observable<Bool> {
+        return fullloading.asObservable().filter { $0.1 == "1" }.map { $0.0 }
     }
 }

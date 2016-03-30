@@ -24,7 +24,7 @@ class RepositoriesController: XLTableViewController {
         super.viewDidLoad()
         
         rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
-            .map { _ in () }
+            .map { _ in false }
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
         
@@ -32,7 +32,7 @@ class RepositoriesController: XLTableViewController {
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
         
-        viewModel.loading.asDriver()
+        viewModel.loading.asDriver(onErrorJustReturn: false)
             .drive(activityIndicatorView.rx_animating)
             .addDisposableTo(disposeBag)
         
@@ -46,6 +46,16 @@ class RepositoriesController: XLTableViewController {
         searchBar.rx_text
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.rx_valueChanged
+            .filter { refreshControl.refreshing }
+            .map { false }
+            .bindTo(viewModel.refreshTrigger)
+            .addDisposableTo(disposeBag)
+        tableView.addSubview(refreshControl)
+        viewModel.firstPageLoading.filter { $0 == false && refreshControl.refreshing }
+            .subscribeNext { _ in refreshControl.endRefreshing() }
+            .addDisposableTo(disposeBag)
     }
-
 }

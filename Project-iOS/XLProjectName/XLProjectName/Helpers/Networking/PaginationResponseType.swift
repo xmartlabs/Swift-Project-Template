@@ -17,7 +17,7 @@ protocol PaginationResponseType {
     var previousPage: String? { get }
     var nextPage: String? { get }
     
-    init(elements: [Element], previousPage: String?, nextPage: String?)
+    init(elements: [Element], previousPage: String?, nextPage: String?, page: String?)
 }
 
 extension PaginationResponseType {
@@ -35,5 +35,5 @@ struct PaginationResponse<E: Decodable where E.DecodedType == E>: PaginationResp
     let elements: [E]
     var previousPage: String?
     var nextPage: String?
-    
+    var page: String?
 }
