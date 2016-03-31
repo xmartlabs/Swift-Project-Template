@@ -20,6 +20,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     let refreshTrigger = PublishSubject<Bool>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
+    let networkErrorTrigger = PublishSubject<NetworkError>()
 
     let hasNextPage = Variable<Bool>(false)
     let fullloading = Variable<LoadingType>((false, "1"))
@@ -75,6 +76,10 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
         
         let response = request
             .flatMap { $0.rx_collection() }
+            .doOnNetworkError { [weak self] error throws in
+                guard let mySelf = self else { return }
+                Observable.just(error).bindTo(mySelf.networkErrorTrigger).addDisposableTo(mySelf.disposeBag)
+            }
             .shareReplay(1)
         
         Observable
