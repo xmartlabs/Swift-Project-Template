@@ -21,7 +21,6 @@
 		283020B11C866BA700E6EBC2 /* JSONStringify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020B01C866BA700E6EBC2 /* JSONStringify.swift */; };
 		283020B31C871B2600E6EBC2 /* Request+ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020B21C871B2600E6EBC2 /* Request+ResponseObject.swift */; };
 		283020B51C8728D100E6EBC2 /* NSData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020B41C8728D100E6EBC2 /* NSData.swift */; };
-		283A74511C84DF2A00E23F88 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2823A1C7797BA003ECA4F /* LoginController.swift */; };
 		283A74581C85FA2F00E23F88 /* NSURL+Argo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A74571C85FA2F00E23F88 /* NSURL+Argo.swift */; };
 		2859C1BE1CA03E7100D598B7 /* PaginationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859C1BD1CA03E7100D598B7 /* PaginationViewModel.swift */; };
 		2859C1C01CA03FF200D598B7 /* PaginationRequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2859C1BF1CA03FF200D598B7 /* PaginationRequestType.swift */; };
@@ -49,6 +48,7 @@
 		6744CBE2C1D4F470FD70FAA5 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5CE8DAF3DF9D8499BA58B7A /* Pods.framework */; };
 		B20183FA1C906CC5005E8176 /* Request+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20183F91C906CC5005E8176 /* Request+Rx.swift */; };
 		B23A40F01C972C2B004AB8DC /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23A40EF1C972C2B004AB8DC /* NSDate.swift */; };
+		D2865CE61CAEDFA200D1E45D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2865CE51CAEDFA200D1E45D /* LoginController.swift */; };
 		E146537A090BC533432D73CC /* Pods_ui_tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81D1F36300BEF455B87151D4 /* Pods_ui_tests.framework */; };
 		F10713EA601AEDE0853ADCE1 /* Pods_unit_tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B825ECE73F7CC1058884D69 /* Pods_unit_tests.framework */; };
 /* End PBXBuildFile section */
@@ -104,7 +104,6 @@
 		2867E84A1C74C7D400FCEBBD /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
 		2867E84C1C74C7D400FCEBBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28809F271CA3402B00EA7BBF /* NSHTTPURLResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSHTTPURLResponse.swift; sourceTree = "<group>"; };
-		28C2823A1C7797BA003ECA4F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Controllers/LoginController.swift; sourceTree = "<group>"; };
 		28C2823B1C7797BA003ECA4F /* RepositoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryController.swift; path = Controllers/RepositoryController.swift; sourceTree = "<group>"; };
 		28C2823C1C7797BA003ECA4F /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserController.swift; path = Controllers/UserController.swift; sourceTree = "<group>"; };
 		28C282401C7797CA003ECA4F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Helpers/Constants.swift; sourceTree = "<group>"; };
@@ -126,6 +125,7 @@
 		A72B8BD70ACBADB61E8DCC94 /* Pods-ui_tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ui_tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ui_tests/Pods-ui_tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B20183F91C906CC5005E8176 /* Request+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Request+Rx.swift"; path = "Helpers/Alamofire/Request+Rx.swift"; sourceTree = "<group>"; };
 		B23A40EF1C972C2B004AB8DC /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
+		D2865CE51CAEDFA200D1E45D /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Controllers/LoginController.swift; sourceTree = "<group>"; };
 		F5CE8DAF3DF9D8499BA58B7A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -317,7 +317,7 @@
 		28C282391C7795DB003ECA4F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				28C2823A1C7797BA003ECA4F /* LoginController.swift */,
+				D2865CE51CAEDFA200D1E45D /* LoginController.swift */,
 				28C2823B1C7797BA003ECA4F /* RepositoryController.swift */,
 				28C2823C1C7797BA003ECA4F /* UserController.swift */,
 				282D1ECF1CA053EF001C7B8F /* RepositoriesController.swift */,
@@ -696,7 +696,6 @@
 				2817316B1C9C4BDA006237C7 /* XLTableViewController.swift in Sources */,
 				28C2823E1C7797BA003ECA4F /* RepositoryController.swift in Sources */,
 				28D65F951C99D8AF008ED705 /* UIDevice.swift in Sources */,
-				283A74511C84DF2A00E23F88 /* LoginController.swift in Sources */,
 				2859C1BE1CA03E7100D598B7 /* PaginationViewModel.swift in Sources */,
 				2859C1C01CA03FF200D598B7 /* PaginationRequestType.swift in Sources */,
 				281731631C9B3AD8006237C7 /* RealmCollectionType+Argo.swift in Sources */,
@@ -722,6 +721,7 @@
 				283020A91C86166A00E6EBC2 /* NSDate+Argo.swift in Sources */,
 				28C282491C7798B0003ECA4F /* RepositoryModel.swift in Sources */,
 				28C282441C7797CA003ECA4F /* Constants.swift in Sources */,
+				D2865CE61CAEDFA200D1E45D /* LoginController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

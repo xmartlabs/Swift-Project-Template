@@ -1,44 +1,83 @@
 //
-//  LoginController.swift
+//  MainViewController.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL ( http://xmartlabs.com )
-//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
+//  Created by Federico Ojeda on 3/31/16.
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
 import RxSwift
 import XLSwiftKit
+import Eureka
 
-public class LoginController: UIViewController {
-    
-// MARK: - Outlets
-    
-    // TextFields
-    @IBOutlet weak var usernameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var organizationTextField: UITextField!
-    @IBOutlet weak var repositoryTextField: UITextField!
-    @IBOutlet weak var userToSeeTextField: UITextField!
-    // Butttons
-    @IBOutlet weak var logInButton: UIButton!
-    @IBOutlet weak var seeRepoButton: UIButton!
-    @IBOutlet weak var seeProfileButton: UIButton!
-    
+class LoginController: FormViewController {
+
+    private struct RowTags {
+        static let LogInUsername = "log in username"
+        static let LogInPassword = "log in password"
+        static let RepoOwner = "see repository owner"
+        static let RepoName = "see repository name"
+        static let SeeProfileUsername = "see profile username"
+    }
     
     let disposeBag = DisposeBag()
     
-// MARK: - Life cycle & iOS Framework invocations
-    
-    public override func viewDidLoad() {
+    override func viewDidLoad() {
         super.viewDidLoad()
-        passwordTextField.secureTextEntry = true
-        logInButton.addTarget(self, action: #selector(LoginController.loginTapped(_:)), forControlEvents: .TouchUpInside)
-        seeRepoButton.addTarget(self, action: #selector(LoginController.seeRepoTapped(_:)), forControlEvents: .TouchUpInside)
-        seeProfileButton.addTarget(self, action: #selector(LoginController.seeProfileTapped(_:)), forControlEvents: .TouchUpInside)
+        setUpSections()
+    }
+
+    private func setUpSections() {
+        form +++ Section(header: "Advanced usage", footer: "Please enter your credentials for advanced usage")
+                <<< NameRow() {
+                    $0.title = "Username:"
+                    $0.placeholder = "insert username here.."
+                    $0.tag = RowTags.LogInUsername
+                }
+                <<< PasswordRow() {
+                    $0.title = "Password:"
+                    $0.placeholder = "insert password here.."
+                    $0.tag = RowTags.LogInPassword
+                }
+                <<< ButtonRow() {
+                    $0.title = "Log in"
+                    }
+                    .onCellSelection { [weak self] _,_ in
+                        self?.loginTapped()
+                    }
+            +++ Section(header: "Repositories", footer: "Enter repository url")
+                <<< NameRow() {
+                    $0.title = "User:"
+                    $0.placeholder = "Xmartlabs"
+                    $0.tag = RowTags.RepoOwner
+                }
+                <<< NameRow() {
+                    $0.title = "Repository:"
+                    $0.placeholder = "Eureka"
+                    $0.tag = RowTags.RepoName
+                }
+                <<< ButtonRow() {
+                    $0.title = "See repo"
+                    }
+                    .onCellSelection { [weak self] _,_ in
+                        self?.seeRepoTapped()
+                    }
+            +++ Section(header: "Github users", footer: "Enter a github username to see its repositories")
+                <<< NameRow() {
+                    $0.title = "Username:"
+                    $0.placeholder = "Xmartlabs"
+                    $0.tag = RowTags.SeeProfileUsername
+                }
+                <<< ButtonRow() {
+                    $0.title = "See profile"
+                }
+                .onCellSelection { [weak self] _,_ in
+                   self?.seeProfileTapped()
+                }
     }
     
-    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         super.prepareForSegue(segue, sender: sender)
         if let destinationVC = segue.destinationViewController as? UserController {
             destinationVC.user = sender as? User
@@ -47,14 +86,28 @@ public class LoginController: UIViewController {
         }
     }
     
-// MARK: - Actions
+    private func getTextFromRow(tag: String) -> String? {
+        let textRow : NameRow = form.rowByTag(tag)!
+        let textEntered = textRow.cell.textField.text
+        return textEntered
+    }
     
-    func loginTapped(sender: UIButton) {
-        guard let username = usernameTextField.text, let password = passwordTextField.text where !username.isEmpty && !password.isEmpty else {
+    private func getPasswordFromRow(tag: String) -> String? {
+        let textRow : PasswordRow = form.rowByTag(tag)!
+        let textEntered = textRow.cell.textField.text
+        return textEntered
+    }
+    
+    // MARK: - Actions
+    
+    func loginTapped() {
+        let writtenUsername = getTextFromRow(RowTags.LogInUsername)
+        let writtenPassword = getPasswordFromRow(RowTags.LogInPassword)
+        guard let username = writtenUsername, let password = writtenPassword where !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password")
             return
         }
-
+        
         Route.User.Login(username: username, password: password).request
             .rx_anyObject()
             .doOnError() { [weak self] error in
@@ -69,13 +122,14 @@ public class LoginController: UIViewController {
             .addDisposableTo(disposeBag)
     }
     
-    func seeRepoTapped(sender: UIButton) {
-        //validate
-        guard let repo = repositoryTextField.text, let owner = organizationTextField.text where !repo.isEmpty && !owner.isEmpty else {
+    func seeRepoTapped() {
+        let writtenOwner = getTextFromRow(RowTags.RepoOwner)
+        let writtenRepo = getTextFromRow(RowTags.RepoName)
+        guard let repo = writtenRepo, let owner = writtenOwner where !repo.isEmpty && !owner.isEmpty else {
             showError("Please enter the repository and organization name")
             return
         }
-
+        
         Route.Repository.GetInfo(owner: owner, repo: repo).request
             .rx_object()
             .doOnError() { [weak self] error in
@@ -87,12 +141,13 @@ public class LoginController: UIViewController {
             .addDisposableTo(disposeBag)
     }
     
-    func seeProfileTapped(sender: AnyObject) {
-        guard let user = userToSeeTextField.text where !user.isEmpty else {
+    func seeProfileTapped() {
+        let writtenUsername = getTextFromRow(RowTags.SeeProfileUsername)
+        guard let user = writtenUsername where !user.isEmpty else {
             showError("Please enter the username")
             return
         }
-
+        
         Route.User.GetInfo(username: user).request
             .rx_object()
             .doOnError() { [weak self] _ in
@@ -103,5 +158,4 @@ public class LoginController: UIViewController {
             }
             .addDisposableTo(disposeBag)
     }
-
 }
