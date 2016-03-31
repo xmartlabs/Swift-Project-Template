@@ -56,11 +56,11 @@ public class LoginController: UIViewController {
         }
 
         Route.User.Login(username: username, password: password).request
-            .rx_object()
-            .doOnError() { [weak self] _ in
-                self?.showError("Error", message: "Sorry user login does not work correctly")
+            .rx_anyObject()
+            .doOnError() { [weak self] error in
+                 self?.showError("Error", message: (error as? NetworkError).debugDescription ?? "Sorry user login does not work correctly")
             }
-            .flatMap() { (user: User) in
+            .flatMap() { _ in
                 return Route.User.GetInfo(username: username).request.rx_object()
             }
             .subscribeNext() { [weak self] (user: User) in

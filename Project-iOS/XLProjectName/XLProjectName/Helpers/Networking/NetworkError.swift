@@ -18,4 +18,18 @@ public enum NetworkError: ErrorType {
     static func networkingError(alamofireError: NSError, request: NSURLRequest?, response: NSHTTPURLResponse? = nil, json: AnyObject? = nil) -> NetworkError {
         return NetworkError.Networking(error: alamofireError, code: alamofireError.code, request: request, response: response, json: json)
     }
+    
+}
+
+extension NetworkError : CustomDebugStringConvertible {
+
+    public var debugDescription: String {
+        switch self {
+        case .Networking(let error, let code, _, _, let json):
+            return "\(error.debugDescription) Code: \(code) \(json.map { JSONStringify($0)} ?? "")"
+        case .Parsing(let decodedError, _, _, let json):
+            return "\(decodedError.description) \(json.map { JSONStringify($0)} ?? "")"
+        }
+    }
+
 }
