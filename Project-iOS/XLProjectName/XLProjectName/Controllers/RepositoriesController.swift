@@ -57,5 +57,24 @@ class RepositoriesController: XLTableViewController {
         viewModel.firstPageLoading.filter { $0 == false && refreshControl.refreshing }
             .subscribeNext { _ in refreshControl.endRefreshing() }
             .addDisposableTo(disposeBag)
+        
+        viewModel.emptyState.filter { $0 }
+            .subscribeNext { [weak self] _ in
+                self?.showAlertViewForEmptyState()
+            }
+            .addDisposableTo(disposeBag)
     }
+    
+    @IBAction func clearData(sender: AnyObject) {
+        Observable.just([]).bindTo(viewModel.elements).addDisposableTo(disposeBag)
+    }
+    
+    private func showAlertViewForEmptyState() {
+        let alert = UIAlertController(title: "Error", message: "No repositories found", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Default, handler: { [weak self] _ in
+            self?.navigationController?.popViewControllerAnimated(true)
+        }))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
 }

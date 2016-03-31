@@ -117,4 +117,11 @@ extension PaginationViewModel {
     var firstPageLoading: Observable<Bool> {
         return fullloading.asObservable().filter { $0.1 == "1" }.map { $0.0 }
     }
+    
+    var emptyState: Observable<Bool> {
+        return Observable.combineLatest(loading.skip(1), elements.asObservable().map { $0.isEmpty }.skip(1)) { (isLoading, isEmpty) throws in
+            return !isLoading && isEmpty
+        }
+    }
+    
 }
