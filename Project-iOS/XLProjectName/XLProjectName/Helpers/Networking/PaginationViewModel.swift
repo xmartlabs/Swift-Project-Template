@@ -10,6 +10,7 @@ import Alamofire
 import Foundation
 import Argo
 import RxSwift
+import RxCocoa
 
 class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
     
@@ -34,7 +35,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     }
     
     private func setUpForceRefresh() {
-        queryTrigger
+        queryTrigger.skip(1)
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .doOnNext { [weak self] queryString in
@@ -79,7 +80,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
         Observable
             .of(
                 request.map { (true, $0.page) },
-                response.map { (false, $0.page ?? "1") }
+                response.map { (false, $0.page ?? "1") }.catchErrorJustReturn((false, fullloading.value.1))
             )
             .merge()
             .bindTo(fullloading)
@@ -87,9 +88,7 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
                 
         Observable
             .combineLatest(elements.asObservable(), response) { elements, response in
-                return response.hasPreviousPage
-                    ? elements + response.elements
-                    : response.elements
+                return response.hasPreviousPage ? elements + response.elements : response.elements
             }
             .take(1)
             .bindTo(elements)
@@ -110,11 +109,19 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
 
 extension PaginationViewModel {
     
-    var loading: Observable<Bool> {
-        return fullloading.asObservable().map { $0.0 }
+    var loading: Driver<Bool> {
+        return fullloading.asDriver().skip(1).map { $0.0 }.distinctUntilChanged()
     }
     
-    var firstPageLoading: Observable<Bool> {
-        return fullloading.asObservable().filter { $0.1 == "1" }.map { $0.0 }
+    var firstPageLoading: Driver<Bool> {
+        return fullloading.asDriver().filter { $0.1 == "1" }.map { $0.0 }
     }
+    
+    var emptyState: Driver<Bool> {
+        return Driver.combineLatest(loading, elements.asDriver().skip(1)) { (isLoading, elements) -> Bool in
+            return !isLoading && elements.isEmpty
+        }
+        .distinctUntilChanged()
+    }
+    
 }
