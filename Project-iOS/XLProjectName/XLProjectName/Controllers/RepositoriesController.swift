@@ -32,7 +32,7 @@ class RepositoriesController: XLTableViewController {
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
         
-        viewModel.loading.asDriver(onErrorJustReturn: false)
+        viewModel.loading
             .drive(activityIndicatorView.rx_animating)
             .addDisposableTo(disposeBag)
         
@@ -54,12 +54,15 @@ class RepositoriesController: XLTableViewController {
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
         tableView.addSubview(refreshControl)
-        viewModel.firstPageLoading.filter { $0 == false && refreshControl.refreshing }
-            .subscribeNext { _ in refreshControl.endRefreshing() }
+        
+        viewModel.firstPageLoading
+            .filter { $0 == false && refreshControl.refreshing }
+            .driveNext { _ in refreshControl.endRefreshing() }
             .addDisposableTo(disposeBag)
         
-        viewModel.emptyState.filter { $0 }
-            .subscribeNext { [weak self] _ in
+        viewModel.emptyState
+            .filter { $0 }
+            .driveNext { [weak self] _ in
                 self?.showAlertViewForEmptyState()
             }
             .addDisposableTo(disposeBag)
