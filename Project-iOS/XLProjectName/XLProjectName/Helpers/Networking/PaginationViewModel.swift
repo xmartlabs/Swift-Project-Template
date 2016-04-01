@@ -12,14 +12,15 @@ import Argo
 import RxSwift
 import RxCocoa
 
-class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
+class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.DecodedType == Element> {
     
-    var request: PaginationRequest<Element>
+    var paginationRequest: PaginationRequest<Element, Filter>
     typealias LoadingType = (Bool, String)
     
     let refreshTrigger = PublishSubject<Bool>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
+    let filterTrigger = PublishSubject<Filter>()
 
     let hasNextPage = Variable<Bool>(false)
     let fullloading = Variable<LoadingType>((false, "1"))
@@ -28,40 +29,53 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
     private var disposeBag = DisposeBag()
     private let queryDisposeBag = DisposeBag()
     
-    init(route: RequestType, page: String = "1", query: String = "") {
-        request = PaginationRequest(route: route, page: page, query: query)
-        bindPaginationRequest(request, nextPage: nil)
+    init(route: RequestType, page: String = "1", query: String = "", filter: Filter? = nil) {
+        paginationRequest = PaginationRequest(route: route, page: page, query: query, filter: filter)
+        bindPaginationRequest(paginationRequest, nextPage: nil)
         setUpForceRefresh()
     }
     
     private func setUpForceRefresh() {
+        
         queryTrigger.skip(1)
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .doOnNext { [weak self] queryString in
                 guard let mySelf = self else { return }
-                mySelf.bindPaginationRequest(mySelf.request.routeWithQuery(queryString), nextPage: nil)
+                mySelf.bindPaginationRequest(mySelf.paginationRequest.routeWithQuery(queryString), nextPage: nil)
             }
             .map { _ in false }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
         
-        refreshTrigger.filter { $0 == true }
-            .doOnNext { [weak self] queryString in
+        refreshTrigger
+            .filter { $0 }
+            .doOnNext { [weak self] _ in
                 guard let mySelf = self else { return }
-                mySelf.bindPaginationRequest(mySelf.request.routeWithPage("1"), nextPage: nil)
+                mySelf.bindPaginationRequest(mySelf.paginationRequest.routeWithPage("1"), nextPage: nil)
+            }
+            .map { _ in false }
+            .bindTo(refreshTrigger)
+            .addDisposableTo(queryDisposeBag)
+        
+        
+        filterTrigger
+            .doOnNext { [weak self] fitler in
+                guard let mySelf = self else { return }
+                mySelf.bindPaginationRequest(mySelf.paginationRequest.routeWithFilter(fitler), nextPage: nil)
             }
             .map { _ in false }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
     }
     
-    private func bindPaginationRequest(paginationRequest: PaginationRequest<Element>, nextPage: String?) {
+    private func bindPaginationRequest(paginationRequest: PaginationRequest<Element, Filter>, nextPage: String?) {
         disposeBag = DisposeBag()
-        
-        let refreshRequest = refreshTrigger.filter { $0 == false }
+        self.paginationRequest = paginationRequest
+        let refreshRequest = refreshTrigger
+            .filter { !$0 }
             .take(1)
-            .map { _ in paginationRequest.routeWithPage(paginationRequest.page) }
+            .map { _ in paginationRequest }
         
         let nextPageRequest = loadNextPageTrigger
             .take(1)
@@ -104,6 +118,13 @@ class PaginationViewModel<Element: Decodable where Element.DecodedType == Elemen
                 self?.bindPaginationRequest(paginationRequest, nextPage: paginationResponse.nextPage)
             }
             .addDisposableTo(disposeBag)
+    }
+}
+
+class SimplePaginationViewModel<Element: Decodable where Element.DecodedType == Element> : PaginationViewModel<Element, EmptyFilter> {
+    
+    init(route: RequestType, page: String = "1", query: String = "") {
+        super.init(route: route, page: page, query: query, filter: nil)
     }
 }
 
