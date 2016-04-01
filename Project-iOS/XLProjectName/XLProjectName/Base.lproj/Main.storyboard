@@ -405,17 +405,17 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v9p-Nj-JIZ">
-                                <rect key="frame" x="100" y="255" width="400" height="90"/>
+                                <rect key="frame" x="125" y="240" width="350" height="120"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gg3-Vp-Fg7">
-                                        <rect key="frame" x="189" y="8" width="23" height="26"/>
+                                        <rect key="frame" x="164" y="8" width="23" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, no repositories available" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uip-EA-joU">
-                                        <rect key="frame" x="20" y="54" width="360" height="28"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <rect key="frame" x="20" y="52" width="310" height="60"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -423,12 +423,12 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="uip-EA-joU" firstAttribute="leading" secondItem="Gg3-Vp-Fg7" secondAttribute="leading" id="69e-aJ-8gN"/>
-                                    <constraint firstAttribute="width" constant="400" id="Baj-Pc-LdM"/>
+                                    <constraint firstAttribute="width" constant="350" id="Baj-Pc-LdM"/>
                                     <constraint firstItem="uip-EA-joU" firstAttribute="top" secondItem="Gg3-Vp-Fg7" secondAttribute="bottom" constant="92" id="MS1-8N-aEb"/>
                                     <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="centerX" secondItem="v9p-Nj-JIZ" secondAttribute="centerX" id="Sd2-29-50b"/>
                                     <constraint firstAttribute="trailing" secondItem="uip-EA-joU" secondAttribute="trailing" constant="20" symbolic="YES" id="WeX-PC-hRM"/>
                                     <constraint firstItem="uip-EA-joU" firstAttribute="bottom" secondItem="v9p-Nj-JIZ" secondAttribute="bottomMargin" id="j2M-Oz-GIA"/>
-                                    <constraint firstAttribute="height" constant="90" id="mZB-gS-7NE"/>
+                                    <constraint firstAttribute="height" constant="120" id="mZB-gS-7NE"/>
                                     <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="top" secondItem="v9p-Nj-JIZ" secondAttribute="topMargin" id="pBP-VV-p4U"/>
                                     <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="leading" secondItem="uip-EA-joU" secondAttribute="leading" id="vht-YM-KWG"/>
                                     <constraint firstItem="uip-EA-joU" firstAttribute="leading" secondItem="v9p-Nj-JIZ" secondAttribute="leading" constant="20" symbolic="YES" id="zyQ-83-otH"/>

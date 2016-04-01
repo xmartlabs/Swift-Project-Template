@@ -124,7 +124,7 @@ class RepositoriesController: XLTableViewController {
 
         viewModel.emptyState
             .filter { $0 }
-            .driveNext { [weak self] _ in self?.showAlertViewForEmptyState() }
+            .driveNext { [weak self] _ in self?.showEmptyStateView() }
             .addDisposableTo(disposeBag)
     }
 
