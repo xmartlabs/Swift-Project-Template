@@ -20,7 +20,7 @@ extension NSHTTPURLResponse {
     }
     
     var firstLinkPageValue: String? {
-        return linkPagePrameter("next")
+        return linkPagePrameter("first")
     }
     
     var lastLinkPageValue: String? {
