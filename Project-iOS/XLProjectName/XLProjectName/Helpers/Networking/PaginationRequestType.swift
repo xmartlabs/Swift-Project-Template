@@ -30,13 +30,14 @@ protocol PaginationRequestType: RequestType {
     var query: String? { get }
     var route: RequestType { get }
     var filter: Filter? { get }
+    var collectionPath: String? { get }
     
     var extraParameters: [String: AnyObject]? { get }
     func routeWithPage(page: String) -> Self
     func routeWithQuery(query: String) -> Self
     func routeWithFilter(filter: Filter) -> Self
     
-    init(route: RequestType, page: String, query: String?, filter: Filter?, extraParameters: [String: AnyObject]?)
+    init(route: RequestType, page: String, query: String?, filter: Filter?, extraParameters: [String: AnyObject]?, collectionPath: String?)
 }
 
 extension PaginationRequestType {
@@ -57,15 +58,15 @@ extension PaginationRequestType {
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
     
     func routeWithPage(page: String) -> Self {
-        return Self.init(route: route, page: page, query: query, filter: filter, extraParameters: extraParameters)
+        return Self.init(route: route, page: page, query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
     }
     
     func routeWithQuery(query: String) -> Self {
-        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters)
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
     }
     
     func routeWithFilter(filter: Filter) -> Self {
-        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters)
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
     }
 }
 
@@ -74,31 +75,31 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
     func rx_collection() -> Observable<Response> {
         let myRequest = request
         let myPage = page
-        return myRequest.rx_collection().map({ elements -> Response in
+        return myRequest.rx_collection(collectionPath).map({ elements -> Response in
             return Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage)
         })
     }
     
 
-    private func responseCollection(completionHandler: Alamofire.Response<Response, NetworkError> -> Void) -> Request {
-        let myRequest = request
-        let myPage = page
-        myRequest.responseCollection { (response: Alamofire.Response<[Response.Element], NetworkError>) in
-            switch response.result {
-            case .Failure(let error):
-                completionHandler(Alamofire.Response(request: myRequest.request,
-                                                    response: myRequest.response,
-                                                        data: response.data,
-                                                      result: .Failure(error)))
-            case .Success(let elements):
-                completionHandler(Alamofire.Response(request: myRequest.request,
-                                                    response: myRequest.response,
-                                                        data: response.data,
-                    result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage))))
-            }
-        }
-        return myRequest
-    }
+//    private func responseCollection(completionHandler: Alamofire.Response<Response, NetworkError> -> Void) -> Request {
+//        let myRequest = request
+//        let myPage = page
+//        myRequest.responseCollection { (response: Alamofire.Response<[Response.Element], NetworkError>) in
+//            switch response.result {
+//            case .Failure(let error):
+//                completionHandler(Alamofire.Response(request: myRequest.request,
+//                                                    response: myRequest.response,
+//                                                        data: response.data,
+//                                                      result: .Failure(error)))
+//            case .Success(let elements):
+//                completionHandler(Alamofire.Response(request: myRequest.request,
+//                                                    response: myRequest.response,
+//                                                        data: response.data,
+//                    result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage))))
+//            }
+//        }
+//        return myRequest
+//    }
 }
 
 struct PaginationRequest<Element: Decodable, Filter: FilterType where Element.DecodedType == Element>: PaginationRequestType {
@@ -110,11 +111,14 @@ struct PaginationRequest<Element: Decodable, Filter: FilterType where Element.De
     var query: String?
     var filter: Filter?
     var extraParameters: [String : AnyObject]?
+    var collectionPath: String?
     
-    init(route: RequestType, page: String = "1", query: String? = nil, filter: Filter? = nil, extraParameters: [String: AnyObject]? = nil) {
+    init(route: RequestType, page: String = "1", query: String? = nil, filter: Filter? = nil, extraParameters: [String: AnyObject]? = nil, collectionPath: String? = nil) {
         self.route = route
         self.page = page
         self.query = query
         self.filter = filter
+        self.extraParameters = extraParameters
+        self.collectionPath = collectionPath
     }
 }

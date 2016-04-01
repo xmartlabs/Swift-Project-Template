@@ -53,9 +53,8 @@ class RepositoriesController: XLTableViewController {
     }()
     
     lazy var viewModel: PaginationViewModel<Repository, RepositoriesFilter>  = { [unowned self] in
-        return PaginationViewModel(route: Route.User.Repositories(username: self.user.username), filter: self.filters)
+        return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.User.Repositories(username: self.user.username), filter: self.filters))
     }()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,9 +120,7 @@ class RepositoriesController: XLTableViewController {
         
         viewModel.emptyState
             .filter { $0 }
-            .driveNext { [weak self] _ in
-                self?.showAlertViewForEmptyState()
-            }
+            .driveNext { [weak self] _ in self?.showAlertViewForEmptyState() }
             .addDisposableTo(disposeBag)
     }
     

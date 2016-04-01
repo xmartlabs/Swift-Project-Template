@@ -31,9 +31,9 @@ extension Alamofire.Request {
         }.doOnError(NetworkManager.generalErrorHandler)
     }
     
-    public func rx_collection<T: Decodable where T == T.DecodedType>() -> Observable<[T]> {
+    public func rx_collection<T: Decodable where T == T.DecodedType>(jsonCollectionPath:String? = nil) -> Observable<[T]> {
         return Observable.create { [weak self] subscriber in
-            self?.responseCollection { (response: Response<[T], NetworkError>) in
+            self?.responseCollection(jsonCollectionPath) { (response: Response<[T], NetworkError>) in
                 switch response.result {
                 case .Failure(let error):
                     subscriber.onError(error)
