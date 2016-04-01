@@ -85,12 +85,14 @@ struct R {
     private init() {}
   }
   
-  /// This `R.storyboard` struct is generated, and contains static references to 3 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 4 storyboards.
   struct storyboard {
     /// Storyboard `LaunchScreen`.
     static let launchScreen = _R.storyboard.launchScreen()
     /// Storyboard `Main`.
     static let main = _R.storyboard.main()
+    /// Storyboard `SearchRepository`.
+    static let searchRepository = _R.storyboard.searchRepository()
     /// Storyboard `VCTemplates`.
     static let vCTemplates = _R.storyboard.vCTemplates()
     
@@ -102,6 +104,11 @@ struct R {
     /// `UIStoryboard(name: "Main", bundle: ...)`
     static func main(_: Void) -> UIStoryboard {
       return UIStoryboard(resource: R.storyboard.main)
+    }
+    
+    /// `UIStoryboard(name: "SearchRepository", bundle: ...)`
+    static func searchRepository(_: Void) -> UIStoryboard {
+      return UIStoryboard(resource: R.storyboard.searchRepository)
     }
     
     /// `UIStoryboard(name: "VCTemplates", bundle: ...)`
@@ -137,6 +144,15 @@ struct _R {
       
       let bundle = _R.hostingBundle
       let name = "Main"
+      
+      private init() {}
+    }
+    
+    struct searchRepository: StoryboardResourceWithInitialControllerType {
+      typealias InitialController = SearchRepositoriesController
+      
+      let bundle = _R.hostingBundle
+      let name = "SearchRepository"
       
       private init() {}
     }

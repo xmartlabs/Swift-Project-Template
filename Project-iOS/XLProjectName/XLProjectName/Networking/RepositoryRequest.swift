@@ -14,10 +14,11 @@ extension Route {
     enum Repository: RequestType {
         
         case GetInfo(owner: String, repo: String)
+        case Search()
 
         var method: Alamofire.Method {
             switch self {
-            case .GetInfo:
+            case .GetInfo, .Search:
                 return .GET
             }
         }
@@ -26,6 +27,8 @@ extension Route {
             switch self {
             case let .GetInfo(owner, repo):
                 return "repos/\(owner)/\(repo)"
+            case .Search:
+                return "search/repositories"
             }
         }
 

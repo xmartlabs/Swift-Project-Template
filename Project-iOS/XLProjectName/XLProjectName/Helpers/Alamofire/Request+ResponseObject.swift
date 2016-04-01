@@ -30,10 +30,10 @@ extension Request {
     }
 
     
-    public func responseCollection<T: Decodable where T == T.DecodedType >(completionHandler: Response<[T], NetworkError> -> Void) -> Self {
+    public func responseCollection<T: Decodable where T == T.DecodedType >(jsonCollectionPath: String? = nil, completionHandler: Response<[T], NetworkError> -> Void) -> Self {
         let responseSerializer = ResponseSerializer<[T], NetworkError> { request, response, data, error in
             return Request.serialize(request, response: response, data: data, error: error) { result, value in
-                if let representation = value as? [[String: AnyObject]] {
+                if let representation = (jsonCollectionPath.map { value.valueForKeyPath($0) } ?? value) as? [[String: AnyObject]] {
                     DEBUGJson(value)
                     var result = [T]()
                     for userRepresentation in representation {

@@ -13,30 +13,31 @@ import RxSwift
 import RxCocoa
 
 class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.DecodedType == Element> {
-
+    
     var paginationRequest: PaginationRequest<Element, Filter>
     typealias LoadingType = (Bool, String)
-
+    
     let refreshTrigger = PublishSubject<Bool>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
     let filterTrigger = PublishSubject<Filter>()
     let networkErrorTrigger = PublishSubject<NetworkError>()
+
     let hasNextPage = Variable<Bool>(false)
     let fullloading = Variable<LoadingType>((false, "1"))
     let elements = Variable<[Element]>([])
-
+    
     private var disposeBag = DisposeBag()
     private let queryDisposeBag = DisposeBag()
-
-    init(route: RequestType, page: String = "1", query: String = "", filter: Filter? = nil) {
-        paginationRequest = PaginationRequest(route: route, page: page, query: query, filter: filter)
-        bindPaginationRequest(paginationRequest, nextPage: nil)
+    
+    init(paginationRequest: PaginationRequest<Element, Filter>) {
+        self.paginationRequest = paginationRequest
+        bindPaginationRequest(self.paginationRequest, nextPage: nil)
         setUpForceRefresh()
     }
-
+    
     private func setUpForceRefresh() {
-
+        
         queryTrigger.skip(1)
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -47,7 +48,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .map { _ in false }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
-
+        
         refreshTrigger
             .filter { $0 }
             .doOnNext { [weak self] _ in
@@ -57,8 +58,8 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .map { _ in false }
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
-
-
+        
+        
         filterTrigger
             .doOnNext { [weak self] fitler in
                 guard let mySelf = self else { return }
@@ -68,7 +69,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .bindTo(refreshTrigger)
             .addDisposableTo(queryDisposeBag)
     }
-
+    
     private func bindPaginationRequest(paginationRequest: PaginationRequest<Element, Filter>, nextPage: String?) {
         disposeBag = DisposeBag()
         self.paginationRequest = paginationRequest
@@ -76,25 +77,26 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .filter { !$0 }
             .take(1)
             .map { _ in paginationRequest }
-
+        
         let nextPageRequest = loadNextPageTrigger
             .take(1)
             .flatMap { nextPage.map { Observable.of(paginationRequest.routeWithPage($0)) } ?? Observable.empty() }
-
+        
         let request = Observable
             .of(refreshRequest, nextPageRequest)
             .merge()
             .take(1)
             .shareReplay(1)
-
+        
         let response = request
             .flatMap { $0.rx_collection() }
             .doOnNetworkError { [weak self] error throws in
                 guard let mySelf = self else { return }
                 Observable.just(error).bindTo(mySelf.networkErrorTrigger).addDisposableTo(mySelf.disposeBag)
+                Observable.just([]).bindTo(mySelf.elements).addDisposableTo(mySelf.disposeBag)
             }
             .shareReplay(1)
-
+        
         Observable
             .of(
                 request.map { (true, $0.page) },
@@ -103,7 +105,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .merge()
             .bindTo(fullloading)
             .addDisposableTo(disposeBag)
-
+                
         Observable
             .combineLatest(elements.asObservable(), response) { elements, response in
                 return response.hasPreviousPage ? elements + response.elements : response.elements
@@ -111,12 +113,12 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .take(1)
             .bindTo(elements)
             .addDisposableTo(disposeBag)
-
+        
         response
             .map { $0.hasNextPage }
             .bindTo(hasNextPage)
             .addDisposableTo(disposeBag)
-
+        
         response
             .subscribeNext { [weak self] paginationResponse in
                 self?.bindPaginationRequest(paginationRequest, nextPage: paginationResponse.nextPage)
@@ -126,27 +128,28 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
 }
 
 class SimplePaginationViewModel<Element: Decodable where Element.DecodedType == Element> : PaginationViewModel<Element, EmptyFilter> {
-
-    init(route: RequestType, page: String = "1", query: String = "") {
-        super.init(route: route, page: page, query: query, filter: nil)
+    
+    override init(paginationRequest: PaginationRequest<Element, EmptyFilter>) {
+        super.init(paginationRequest: paginationRequest)
     }
+    
 }
 
 extension PaginationViewModel {
-
+    
     var loading: Driver<Bool> {
         return fullloading.asDriver().skip(1).map { $0.0 }.distinctUntilChanged()
     }
-
+    
     var firstPageLoading: Driver<Bool> {
         return fullloading.asDriver().filter { $0.1 == "1" }.map { $0.0 }
     }
-
+    
     var emptyState: Driver<Bool> {
         return Driver.combineLatest(loading, elements.asDriver().skip(1)) { (isLoading, elements) -> Bool in
             return !isLoading && elements.isEmpty
         }
         .distinctUntilChanged()
     }
-
+    
 }
