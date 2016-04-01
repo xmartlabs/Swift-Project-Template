@@ -13,17 +13,29 @@ import RxSwift
 import Crashlytics
 import WebLinking
 
+protocol FilterType {
+    var parameters: [String: AnyObject]? { get }
+}
+
+struct EmptyFilter: FilterType {
+    var parameters: [String: AnyObject]? { return nil }
+}
+
 protocol PaginationRequestType: RequestType {
     
     associatedtype Response: PaginationResponseType
+    associatedtype Filter: FilterType
     
     var page: String { get }
-    var query: String { get }
+    var query: String? { get }
     var route: RequestType { get }
-    var pageSize: Int? { get }
+    var filter: Filter? { get }
     
+    var extraParameters: [String: AnyObject]? { get }
     func routeWithPage(page: String) -> Self
-    init(route: RequestType, query: String, page: String)
+    func routeWithQuery(query: String) -> Self
+    
+    init(route: RequestType, page: String, query: String?, filter: Filter?, extraParameters: [String: AnyObject]?)
 }
 
 extension PaginationRequestType {
@@ -33,12 +45,27 @@ extension PaginationRequestType {
     var parameters: [String: AnyObject]? {
         var result = route.parameters ?? [:]
         result["page"] = page
-        if query != "" {
+        if let q = query where q != "" {
             result["q"] = query
+        }
+        if let filterParam = filter?.parameters {
+            result.merge(filterParam)
         }
         return result
     }
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
+    
+    func routeWithPage(page: String) -> Self {
+        return Self.init(route: route, page: page, query: query, filter: filter, extraParameters: extraParameters)
+    }
+    
+    func routeWithQuery(query: String) -> Self {
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters)
+    }
+    
+    func routeWithFilter(filter: Filter) -> Self {
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters)
+    }
 }
 
 extension PaginationRequestType where Response.Element.DecodedType == Response.Element {
@@ -73,27 +100,20 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
     }
 }
 
-struct PaginationRequest<Element: Decodable where Element.DecodedType == Element>: PaginationRequestType {
+struct PaginationRequest<Element: Decodable, Filter: FilterType where Element.DecodedType == Element>: PaginationRequestType {
     
     typealias Response = PaginationResponse<Element>
     
-    var page: String
-    var query: String
     var route: RequestType
+    var page: String
+    var query: String?
+    var filter: Filter?
+    var extraParameters: [String : AnyObject]?
     
-    var pageSize: Int?
-    
-    init(route: RequestType, query: String = "", page: String = "1") {
+    init(route: RequestType, page: String = "1", query: String? = nil, filter: Filter? = nil, extraParameters: [String: AnyObject]? = nil) {
         self.route = route
         self.page = page
         self.query = query
-    }
-    
-    func routeWithPage(page: String) -> PaginationRequest<Element> {
-        return PaginationRequest(route: route, page: page, query: query)
-    }
-    
-    func routeWithQuery(query: String) -> PaginationRequest<Element> {
-        return PaginationRequest(route: route, page: page, query: query)
+        self.filter = filter
     }
 }
