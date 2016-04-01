@@ -355,7 +355,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" showsScopeBar="YES" id="DxD-2h-YzX">
-                                    <rect key="frame" x="0.0" y="64" width="600" height="88"/>
+                                    <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <scopeButtonTitles>
@@ -404,9 +404,48 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v9p-Nj-JIZ">
+                                <rect key="frame" x="100" y="255" width="400" height="90"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gg3-Vp-Fg7">
+                                        <rect key="frame" x="189" y="8" width="23" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, no repositories available" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uip-EA-joU">
+                                        <rect key="frame" x="20" y="54" width="360" height="28"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="uip-EA-joU" firstAttribute="leading" secondItem="Gg3-Vp-Fg7" secondAttribute="leading" id="69e-aJ-8gN"/>
+                                    <constraint firstAttribute="width" constant="400" id="Baj-Pc-LdM"/>
+                                    <constraint firstItem="uip-EA-joU" firstAttribute="top" secondItem="Gg3-Vp-Fg7" secondAttribute="bottom" constant="92" id="MS1-8N-aEb"/>
+                                    <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="centerX" secondItem="v9p-Nj-JIZ" secondAttribute="centerX" id="Sd2-29-50b"/>
+                                    <constraint firstAttribute="trailing" secondItem="uip-EA-joU" secondAttribute="trailing" constant="20" symbolic="YES" id="WeX-PC-hRM"/>
+                                    <constraint firstItem="uip-EA-joU" firstAttribute="bottom" secondItem="v9p-Nj-JIZ" secondAttribute="bottomMargin" id="j2M-Oz-GIA"/>
+                                    <constraint firstAttribute="height" constant="90" id="mZB-gS-7NE"/>
+                                    <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="top" secondItem="v9p-Nj-JIZ" secondAttribute="topMargin" id="pBP-VV-p4U"/>
+                                    <constraint firstItem="Gg3-Vp-Fg7" firstAttribute="leading" secondItem="uip-EA-joU" secondAttribute="leading" id="vht-YM-KWG"/>
+                                    <constraint firstItem="uip-EA-joU" firstAttribute="leading" secondItem="v9p-Nj-JIZ" secondAttribute="leading" constant="20" symbolic="YES" id="zyQ-83-otH"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="69e-aJ-8gN"/>
+                                        <exclude reference="MS1-8N-aEb"/>
+                                        <exclude reference="vht-YM-KWG"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="v9p-Nj-JIZ" firstAttribute="centerY" secondItem="Sbl-3g-YT0" secondAttribute="centerY" id="1C6-Oe-12B"/>
+                            <constraint firstItem="v9p-Nj-JIZ" firstAttribute="centerX" secondItem="Sbl-3g-YT0" secondAttribute="centerX" id="7KR-oU-fBg"/>
                             <constraint firstItem="Sbl-3g-YT0" firstAttribute="top" secondItem="Peo-xy-EKU" secondAttribute="bottom" constant="-64" id="O8w-dP-Vlw"/>
                             <constraint firstAttribute="trailing" secondItem="Sbl-3g-YT0" secondAttribute="trailing" id="WTn-z0-Unp"/>
                             <constraint firstItem="sRt-6z-4s4" firstAttribute="top" secondItem="Sbl-3g-YT0" secondAttribute="bottom" id="fiv-st-Zaf"/>
@@ -422,6 +461,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activityIndicatorView" destination="LGu-MC-USy" id="Bhj-gH-mgF"/>
+                        <outlet property="emptyStateView" destination="v9p-Nj-JIZ" id="esT-uo-HDN"/>
                         <outlet property="searchBar" destination="DxD-2h-YzX" id="qfu-XV-E2J"/>
                         <outlet property="tableView" destination="Sbl-3g-YT0" id="opr-BS-tQP"/>
                     </connections>
