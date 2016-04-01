@@ -34,6 +34,7 @@ protocol PaginationRequestType: RequestType {
     var extraParameters: [String: AnyObject]? { get }
     func routeWithPage(page: String) -> Self
     func routeWithQuery(query: String) -> Self
+    func routeWithFilter(filter: Filter) -> Self
     
     init(route: RequestType, page: String, query: String?, filter: Filter?, extraParameters: [String: AnyObject]?)
 }

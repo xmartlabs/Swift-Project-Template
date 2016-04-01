@@ -109,7 +109,7 @@ class RepositoriesController: XLTableViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.rx_valueChanged
             .filter { refreshControl.refreshing }
-            .map { false }
+            .map { true }
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
         tableView.addSubview(refreshControl)
