@@ -38,7 +38,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
     
     private func setUpForceRefresh() {
         
-        queryTrigger.skip(1)
+        queryTrigger
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .doOnNext { [weak self] queryString in
@@ -90,11 +90,6 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
         
         let response = request
             .flatMap { $0.rx_collection() }
-            .doOnNetworkError { [weak self] error throws in
-                guard let mySelf = self else { return }
-                Observable.just(error).bindTo(mySelf.networkErrorTrigger).addDisposableTo(mySelf.disposeBag)
-                Observable.just([]).bindTo(mySelf.elements).addDisposableTo(mySelf.disposeBag)
-            }
             .shareReplay(1)
         
         Observable
@@ -120,6 +115,13 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .addDisposableTo(disposeBag)
         
         response
+            .doOnNetworkError { [weak self] error throws in
+                guard let mySelf = self else { return }
+                Observable.just(error).bindTo(mySelf.networkErrorTrigger).addDisposableTo(mySelf.disposeBag)
+            }
+            .doOnError { [weak self] _ in
+                guard let mySelf = self else { return }
+                mySelf.bindPaginationRequest(mySelf.paginationRequest, nextPage: mySelf.fullloading.value.1) }
             .subscribeNext { [weak self] paginationResponse in
                 self?.bindPaginationRequest(paginationRequest, nextPage: paginationResponse.nextPage)
             }

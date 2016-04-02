@@ -23,23 +23,18 @@ protocol URLRequestSetup {
     func urlRequestSetup(urlRequest: NSMutableURLRequest)
 }
 
+protocol URLRequestParametersSetup {
+    func urlRequestParametersSetup(urlRequest: NSMutableURLRequest, parameters: [String: AnyObject]?) -> [String: AnyObject]?
+}
+
 extension RequestType {
     
     var URLRequest: NSMutableURLRequest {
         let mutableURLRequest = NSMutableURLRequest(URL: Constants.Network.baseUrl.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
-        
-        //        mutableURLRequest.setValue(value: AnyObject?, forKey: String)
-        
-        
-        //        public static func addAuthHeader(request: NSMutableURLRequest, username: String, password: String) {
-        //            let utf8 = "\(username):\(password)".dataUsingEncoding(NSUTF8StringEncoding)
-        //            let base64 = utf8?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
-        //            guard let encodedString = base64 else { return }
-        //            request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
-        //        }
-        let urlRequest = encoding.encode(mutableURLRequest, parameters: parameters).0
-        (self as? URLRequestSetup)?.urlRequestSetup(urlRequest)
+        let params = (self as? URLRequestParametersSetup)?.urlRequestParametersSetup(mutableURLRequest, parameters: parameters) ?? parameters
+        let urlRequest = encoding.encode(mutableURLRequest, parameters: params).0
+        (self as? URLRequestSetup)?.urlRequestSetup(mutableURLRequest)
         return urlRequest
     }
     

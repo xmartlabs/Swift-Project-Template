@@ -43,10 +43,12 @@ struct R {
   
   /// This `R.segue` struct is generated, and contains static references to 2 view controllers.
   struct segue {
-    /// This struct is generated for `LoginController`, and contains static references to 2 segues.
+    /// This struct is generated for `LoginController`, and contains static references to 3 segues.
     struct loginController {
       /// Segue identifier `PushToRepoController`.
       static let pushToRepoController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, RepositoryController> = StoryboardSegueIdentifier(identifier: "PushToRepoController")
+      /// Segue identifier `PushToSearchRepositoriesController`.
+      static let pushToSearchRepositoriesController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, SearchRepositoriesController> = StoryboardSegueIdentifier(identifier: "PushToSearchRepositoriesController")
       /// Segue identifier `PushToUserController`.
       static let pushToUserController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, UserController> = StoryboardSegueIdentifier(identifier: "PushToUserController")
       
@@ -55,6 +57,13 @@ struct R {
       /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
       static func pushToRepoController(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, LoginController, RepositoryController>? {
         return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToRepoController, segue: segue)
+      }
+      
+      /// Optionally returns a typed version of segue `PushToSearchRepositoriesController`.
+      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
+      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
+      static func pushToSearchRepositoriesController(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, LoginController, SearchRepositoriesController>? {
+        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToSearchRepositoriesController, segue: segue)
       }
       
       /// Optionally returns a typed version of segue `PushToUserController`.

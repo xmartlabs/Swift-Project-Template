@@ -1,8 +1,8 @@
 //
-//  SearchRepositoryController.swift
+//  SearchRepositoriesController.swift
 //  XLProjectName
 //
-//  Created by Diego Medina on 3/31/16.
+//  Created by Xmartlabs SRL. ( http://xmartlabs.com )
 //  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
@@ -12,12 +12,14 @@ import Eureka
 import RxSwift
 import RxCocoa
 
-class SearchRepositoriesController: FormViewController {
+class SearchRepositoriesController: XLTableViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    private var emptyStateLabel: UILabel!
-    let disposeBag = DisposeBag()
+    private lazy var emptyStateLabel: UILabel = {
+        let emptyStateLabel = UILabel()
+        emptyStateLabel.text = ControllerConstants.NoTextMessage
+        emptyStateLabel.textAlignment = .Center
+        return emptyStateLabel
+    }()
     
     lazy var viewModel: SimplePaginationViewModel<Repository>  = { [unowned self] in
         return SimplePaginationViewModel(paginationRequest: PaginationRequest<Repository, EmptyFilter>(route: Route.Repository.Search(), collectionPath: "items"))
@@ -25,69 +27,56 @@ class SearchRepositoriesController: FormViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let table = tableView else { return }
+        tableView.backgroundView = emptyStateLabel
+        tableView.keyboardDismissMode = .OnDrag
         
         rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
+            .skip(1)
             .map { _ in false }
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
         
-        table.rx_reachedBottom
+        tableView.rx_reachedBottom
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
         
-        viewModel.loading.skip(1)
+        viewModel.loading
             .drive(activityIndicatorView.rx_animating)
             .addDisposableTo(disposeBag)
         
-        form +++ Section()
-        viewModel.elements.asDriver()
-            .driveNext { [weak self] repos in
-                repos.forEach { repo in
-                    guard let mySelf = self else { return }
-                    mySelf.form.first! <<< LabelRow() { $0.title = repo.name }
-                }
+        
+        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx_text.asDriver()) { elements, loading, searchText in return loading || searchText.isEmpty ? [] : elements }
+            .asDriver()
+            .drive(tableView.rx_itemsWithCellIdentifier("Cell")) { _, repository, cell in
+                cell.textLabel?.text = repository.name
+                cell.detailTextLabel?.text = "🌟\(repository.stargazersCount)"
             }
             .addDisposableTo(disposeBag)
         
-        searchBar.rx_text
-            .doOnNext { [weak self] _ in self?.form.first!.removeAll() }
+        searchBar.rx_text.filter { !$0.isEmpty }
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
         
         let refreshControl = UIRefreshControl()
         refreshControl.rx_valueChanged
             .filter { refreshControl.refreshing }
-            .map { false }
+            .map { true }
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
-        table.addSubview(refreshControl)
+        tableView.addSubview(refreshControl)
         
         viewModel.firstPageLoading
             .filter { $0 == false && refreshControl.refreshing }
             .driveNext { _ in refreshControl.endRefreshing() }
             .addDisposableTo(disposeBag)
         
-        viewModel.networkErrorTrigger
-            .subscribeNext { _ in refreshControl.endRefreshing() }
-            .addDisposableTo(disposeBag)
-        
-        setUpEmptyStateLabel()
-        viewModel.emptyState
+        Driver.combineLatest(viewModel.emptyState, searchBar.rx_text.asDriver()) { $0 ||  $1.isEmpty }
             .driveNext { [weak self] state in
                 self?.emptyStateLabel.hidden = !state
                 self?.emptyStateLabel.text = (self?.searchBar.text?.isEmpty ?? true) ? ControllerConstants.NoTextMessage : ControllerConstants.NoRepositoriesMessage
             }
             .addDisposableTo(disposeBag)
     }
-    
-    private func setUpEmptyStateLabel() {
-        emptyStateLabel = UILabel()
-        emptyStateLabel.text = ControllerConstants.NoTextMessage
-        emptyStateLabel.textAlignment = .Center
-        tableView?.backgroundView = emptyStateLabel
-    }
-
 }
 
 extension SearchRepositoriesController {

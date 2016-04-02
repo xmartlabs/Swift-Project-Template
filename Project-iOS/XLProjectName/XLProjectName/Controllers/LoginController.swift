@@ -63,6 +63,14 @@ class LoginController: FormViewController {
                     .onCellSelection { [weak self] _,_ in
                         self?.seeRepoTapped()
                     }
+            +++ Section()
+                <<< ButtonRow() {
+                    $0.title = "Search Repositories"
+                    $0.presentationMode = PresentationMode.SegueName(segueName: R.segue.loginController.pushToSearchRepositoriesController.identifier, completionCallback: nil)
+                }
+            
+            
+            
             +++ Section(header: "Github users", footer: "Enter a github username to see its repositories")
                 <<< NameRow() {
                     $0.title = "Username:"

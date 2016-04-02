@@ -90,6 +90,7 @@ class RepositoriesController: XLTableViewController {
             .addDisposableTo(disposeBag)
 
         searchBar.rx_text
+            .skip(1)
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
 
