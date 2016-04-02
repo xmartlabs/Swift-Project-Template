@@ -75,26 +75,6 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
         })
     }
     
-
-//    private func responseCollection(completionHandler: Alamofire.Response<Response, NetworkError> -> Void) -> Request {
-//        let myRequest = request
-//        let myPage = page
-//        myRequest.responseCollection { (response: Alamofire.Response<[Response.Element], NetworkError>) in
-//            switch response.result {
-//            case .Failure(let error):
-//                completionHandler(Alamofire.Response(request: myRequest.request,
-//                                                    response: myRequest.response,
-//                                                        data: response.data,
-//                                                      result: .Failure(error)))
-//            case .Success(let elements):
-//                completionHandler(Alamofire.Response(request: myRequest.request,
-//                                                    response: myRequest.response,
-//                                                        data: response.data,
-//                    result: .Success(Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage))))
-//            }
-//        }
-//        return myRequest
-//    }
 }
 
 struct PaginationRequest<Element: Decodable where Element.DecodedType == Element>: PaginationRequestType {
