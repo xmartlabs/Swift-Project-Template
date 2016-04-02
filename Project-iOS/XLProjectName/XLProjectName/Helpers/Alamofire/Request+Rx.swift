@@ -14,9 +14,9 @@ import RxSwift
 
 extension Alamofire.Request {
     
-    public func rx_object<T: Decodable where T == T.DecodedType>() -> Observable<T> {
+    public func rx_object<T: Decodable where T == T.DecodedType>(keyPath: String? = nil) -> Observable<T> {
         return Observable.create { [weak self] subscriber in
-             self?.responseObject { (response: Response<T, NetworkError>) in
+             self?.responseObject(keyPath) { (response: Response<T, NetworkError>) in
                 switch response.result {
                 case .Failure(let error):
                     subscriber.onError(error)
@@ -31,9 +31,9 @@ extension Alamofire.Request {
         }.doOnError(NetworkManager.generalErrorHandler)
     }
     
-    public func rx_collection<T: Decodable where T == T.DecodedType>(jsonCollectionPath:String? = nil) -> Observable<[T]> {
+    public func rx_collection<T: Decodable where T == T.DecodedType>(collectionKeyPath:String? = nil) -> Observable<[T]> {
         return Observable.create { [weak self] subscriber in
-            self?.responseCollection(jsonCollectionPath) { (response: Response<[T], NetworkError>) in
+            self?.responseCollection(collectionKeyPath) { (response: Response<[T], NetworkError>) in
                 switch response.result {
                 case .Failure(let error):
                     subscriber.onError(error)

@@ -17,27 +17,22 @@ protocol FilterType {
     var parameters: [String: AnyObject]? { get }
 }
 
-struct EmptyFilter: FilterType {
-    var parameters: [String: AnyObject]? { return nil }
-}
-
 protocol PaginationRequestType: RequestType {
     
     associatedtype Response: PaginationResponseType
-    associatedtype Filter: FilterType
     
     var page: String { get }
     var query: String? { get }
     var route: RequestType { get }
-    var filter: Filter? { get }
-    var collectionPath: String? { get }
+    var filter: FilterType? { get }
+    var collectionKeyPath: String? { get }
     
     var extraParameters: [String: AnyObject]? { get }
     func routeWithPage(page: String) -> Self
     func routeWithQuery(query: String) -> Self
-    func routeWithFilter(filter: Filter) -> Self
+    func routeWithFilter(filter: FilterType) -> Self
     
-    init(route: RequestType, page: String, query: String?, filter: Filter?, extraParameters: [String: AnyObject]?, collectionPath: String?)
+    init(route: RequestType, page: String, query: String?, filter: FilterType?, extraParameters: [String: AnyObject]?, collectionKeyPath: String?)
 }
 
 extension PaginationRequestType {
@@ -58,15 +53,15 @@ extension PaginationRequestType {
     var encoding: Alamofire.ParameterEncoding { return route.encoding }
     
     func routeWithPage(page: String) -> Self {
-        return Self.init(route: route, page: page, query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
+        return Self.init(route: route, page: page, query: query, filter: filter, extraParameters: extraParameters, collectionKeyPath: collectionKeyPath)
     }
     
     func routeWithQuery(query: String) -> Self {
-        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionKeyPath: collectionKeyPath)
     }
     
-    func routeWithFilter(filter: Filter) -> Self {
-        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionPath: collectionPath)
+    func routeWithFilter(filter: FilterType) -> Self {
+        return Self.init(route: route, page: "1", query: query, filter: filter, extraParameters: extraParameters, collectionKeyPath: collectionKeyPath)
     }
 }
 
@@ -75,7 +70,7 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
     func rx_collection() -> Observable<Response> {
         let myRequest = request
         let myPage = page
-        return myRequest.rx_collection(collectionPath).map({ elements -> Response in
+        return myRequest.rx_collection(collectionKeyPath).map({ elements -> Response in
             return Response.init(elements: elements, previousPage: myRequest.response?.previousLinkPageValue, nextPage: myRequest.response?.nextLinkPageValue, page: myPage)
         })
     }
@@ -102,23 +97,23 @@ extension PaginationRequestType where Response.Element.DecodedType == Response.E
 //    }
 }
 
-struct PaginationRequest<Element: Decodable, Filter: FilterType where Element.DecodedType == Element>: PaginationRequestType {
+struct PaginationRequest<Element: Decodable where Element.DecodedType == Element>: PaginationRequestType {
     
     typealias Response = PaginationResponse<Element>
     
     var route: RequestType
     var page: String
     var query: String?
-    var filter: Filter?
+    var filter: FilterType?
     var extraParameters: [String : AnyObject]?
-    var collectionPath: String?
+    var collectionKeyPath: String?
     
-    init(route: RequestType, page: String = "1", query: String? = nil, filter: Filter? = nil, extraParameters: [String: AnyObject]? = nil, collectionPath: String? = nil) {
+    init(route: RequestType, page: String = "1", query: String? = nil, filter: FilterType? = nil, extraParameters: [String: AnyObject]? = nil, collectionKeyPath: String? = nil) {
         self.route = route
         self.page = page
         self.query = query
         self.filter = filter
         self.extraParameters = extraParameters
-        self.collectionPath = collectionPath
+        self.collectionKeyPath = collectionKeyPath
     }
 }

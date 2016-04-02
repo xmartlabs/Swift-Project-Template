@@ -12,15 +12,15 @@ import Argo
 import RxSwift
 import RxCocoa
 
-class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.DecodedType == Element> {
+class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
     
-    var paginationRequest: PaginationRequest<Element, Filter>
+    var paginationRequest: PaginationRequest<Element>
     typealias LoadingType = (Bool, String)
     
     let refreshTrigger = PublishSubject<Bool>()
     let loadNextPageTrigger = PublishSubject<Void>()
     let queryTrigger = PublishSubject<String>()
-    let filterTrigger = PublishSubject<Filter>()
+    let filterTrigger = PublishSubject<FilterType>()
     let networkErrorTrigger = PublishSubject<NetworkError>()
 
     let hasNextPage = Variable<Bool>(false)
@@ -30,7 +30,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
     private var disposeBag = DisposeBag()
     private let queryDisposeBag = DisposeBag()
     
-    init(paginationRequest: PaginationRequest<Element, Filter>) {
+    init(paginationRequest: PaginationRequest<Element>) {
         self.paginationRequest = paginationRequest
         bindPaginationRequest(self.paginationRequest, nextPage: nil)
         setUpForceRefresh()
@@ -70,7 +70,7 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             .addDisposableTo(queryDisposeBag)
     }
     
-    private func bindPaginationRequest(paginationRequest: PaginationRequest<Element, Filter>, nextPage: String?) {
+    private func bindPaginationRequest(paginationRequest: PaginationRequest<Element>, nextPage: String?) {
         disposeBag = DisposeBag()
         self.paginationRequest = paginationRequest
         let refreshRequest = refreshTrigger
@@ -127,14 +127,6 @@ class PaginationViewModel<Element: Decodable, Filter: FilterType where Element.D
             }
             .addDisposableTo(disposeBag)
     }
-}
-
-class SimplePaginationViewModel<Element: Decodable where Element.DecodedType == Element> : PaginationViewModel<Element, EmptyFilter> {
-    
-    override init(paginationRequest: PaginationRequest<Element, EmptyFilter>) {
-        super.init(paginationRequest: paginationRequest)
-    }
-    
 }
 
 extension PaginationViewModel {

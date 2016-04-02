@@ -21,8 +21,8 @@ class SearchRepositoriesController: XLTableViewController {
         return emptyStateLabel
     }()
     
-    lazy var viewModel: SimplePaginationViewModel<Repository>  = { [unowned self] in
-        return SimplePaginationViewModel(paginationRequest: PaginationRequest<Repository, EmptyFilter>(route: Route.Repository.Search(), collectionPath: "items"))
+    lazy var viewModel: PaginationViewModel<Repository>  = { [unowned self] in
+        return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.Repository.Search(), collectionKeyPath: "items"))
         }()
     
     override func viewDidLoad() {
