@@ -8,7 +8,6 @@
 
 import Foundation
 import Alamofire
-import Argo
 import Crashlytics
 
 public class NetworkManager {

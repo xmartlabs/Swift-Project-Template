@@ -11,7 +11,7 @@ import Argo
 
 protocol PaginationResponseType {
     
-    associatedtype Element: Decodable
+    associatedtype Element
     
     var elements: [Element] { get }
     var previousPage: String? { get }
@@ -30,7 +30,7 @@ extension PaginationResponseType {
     }
 }
 
-struct PaginationResponse<E: Decodable where E.DecodedType == E>: PaginationResponseType {
+struct PaginationResponse<E>: PaginationResponseType {
     
     let elements: [E]
     var previousPage: String?

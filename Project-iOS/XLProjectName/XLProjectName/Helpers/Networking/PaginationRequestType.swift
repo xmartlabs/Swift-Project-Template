@@ -65,7 +65,7 @@ extension PaginationRequestType {
     }
 }
 
-extension PaginationRequestType where Response.Element.DecodedType == Response.Element {
+extension PaginationRequestType where Response.Element: Decodable, Response.Element.DecodedType == Response.Element {
     
     func rx_collection() -> Observable<Response> {
         let myRequest = request

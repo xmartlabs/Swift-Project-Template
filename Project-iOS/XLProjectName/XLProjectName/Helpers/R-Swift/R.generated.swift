@@ -140,7 +140,7 @@ struct _R {
   
   struct storyboard {
     struct launchScreen: StoryboardResourceWithInitialControllerType {
-      typealias InitialController = UINavigationController
+      typealias InitialController = UIViewController
       
       let bundle = _R.hostingBundle
       let name = "LaunchScreen"

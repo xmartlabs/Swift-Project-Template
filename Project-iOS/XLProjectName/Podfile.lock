@@ -7,6 +7,7 @@ PODS:
   - Crashlytics (3.7.0):
     - Fabric (~> 1.6.3)
   - Curry (1.4.0)
+  - Decodable (0.4.2)
   - Device (0.0.7)
   - DynamicColor (2.4.0)
   - Eureka (1.5.0)
@@ -42,6 +43,7 @@ DEPENDENCIES:
   - AsyncSwift (~> 1.0)
   - Crashlytics
   - Curry (~> 1.0)
+  - Decodable
   - Device (~> 0.0)
   - DynamicColor (~> 2.0)
   - Eureka (~> 1.5)
@@ -76,6 +78,7 @@ SPEC CHECKSUMS:
   AsyncSwift: 46a78bceb11f0e5bb52747f740d9692ec78d2d7c
   Crashlytics: c3a2333dea9e2733d2777f730910321fc9e25c0d
   Curry: 294533187eedbf52db60a1e70c29b4f5c9f621c0
+  Decodable: b1cd96ad9f722721bc98b0310952214a47f71d6a
   Device: a476728f5aee9abf5b9573e3fa8c77de030d0b12
   DynamicColor: 2f3fd61053684667bad9f03045dcf9a2a5a007ea
   Eureka: 2fb37bb50569c62ee3284689d5b7aca694b040e0
