@@ -10,7 +10,6 @@ import Foundation
 import Alamofire
 import RxAlamofire
 import RxSwift
-import Argo
 
 protocol RequestType: URLRequestConvertible {
     var method: Alamofire.Method { get }
