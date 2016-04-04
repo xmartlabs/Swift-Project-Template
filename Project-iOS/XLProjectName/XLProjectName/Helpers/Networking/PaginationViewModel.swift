@@ -12,7 +12,7 @@ import Argo
 import RxSwift
 import RxCocoa
 
-class PaginationViewModel<Element: Decodable where Element.DecodedType == Element> {
+class PaginationViewModel<Element: XLDecodable> {
     
     var paginationRequest: PaginationRequest<Element>
     typealias LoadingType = (Bool, String)

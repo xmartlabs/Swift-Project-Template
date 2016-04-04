@@ -14,7 +14,7 @@ import RxSwift
 
 extension Alamofire.Request {
     
-    public func rx_object<T: Decodable where T == T.DecodedType>(keyPath: String? = nil) -> Observable<T> {
+    public func rx_object<T: XLDecodable>(keyPath: String? = nil) -> Observable<T> {
         return Observable.create { [weak self] subscriber in
              self?.responseObject(keyPath) { (response: Response<T, NetworkError>) in
                 switch response.result {
@@ -31,7 +31,7 @@ extension Alamofire.Request {
         }.doOnError(NetworkManager.generalErrorHandler)
     }
     
-    public func rx_collection<T: Decodable where T == T.DecodedType>(collectionKeyPath:String? = nil) -> Observable<[T]> {
+    public func rx_collection<T: XLDecodable>(collectionKeyPath:String? = nil) -> Observable<[T]> {
         return Observable.create { [weak self] subscriber in
             self?.responseCollection(collectionKeyPath) { (response: Response<[T], NetworkError>) in
                 switch response.result {

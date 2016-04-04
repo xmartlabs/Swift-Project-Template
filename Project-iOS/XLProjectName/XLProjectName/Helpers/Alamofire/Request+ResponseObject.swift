@@ -13,17 +13,17 @@ import Crashlytics
 
 extension Request {
     
-    public func responseObject<T: Decodable where T == T.DecodedType>(keyPath: String? = nil, completionHandler: Response<T, NetworkError> -> Void) -> Self {
+    public func responseObject<T: XLDecodable>(keyPath: String? = nil, completionHandler: Response<T, NetworkError> -> Void) -> Self {
         let responseSerializer = ResponseSerializer<T, NetworkError> { request, response, data, error in
             return Request.serialize(request, response: response, data: data, error: error) { result, value in
                 DEBUGJson(value)
                 if let object = keyPath.map({ value.valueForKeyPath($0)}) ?? value {
-                    let decodedData = T.decode(JSON.parse(object))
-                    switch decodedData {
-                    case let .Failure(argoError):
-                        return .Failure(NetworkError.Parsing(error: argoError, request: request, response: response, json: data))
-                    case let .Success(object):
-                        return .Success(object)
+                    do {
+                        let decodedData = try T.decode(object)
+                        return .Success(decodedData)
+                    }
+                    catch let error {
+                        return .Failure(NetworkError.Parsing(error: error, request: request, response: response, json: data))
                     }
                 } else {
                     let failureReason = "Json response could not be found"
@@ -36,21 +36,20 @@ extension Request {
     }
 
     
-    public func responseCollection<T: Decodable where T == T.DecodedType >(collectionKeyPath: String? = nil, completionHandler: Response<[T], NetworkError> -> Void) -> Self {
+    public func responseCollection<T: XLDecodable>(collectionKeyPath: String? = nil, completionHandler: Response<[T], NetworkError> -> Void) -> Self {
         let responseSerializer = ResponseSerializer<[T], NetworkError> { request, response, data, error in
             return Request.serialize(request, response: response, data: data, error: error) { result, value in
                 if let representation = (collectionKeyPath.map { value.valueForKeyPath($0) } ?? value) as? [[String: AnyObject]] {
                     DEBUGJson(value)
                     var result = [T]()
                     for userRepresentation in representation {
-                        let decodedData = T.decode(JSON.parse(userRepresentation))
-                        
-                        switch decodedData {
-                        case let .Failure(argoError):
-                            Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: argoError.description), withAdditionalUserInfo: ["json": JSONStringify(value)])
-                            return .Failure(NetworkError.Parsing(error: argoError, request: request, response: response, json: data))
-                        case let .Success(object):
-                            result.append(object)
+                        do {
+                            let decodedData = try T.decode(userRepresentation)
+                            result.append(decodedData)
+                        }
+                        catch let error {
+                            Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: (error as? CustomStringConvertible)?.description ?? ""), withAdditionalUserInfo: ["json": JSONStringify(value)])
+                            return .Failure(NetworkError.Parsing(error: error, request: request, response: response, json: data))
                         }
                     }
                     return .Success(result)

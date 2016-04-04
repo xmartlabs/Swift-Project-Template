@@ -13,7 +13,7 @@ import SwiftDate
 import RealmSwift
 
 
-class Repository: Object {
+final class Repository: Object {
     
     dynamic var id: Int = Int.min
     dynamic var name: String = ""
@@ -74,7 +74,7 @@ class Repository: Object {
     }
 }
 
-extension Repository: Decodable {
+extension Repository: Decodable, XLDecodable {
 
     static func decode(j: JSON) -> Decoded<Repository> {
         let a = curry(Repository.init)

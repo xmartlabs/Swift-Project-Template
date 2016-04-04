@@ -7,13 +7,13 @@
 //
 
 import Foundation
-import Argo
+import Decodable
 import Curry
 import RealmSwift
 
 
 
-class User: Object {
+final class User: Object {
     
     dynamic var id: Int = Int.min
     dynamic var email: String?
@@ -45,16 +45,14 @@ class User: Object {
     }
 }
 
-extension User: Decodable {
+extension User: Decodable, XLDecodable {
 
-    static func decode(j: JSON) -> Decoded<User> {
-        let a = curry(User.init)
-            <^> j <| "id"
-            <*> j <|? "email"
-            <*> j <|? "avatar_url"  //>>- { NSURL.decode($0) })
-        return a
-            <*> j <|? "name" // Custom types that also conform to Decodable just work
-            <*> j <| "login" // Parse nested objects
-            //<*> j <||| "followers" // parse realm objects, actually not needed since List<T> is a constant and we are not able to assign it.
+    static func decode(j: AnyObject) throws -> User {
+        return try User(id: j => "id",
+                 email: j =>? "email",
+       avatarUrlString: j =>? "avatar_url",
+               company: j =>? "name",
+              username: j => "login")
     }
+    
 }

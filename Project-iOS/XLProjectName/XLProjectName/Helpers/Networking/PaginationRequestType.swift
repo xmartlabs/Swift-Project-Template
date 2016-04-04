@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Argo
 import Alamofire
 import RxSwift
 import Crashlytics
@@ -65,7 +64,7 @@ extension PaginationRequestType {
     }
 }
 
-extension PaginationRequestType where Response.Element: Decodable, Response.Element.DecodedType == Response.Element {
+extension PaginationRequestType where Response.Element: XLDecodable {
     
     func rx_collection() -> Observable<Response> {
         let myRequest = request
@@ -77,7 +76,7 @@ extension PaginationRequestType where Response.Element: Decodable, Response.Elem
     
 }
 
-struct PaginationRequest<Element: Decodable where Element.DecodedType == Element>: PaginationRequestType {
+struct PaginationRequest<Element: XLDecodable>: PaginationRequestType {
     
     typealias Response = PaginationResponse<Element>
     

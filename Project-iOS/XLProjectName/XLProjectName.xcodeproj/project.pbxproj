@@ -40,6 +40,7 @@
 		28C282461C7797CA003ECA4F /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282431C7797CA003ECA4F /* UIImageView.swift */; };
 		28C282491C7798B0003ECA4F /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282471C7798B0003ECA4F /* RepositoryModel.swift */; };
 		28C2824A1C7798B0003ECA4F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282481C7798B0003ECA4F /* UserModel.swift */; };
+		28D4E1711CB2DF8D004CAA2A /* ArgoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */; };
 		28D65F951C99D8AF008ED705 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D65F941C99D8AF008ED705 /* UIDevice.swift */; };
 		28E034DC1CA396C800BD52CE /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E034DB1CA396C800BD52CE /* NetworkError.swift */; };
 		28FEB24C1C9875F60027D470 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FEB24B1C9875F60027D470 /* UIApplication.swift */; };
@@ -113,6 +114,7 @@
 		28C282431C7797CA003ECA4F /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		28C282471C7798B0003ECA4F /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryModel.swift; path = Models/RepositoryModel.swift; sourceTree = "<group>"; };
 		28C282481C7798B0003ECA4F /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserModel.swift; path = Models/UserModel.swift; sourceTree = "<group>"; };
+		28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArgoAdapter.swift; path = Helpers/Argo/ArgoAdapter.swift; sourceTree = "<group>"; };
 		28D65F941C99D8AF008ED705 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		28E034DB1CA396C800BD52CE /* NetworkError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkError.swift; path = Helpers/Networking/NetworkError.swift; sourceTree = "<group>"; };
 		28FEB24B1C9875F60027D470 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 		283A74561C85FA1700E23F88 /* Argo */ = {
 			isa = PBXGroup;
 			children = (
+				28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */,
 				283020A71C86166A00E6EBC2 /* NSDate+Argo.swift */,
 				283A74571C85FA2F00E23F88 /* NSURL+Argo.swift */,
 				281731621C9B3AD8006237C7 /* RealmCollectionType+Argo.swift */,
@@ -718,6 +721,7 @@
 				283020AD1C86330500E6EBC2 /* RequestType.swift in Sources */,
 				281BF1A21C7B8EEF00809E3F /* RepositoryRequest.swift in Sources */,
 				28BFCE171CADF0B400C6962A /* R.generated.swift in Sources */,
+				28D4E1711CB2DF8D004CAA2A /* ArgoAdapter.swift in Sources */,
 				28FEB24E1C98BE840027D470 /* DeviceRequest.swift in Sources */,
 				283020B31C871B2600E6EBC2 /* Request+ResponseObject.swift in Sources */,
 				2859C1C21CA042E200D598B7 /* PaginationResponseType.swift in Sources */,
