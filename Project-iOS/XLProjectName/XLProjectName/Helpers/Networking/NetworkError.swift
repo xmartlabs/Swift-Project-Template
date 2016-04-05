@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Argo
 import Alamofire
 
 public enum NetworkError: ErrorType {

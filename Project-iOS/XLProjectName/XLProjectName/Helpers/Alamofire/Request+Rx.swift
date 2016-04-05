@@ -9,7 +9,6 @@
 import UIKit
 
 import Alamofire
-import Argo
 import RxSwift
 
 extension Alamofire.Request {
