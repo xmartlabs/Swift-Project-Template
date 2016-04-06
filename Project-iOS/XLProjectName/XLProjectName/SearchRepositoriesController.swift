@@ -14,12 +14,8 @@ import RxCocoa
 
 class SearchRepositoriesController: XLTableViewController {
     
-    private lazy var emptyStateLabel: UILabel = {
-        let emptyStateLabel = UILabel()
-        emptyStateLabel.text = ControllerConstants.NoTextMessage
-        emptyStateLabel.textAlignment = .Center
-        return emptyStateLabel
-    }()
+    @IBOutlet weak var emptyStateView: UIView!
+    @IBOutlet weak var emptyStateLabel: UILabel!
     
     lazy var viewModel: PaginationViewModel<Repository>  = { [unowned self] in
         return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.Repository.Search(), collectionKeyPath: "items"))
@@ -27,7 +23,7 @@ class SearchRepositoriesController: XLTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.backgroundView = emptyStateLabel
+        tableView.backgroundView = emptyStateView
         tableView.keyboardDismissMode = .OnDrag
         
         rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
@@ -40,12 +36,9 @@ class SearchRepositoriesController: XLTableViewController {
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
         
-        viewModel.loading
-            .drive(activityIndicatorView.rx_animating)
-            .addDisposableTo(disposeBag)
-        
-        
-        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx_text.asDriver()) { elements, loading, searchText in return loading || searchText.isEmpty ? [] : elements }
+        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx_text.asDriver(), viewModel.queryPending.asDriver()) {
+                elements, loading, searchText, queryPending in return loading || searchText.isEmpty || queryPending ? [] : elements
+            }
             .asDriver()
             .drive(tableView.rx_itemsWithCellIdentifier("Cell")) { _, repository, cell in
                 cell.textLabel?.text = repository.name
@@ -53,7 +46,7 @@ class SearchRepositoriesController: XLTableViewController {
             }
             .addDisposableTo(disposeBag)
         
-        searchBar.rx_text.filter { !$0.isEmpty }
+        searchBar.rx_text.skip(1)
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
         
@@ -65,14 +58,19 @@ class SearchRepositoriesController: XLTableViewController {
             .addDisposableTo(disposeBag)
         tableView.addSubview(refreshControl)
         
+        viewModel.loading
+            .filter { [weak self] _ in !refreshControl.refreshing && !(self?.searchBar.text?.isEmpty ?? false) }
+            .drive(activityIndicatorView.rx_animating)
+            .addDisposableTo(disposeBag)
+        
         viewModel.firstPageLoading
             .filter { $0 == false && refreshControl.refreshing }
             .driveNext { _ in refreshControl.endRefreshing() }
             .addDisposableTo(disposeBag)
         
-        Driver.combineLatest(viewModel.emptyState, searchBar.rx_text.asDriver()) { $0 ||  $1.isEmpty }
+        Driver.combineLatest(viewModel.emptyState, searchBar.rx_text.asDriver(), viewModel.queryPending.asDriver()) { ($0 ||  $1.isEmpty) && !$2 }
             .driveNext { [weak self] state in
-                self?.emptyStateLabel.hidden = !state
+                self?.emptyStateView.hidden = !state
                 self?.emptyStateLabel.text = (self?.searchBar.text?.isEmpty ?? true) ? ControllerConstants.NoTextMessage : ControllerConstants.NoRepositoriesMessage
             }
             .addDisposableTo(disposeBag)

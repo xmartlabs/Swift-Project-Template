@@ -21,7 +21,8 @@ class PaginationViewModel<Element: XLDecodable> {
     let queryTrigger = PublishSubject<String>()
     let filterTrigger = PublishSubject<FilterType>()
     let networkErrorTrigger = PublishSubject<NetworkError>()
-
+    
+    let queryPending = Variable<Bool>(false)
     let hasNextPage = Variable<Bool>(false)
     let fullloading = Variable<LoadingType>((false, "1"))
     let elements = Variable<[Element]>([])
@@ -38,10 +39,12 @@ class PaginationViewModel<Element: XLDecodable> {
     private func setUpForceRefresh() {
         
         queryTrigger
+            .doOnNext { [weak self] _ in self?.queryPending.value = true }
             .throttle(0.25, scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .doOnNext { [weak self] queryString in
                 guard let mySelf = self else { return }
+                mySelf.queryPending.value = false
                 mySelf.bindPaginationRequest(mySelf.paginationRequest.routeWithQuery(queryString), nextPage: nil)
             }
             .map { _ in false }
