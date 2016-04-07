@@ -9,6 +9,7 @@
 import UIKit
 
 import AlamofireImage
+import Alamofire
 import RxSwift
 import RealmSwift
 
@@ -93,7 +94,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         if let image = followerImages[follower.username] {
             cell.imageView?.image = image
         } else if let avatar = follower.avatarUrl {
-            NetworkManager.request(.GET, avatar)
+            MyManager.singleton.request(.GET, avatar)
                 .validate()
                 .rx_image()
                 .observeOn(MainScheduler.instance)

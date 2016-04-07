@@ -11,32 +11,6 @@ import Alamofire
 import Crashlytics
 
 public class NetworkManager {
-
-    public static let networkManager: Alamofire.Manager = {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        // Customize default headers, do not add authentication or content type here
-//        var headers = [String: String]()
-//        headers.merge(Manager.defaultHTTPHeaders)
-//        cfg.HTTPAdditionalHeaders = headers
-        return Alamofire.Manager(configuration: configuration)
-    }()
-
-    static func request(URLRequest: URLRequestConvertible) -> Alamofire.Request {
-        let request = networkManager.request(URLRequest).validate()
-        DEBUGLog(request.debugDescription)
-        return request
-    }
-    
-    static func request(
-        method: Alamofire.Method,
-        _ URLString: URLStringConvertible,
-        parameters: [String: AnyObject]? = nil,
-        encoding: ParameterEncoding = .URL,
-        headers: [String: String]? = nil) -> Alamofire.Request {
-        let request = networkManager.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers)
-        DEBUGLog(request.debugDescription)
-        return request
-    }
     
     public static func generalErrorHandler(error: ErrorType) {
         // Trick to get the userInfo data (note that ErrorType always can be casted to NSError)
@@ -57,6 +31,8 @@ public class NetworkManager {
         
         CLSNSLogv("Service call error: %@", getVaList([nserror]))
         Crashlytics.sharedInstance().recordError(nserror)
+        
+//        Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: (error as? CustomStringConvertible)?.description ?? ""), withAdditionalUserInfo: ["json": JSONStringify(value)])
     }
     
 }

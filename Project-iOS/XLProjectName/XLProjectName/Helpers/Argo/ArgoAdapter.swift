@@ -10,12 +10,9 @@ import Decodable
 import Result
 import Argo
 import Foundation
+import Opera
 
-public protocol XLDecodable {
-    static func decode(json: AnyObject) throws -> Self
-}
-
-extension Argo.Decodable where Self.DecodedType == Self, Self: XLDecodable {
+extension Argo.Decodable where Self.DecodedType == Self, Self: OperaDecodable {
     static func decode(json: AnyObject) throws -> Self {
         let decoded = decode(JSON.parse(json))
         switch decoded {

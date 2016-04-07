@@ -14,6 +14,11 @@ PODS:
   - Fabric (1.6.7)
   - KeychainAccess (2.3.5)
   - Nimble (3.2.0)
+  - Opera (1.0.0):
+    - Alamofire (~> 3.0)
+    - RxCocoa (~> 2.0)
+    - RxSwift (~> 2.0)
+    - WebLinking (~> 1.0)
   - Quick (0.9.1)
   - R.swift (2.1.0):
     - R.swift.Library (~> 2.0.0)
@@ -50,6 +55,7 @@ DEPENDENCIES:
   - Fabric
   - KeychainAccess (~> 2.0)
   - Nimble (~> 3.1)
+  - Opera (from `git@github.com:xmartlabs/Opera.git`, branch `master`)
   - Quick (~> 0.9)
   - R.swift (~> 2.0)
   - RealmSwift
@@ -62,13 +68,19 @@ DEPENDENCIES:
   - XLSwiftKit (from `git@github.com:xmartlabs/XLSwiftKit.git`, branch `master`)
 
 EXTERNAL SOURCES:
+  Opera:
+    :branch: master
+    :git: git@github.com:xmartlabs/Opera.git
   XLSwiftKit:
     :branch: master
     :git: git@github.com:xmartlabs/XLSwiftKit.git
 
 CHECKOUT OPTIONS:
+  Opera:
+    :commit: 16a11ad3fd92e1573d3be8ec845f5c9187c60794
+    :git: git@github.com:xmartlabs/Opera.git
   XLSwiftKit:
-    :commit: 948ca7b8be9d1fac1854c5cb472dad67f1af61a2
+    :commit: 679a736db1108502fe044f1284c1aa9c3c381794
     :git: git@github.com:xmartlabs/XLSwiftKit.git
 
 SPEC CHECKSUMS:
@@ -85,6 +97,7 @@ SPEC CHECKSUMS:
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   KeychainAccess: e283c1981a6c5655e1984cd411c6faf16fa165ae
   Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
+  Opera: a13c90a76c0e8408745fd334ea79d91061b8f625
   Quick: a5221fc21788b6aeda934805e68b061839bc3165
   R.swift: efff131531b5cf142e28fd94957806ff71ccbcf2
   R.swift.Library: 9f4b2d12040daa1ffe336d8f7e1574f73721fd01

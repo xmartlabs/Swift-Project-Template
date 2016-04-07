@@ -10,7 +10,7 @@ import Foundation
 import Decodable
 import Curry
 import RealmSwift
-
+import Opera
 
 
 final class User: Object {
@@ -45,7 +45,7 @@ final class User: Object {
     }
 }
 
-extension User: Decodable, XLDecodable {
+extension User: Decodable, OperaDecodable {
 
     static func decode(j: AnyObject) throws -> User {
         return try User(id: j => "id",

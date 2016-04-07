@@ -10,6 +10,7 @@ import Foundation
 import RxSwift
 import UIKit
 import RxCocoa
+import Opera
 
 struct RepositoriesFilter {
 
@@ -69,11 +70,13 @@ class RepositoriesController: XLTableViewController {
         searchBar.scopeButtonTitles = ["Created", "Updated", "Pushed", "FullName"]
         searchBar.selectedScopeButtonIndex = 1
 
-        rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
-            .map { _ in false }
-            .bindTo(viewModel.refreshTrigger)
-            .addDisposableTo(disposeBag)
-
+//        rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
+//            .map { _ in false }
+//            .bindTo(viewModel.refreshTrigger)
+//            .addDisposableTo(disposeBag)
+        
+        
+    
         tableView.rx_reachedBottom
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
@@ -103,12 +106,13 @@ class RepositoriesController: XLTableViewController {
             .bindTo(viewModel.filterTrigger)
             .addDisposableTo(disposeBag)
 
-        tableView.rx_contentOffset.subscribeNext { _ in
-            if searchBar.isFirstResponder() {
-               searchBar.resignFirstResponder()
-            }
-        }
-        .addDisposableTo(disposeBag)
+//    
+//        tableView.rx_contentOffset.subscribeNext { _ in
+//            if searchBar.isFirstResponder() {
+//               searchBar.resignFirstResponder()
+//            }
+//        }
+//        .addDisposableTo(disposeBag)
 
         let refreshControl = UIRefreshControl()
         refreshControl.rx_valueChanged
@@ -127,6 +131,11 @@ class RepositoriesController: XLTableViewController {
             .filter { $0 }
             .driveNext { [weak self] _ in self?.showEmptyStateView() }
             .addDisposableTo(disposeBag)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        Observable.just(false).bindTo(viewModel.refreshTrigger).addDisposableTo(disposeBag)
     }
 
     @IBAction func clearData(sender: AnyObject) {

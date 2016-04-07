@@ -8,6 +8,7 @@
 
 import Foundation
 import Alamofire
+import Opera
 
 extension Route {
     

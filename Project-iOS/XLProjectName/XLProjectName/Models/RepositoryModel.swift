@@ -11,6 +11,7 @@ import Argo
 import Curry
 import SwiftDate
 import RealmSwift
+import Opera
 
 
 final class Repository: Object {
@@ -74,7 +75,7 @@ final class Repository: Object {
     }
 }
 
-extension Repository: Decodable, XLDecodable {
+extension Repository: Decodable, OperaDecodable {
 
     static func decode(j: JSON) -> Decoded<Repository> {
         let a = curry(Repository.init)

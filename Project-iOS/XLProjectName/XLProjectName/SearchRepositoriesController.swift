@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
-import Eureka
 import RxSwift
 import RxCocoa
+import Opera
 
 class SearchRepositoriesController: XLTableViewController {
     

@@ -17,7 +17,5 @@ class XLTableViewController: UIViewController {
     @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    let disposeBag = DisposeBag()
-
-    
+    var disposeBag = DisposeBag()
 }
