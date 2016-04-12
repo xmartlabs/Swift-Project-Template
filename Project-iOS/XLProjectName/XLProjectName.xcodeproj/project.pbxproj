@@ -13,16 +13,15 @@
 		281BF1A21C7B8EEF00809E3F /* RepositoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281BF19E1C7B8EEF00809E3F /* RepositoryRequest.swift */; };
 		281BF1A31C7B8EEF00809E3F /* UserRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281BF19F1C7B8EEF00809E3F /* UserRequest.swift */; };
 		282D1ED01CA053EF001C7B8F /* RepositoriesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282D1ECF1CA053EF001C7B8F /* RepositoriesController.swift */; };
-		283020A91C86166A00E6EBC2 /* NSDate+Argo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020A71C86166A00E6EBC2 /* NSDate+Argo.swift */; };
 		283020AF1C8633CE00E6EBC2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020AE1C8633CE00E6EBC2 /* NetworkManager.swift */; };
 		283A74511C84DF2A00E23F88 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C2823A1C7797BA003ECA4F /* LoginController.swift */; };
-		283A74581C85FA2F00E23F88 /* NSURL+Argo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283A74571C85FA2F00E23F88 /* NSURL+Argo.swift */; };
 		2867E82B1C74C7D400FCEBBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2867E82A1C74C7D400FCEBBD /* AppDelegate.swift */; };
 		2867E8301C74C7D400FCEBBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2867E82E1C74C7D400FCEBBD /* Main.storyboard */; };
 		2867E8321C74C7D400FCEBBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2867E8311C74C7D400FCEBBD /* Assets.xcassets */; };
 		2867E8351C74C7D400FCEBBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2867E8331C74C7D400FCEBBD /* LaunchScreen.storyboard */; };
 		2867E8401C74C7D400FCEBBD /* UnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2867E83F1C74C7D400FCEBBD /* UnitTests.swift */; };
 		2867E84B1C74C7D400FCEBBD /* UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2867E84A1C74C7D400FCEBBD /* UITests.swift */; };
+		286C92301CBD6AD300208E3B /* NSDate+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 286C922F1CBD6AD300208E3B /* NSDate+Decodable.swift */; };
 		28A6B9D61CB5F95900682BCE /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A6B9D51CB5F95900682BCE /* RequestType.swift */; };
 		28A6B9D81CB6271800682BCE /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28A6B9D71CB6271800682BCE /* Manager.swift */; };
 		28BFCE171CADF0B400C6962A /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 283020A31C86131000E6EBC2 /* R.generated.swift */; };
@@ -32,7 +31,6 @@
 		28C282461C7797CA003ECA4F /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282431C7797CA003ECA4F /* UIImageView.swift */; };
 		28C282491C7798B0003ECA4F /* RepositoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282471C7798B0003ECA4F /* RepositoryModel.swift */; };
 		28C2824A1C7798B0003ECA4F /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28C282481C7798B0003ECA4F /* UserModel.swift */; };
-		28D4E1711CB2DF8D004CAA2A /* ArgoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */; };
 		28D65F951C99D8AF008ED705 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D65F941C99D8AF008ED705 /* UIDevice.swift */; };
 		28FEB24C1C9875F60027D470 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FEB24B1C9875F60027D470 /* UIApplication.swift */; };
 		28FEB24E1C98BE840027D470 /* DeviceRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FEB24D1C98BE840027D470 /* DeviceRequest.swift */; };
@@ -71,9 +69,7 @@
 		281BF19F1C7B8EEF00809E3F /* UserRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequest.swift; sourceTree = "<group>"; };
 		282D1ECF1CA053EF001C7B8F /* RepositoriesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoriesController.swift; path = Controllers/RepositoriesController.swift; sourceTree = "<group>"; };
 		283020A31C86131000E6EBC2 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = R.generated.swift; path = "Helpers/R-Swift/R.generated.swift"; sourceTree = "<group>"; };
-		283020A71C86166A00E6EBC2 /* NSDate+Argo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Argo.swift"; path = "Helpers/Argo/NSDate+Argo.swift"; sourceTree = "<group>"; };
 		283020AE1C8633CE00E6EBC2 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = Helpers/Alamofire/NetworkManager.swift; sourceTree = "<group>"; };
-		283A74571C85FA2F00E23F88 /* NSURL+Argo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSURL+Argo.swift"; path = "Helpers/Argo/NSURL+Argo.swift"; sourceTree = "<group>"; };
 		2867E8271C74C7D400FCEBBD /* XLProjectName.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XLProjectName.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2867E82A1C74C7D400FCEBBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2867E82F1C74C7D400FCEBBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -86,6 +82,7 @@
 		2867E8461C74C7D400FCEBBD /* UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2867E84A1C74C7D400FCEBBD /* UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests.swift; sourceTree = "<group>"; };
 		2867E84C1C74C7D400FCEBBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		286C922F1CBD6AD300208E3B /* NSDate+Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Decodable.swift"; path = "Helpers/Decodable/NSDate+Decodable.swift"; sourceTree = "<group>"; };
 		28A6B9D51CB5F95900682BCE /* RequestType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RequestType.swift; path = Helpers/Networking/RequestType.swift; sourceTree = "<group>"; };
 		28A6B9D71CB6271800682BCE /* Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Manager.swift; path = Helpers/Networking/Manager.swift; sourceTree = "<group>"; };
 		28C2823A1C7797BA003ECA4F /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = Controllers/LoginController.swift; sourceTree = "<group>"; };
@@ -95,7 +92,6 @@
 		28C282431C7797CA003ECA4F /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		28C282471C7798B0003ECA4F /* RepositoryModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RepositoryModel.swift; path = Models/RepositoryModel.swift; sourceTree = "<group>"; };
 		28C282481C7798B0003ECA4F /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserModel.swift; path = Models/UserModel.swift; sourceTree = "<group>"; };
-		28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArgoAdapter.swift; path = Helpers/Argo/ArgoAdapter.swift; sourceTree = "<group>"; };
 		28D65F941C99D8AF008ED705 /* UIDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		28FEB24B1C9875F60027D470 /* UIApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		28FEB24D1C98BE840027D470 /* DeviceRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceRequest.swift; sourceTree = "<group>"; };
@@ -188,16 +184,6 @@
 			name = Alamofire;
 			sourceTree = "<group>";
 		};
-		283A74561C85FA1700E23F88 /* Argo */ = {
-			isa = PBXGroup;
-			children = (
-				28D4E1701CB2DF8D004CAA2A /* ArgoAdapter.swift */,
-				283020A71C86166A00E6EBC2 /* NSDate+Argo.swift */,
-				283A74571C85FA2F00E23F88 /* NSURL+Argo.swift */,
-			);
-			name = Argo;
-			sourceTree = "<group>";
-		};
 		2859C1BC1CA03E4300D598B7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,6 +249,14 @@
 			path = UITests;
 			sourceTree = "<group>";
 		};
+		286C922E1CBD691A00208E3B /* Decodable */ = {
+			isa = PBXGroup;
+			children = (
+				286C922F1CBD6AD300208E3B /* NSDate+Decodable.swift */,
+			);
+			name = Decodable;
+			sourceTree = "<group>";
+		};
 		28C282361C779580003ECA4F /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -273,11 +267,11 @@
 		28C282371C7795A2003ECA4F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				286C922E1CBD691A00208E3B /* Decodable */,
 				2859C1BC1CA03E4300D598B7 /* Networking */,
 				281731671C9C494C006237C7 /* Controllers */,
 				283020AB1C8632C200E6EBC2 /* Alamofire */,
 				283020A21C86130600E6EBC2 /* R-Swift */,
-				283A74561C85FA1700E23F88 /* Argo */,
 				28C282411C7797CA003ECA4F /* Extensions */,
 				28C282401C7797CA003ECA4F /* Constants.swift */,
 			);
@@ -669,7 +663,6 @@
 				540C55A01CADA18F002E1352 /* SearchRepositoriesController.swift in Sources */,
 				B20183FA1C906CC5005E8176 /* Request+Rx.swift in Sources */,
 				283020AF1C8633CE00E6EBC2 /* NetworkManager.swift in Sources */,
-				283A74581C85FA2F00E23F88 /* NSURL+Argo.swift in Sources */,
 				2817316B1C9C4BDA006237C7 /* XLTableViewController.swift in Sources */,
 				28A6B9D81CB6271800682BCE /* Manager.swift in Sources */,
 				28C2823E1C7797BA003ECA4F /* RepositoryController.swift in Sources */,
@@ -682,13 +675,12 @@
 				281731691C9C4BBC006237C7 /* XLViewController.swift in Sources */,
 				281BF1A21C7B8EEF00809E3F /* RepositoryRequest.swift in Sources */,
 				28BFCE171CADF0B400C6962A /* R.generated.swift in Sources */,
-				28D4E1711CB2DF8D004CAA2A /* ArgoAdapter.swift in Sources */,
 				28FEB24E1C98BE840027D470 /* DeviceRequest.swift in Sources */,
 				28C2823F1C7797BA003ECA4F /* UserController.swift in Sources */,
 				281BF1A31C7B8EEF00809E3F /* UserRequest.swift in Sources */,
 				2867E82B1C74C7D400FCEBBD /* AppDelegate.swift in Sources */,
-				283020A91C86166A00E6EBC2 /* NSDate+Argo.swift in Sources */,
 				28C282491C7798B0003ECA4F /* RepositoryModel.swift in Sources */,
+				286C92301CBD6AD300208E3B /* NSDate+Decodable.swift in Sources */,
 				28C282441C7797CA003ECA4F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

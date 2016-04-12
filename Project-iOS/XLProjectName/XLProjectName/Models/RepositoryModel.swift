@@ -7,10 +7,9 @@
 //
 
 import Foundation
-import Argo
-import Curry
 import SwiftDate
 import RealmSwift
+import Decodable
 import Opera
 
 
@@ -77,18 +76,17 @@ final class Repository: Object {
 
 extension Repository: Decodable, OperaDecodable {
 
-    static func decode(j: JSON) -> Decoded<Repository> {
-        let a = curry(Repository.init)
-            <^> j <| "id"
-            <*> j <| "name"
-            <*> j <|? "description"
-            <*> j <|? ["owner", "login"]
-        return a
-            <*> j <|? "language"
-            <*> j <| "open_issues_count"
-            <*> j <| "stargazers_count"
-            <*> j <| "forks_count"
-            <*> j <| "url"     // >>- { NSURL.decode($0) })
-            <*> (j <| "created_at" >>- { NSDate.decode($0) })
+
+    static func decode(j: AnyObject) throws -> Repository {
+        return try Repository(   id: j => "id",
+                               name: j => "name",
+                               desc: j =>? "description",
+                            company: j =>? ["owner", "login"],
+                           language: j =>? "language",
+                         openIssues: j => "open_issues_count",
+                    stargazersCount: j => "stargazers_count",
+                         forksCount: j => "forks_count",
+                          urlString: j => "name",
+                          createdAt: j => "created_at")
     }
 }
