@@ -8,7 +8,6 @@
 
 import Foundation
 import Decodable
-import Curry
 import RealmSwift
 import Opera
 

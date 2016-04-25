@@ -2,14 +2,14 @@
 
 import Foundation
 
-let templateFrameworkName = "XLProductName"
+let templateProjectName = "XLProjectName"
 let templateBundleDomain = "XLOrganizationIdentifier"
 let templateAuthor = "XLAuthorName"
 let templateAuthorEmail = "XLAuthorEmail"
 let templateUserName = "XLUserName"
 let templateOrganizationName = "XLOrganizationName"
 
-var frameworkName = "MyFramework"
+var projectName = "MyProject"
 var bundleDomain = "com.xmartlabs"
 var author = "Xmartlabs SRL"
 var authorEmail = "swift@xmartlabs.com"
@@ -20,8 +20,8 @@ let fileManager = NSFileManager.defaultManager()
 
 let runScriptPathURL = NSURL(fileURLWithPath: fileManager.currentDirectoryPath, isDirectory: true)
 let currentScriptPathURL = NSURL(fileURLWithPath: NSURL(fileURLWithPath: Process.arguments[0], relativeToURL: runScriptPathURL).URLByDeletingLastPathComponent!.path!, isDirectory: true)
-let iOSFrameworkTemplateForlderURL = NSURL(fileURLWithPath: "Project-iOS", relativeToURL: currentScriptPathURL)
-var newFrameworkFolderPath = ""
+let iOSProjectTemplateForlderURL = NSURL(fileURLWithPath: "Project-iOS", relativeToURL: currentScriptPathURL)
+var newProjectFolderPath = ""
 let ignoredFiles = [".DS_Store", "UserInterfaceState.xcuserstate"]
 
 extension NSURL {
@@ -38,8 +38,8 @@ extension NSURL {
   }
 
   func renameIfNeeded() {
-    if let _ = fileName.rangeOfString("XLProductName") {
-      let renamedFileName = fileName.stringByReplacingOccurrencesOfString("XLProductName", withString: frameworkName)
+    if let _ = fileName.rangeOfString("XLProjectName") {
+      let renamedFileName = fileName.stringByReplacingOccurrencesOfString("XLProjectName", withString: projectName)
       try! NSFileManager.defaultManager().moveItemAtURL(self, toURL: NSURL(fileURLWithPath: renamedFileName, relativeToURL: URLByDeletingLastPathComponent))
     }
   }
@@ -49,12 +49,12 @@ extension NSURL {
       print("ERROR READING: \(self)")
       return
     }
-    var newContent = content.stringByReplacingOccurrencesOfString(templateFrameworkName, withString: frameworkName)
+    var newContent = content.stringByReplacingOccurrencesOfString(templateProjectName, withString: projectName)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateBundleDomain, withString: bundleDomain)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthor, withString: author)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateUserName, withString: userName)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthorEmail, withString: authorEmail)
-    newContent = newContent.stringByReplacingOccurrencesOfString(templateOrganizationName, withString: organizationName)
+    //newContent = newContent.stringByReplacingOccurrencesOfString(templateOrganizationName, withString: organizationName)
     try! newContent.writeToURL(self, atomically: true, encoding: NSUTF8StringEncoding)
   }
 }
@@ -72,10 +72,10 @@ func printErrorAndExit<T>(message: T) {
   exit(1)
 }
 
-func checkThatFrameworkForlderCanBeCreated(frameworkURL: NSURL){
+func checkThatProjectForlderCanBeCreated(projectURL: NSURL){
   var isDirectory: ObjCBool = true
-  if fileManager.fileExistsAtPath(frameworkURL.path!, isDirectory: &isDirectory){
-      printErrorAndExit("\(frameworkName) \(isDirectory.boolValue ? "folder already" : "file") exists in \(runScriptPathURL.path) directory, please delete it and try again")
+  if fileManager.fileExistsAtPath(projectURL.path!, isDirectory: &isDirectory){
+      printErrorAndExit("\(projectName) \(isDirectory.boolValue ? "folder already" : "file") exists in \(runScriptPathURL.path) directory, please delete it and try again")
   }
 }
 
@@ -83,7 +83,7 @@ func shell(args: String...) -> (output: String, exitCode: Int32) {
     let task = NSTask()
     task.launchPath = "/usr/bin/env"
     task.arguments = args
-    task.currentDirectoryPath = newFrameworkFolderPath
+    task.currentDirectoryPath = newProjectFolderPath
     let pipe = NSPipe()
     task.standardOutput = pipe
     task.launch()
@@ -99,14 +99,14 @@ func prompt(message: String, defaultValue: String) -> String {
   return line == nil || line == "" ? defaultValue : line!
 }
 
-print("\nLet's go over some question to create your framework base project!")
+print("\nLet's go over some question to create your base project code!")
 
-frameworkName = prompt("Framework name", defaultValue: frameworkName)
+projectName = prompt("Project name", defaultValue: projectName)
 
 // Check if folder already exists
-let newFrameworkFolderURL = NSURL(fileURLWithPath: frameworkName, relativeToURL: runScriptPathURL)
-newFrameworkFolderPath = newFrameworkFolderURL.path!
-checkThatFrameworkForlderCanBeCreated(newFrameworkFolderURL)
+let newProjectFolderURL = NSURL(fileURLWithPath: projectName, relativeToURL: runScriptPathURL)
+newProjectFolderPath = newProjectFolderURL.path!
+checkThatProjectForlderCanBeCreated(newProjectFolderURL)
 
 bundleDomain = prompt("Bundle domain", defaultValue: bundleDomain)
 author       = prompt("Author", defaultValue: author)
@@ -114,34 +114,34 @@ authorEmail  = prompt("Author Email", defaultValue: authorEmail)
 userName     = prompt("Github username", defaultValue: userName)
 organizationName = prompt("Organization Name", defaultValue: organizationName)
 
-// Copy template folder to a new folder inside run script url called frameworkName
+// Copy template folder to a new folder inside run script url called projectName
 do {
-  try fileManager.copyItemAtURL(iOSFrameworkTemplateForlderURL, toURL: newFrameworkFolderURL)
+  try fileManager.copyItemAtURL(iOSProjectTemplateForlderURL, toURL: newProjectFolderURL)
 } catch let error as NSError {
   printErrorAndExit(error.localizedDescription)
 }
 
 // rename files and update content
-let enumerator = fileManager.enumeratorAtURL(newFrameworkFolderURL, includingPropertiesForKeys: [NSURLNameKey, NSURLIsDirectoryKey], options: [], errorHandler: nil)!
-var frameworkDirectories = [NSURL]()
-print("\nCreating \(frameworkName) ...")
+let enumerator = fileManager.enumeratorAtURL(newProjectFolderURL, includingPropertiesForKeys: [NSURLNameKey, NSURLIsDirectoryKey], options: [], errorHandler: nil)!
+var directories = [NSURL]()
+print("\nCreating \(projectName) ...")
 while let fileURL = enumerator.nextObject() as? NSURL {
     guard !ignoredFiles.contains(fileURL.fileName) else { continue }
     if fileURL.isDirectory {
-      frameworkDirectories.append(fileURL)
+      directories.append(fileURL)
     }
     else {
       fileURL.updateContent()
       fileURL.renameIfNeeded()
     }
 }
-for fileURL in frameworkDirectories.reverse() {
+for fileURL in directories.reverse() {
   fileURL.renameIfNeeded()
 }
 
-print(shell("carthage", "update", "--platform", "iOS").output)
 print(shell("git", "init").output)
 print(shell("git", "add", ".").output)
 print(shell("git", "commit", "-m", "'Initial commit'").output)
-print(shell("git", "remote", "add", "origin", "git@github.com:\(userName)/\(frameworkName).git").output)
-print(shell("open", "\(frameworkName).xcworkspace").output)
+print(shell("git", "remote", "add", "origin", "git@github.com:\(userName)/\(projectName).git").output)
+print(shell("pod", "install", "--project-directory=\(projectName)").output)
+print(shell("open", "\(projectName)/\(projectName).xcworkspace").output)
