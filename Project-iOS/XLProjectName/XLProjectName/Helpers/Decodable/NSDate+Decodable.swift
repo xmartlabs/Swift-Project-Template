@@ -2,8 +2,8 @@
 //  NSDate+Decodable.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL on 4/12/16. ( http://xmartlabs.com )
-//    Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Created by XLAuthorName ( XLAuthorWebsite )
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
 import Foundation

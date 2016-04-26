@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL ( http://xmartlabs.com )
+//  Created by XLAuthorName ( XLAuthorWebsite )
 //  Copyright (c) 2016 XLOrganizationName. All rights reserved.
 //
 

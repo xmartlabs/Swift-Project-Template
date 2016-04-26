@@ -2,8 +2,8 @@
 //  IssuesController.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL ( http://xmartlabs.com )
-//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
+//  Created by XLAuthorName ( XLAuthorWebsite )
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
 import UIKit

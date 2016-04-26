@@ -50,3 +50,4 @@ Project-iOS/Pods
 # Carthage/Checkouts
 
 Carthage/Build
+Project-iOS/XLProjectName/Podfile.lock

@@ -1,26 +1,10 @@
+//
 //  Manager.swift
-//  Example-iOS ( https://github.com/xmartlabs/Example-iOS )
+//  XLProjectName
 //
-//  Copyright (c) 2016 Xmartlabs SRL ( http://xmartlabs.com )
+//  Created by XLAuthorName ( XLAuthorWebsite )
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
 
 import Foundation
 import Alamofire
@@ -57,3 +41,28 @@ class MyManager: Alamofire.Manager {
         return result
     }
 }
+
+final class Route {}
+
+//public static func generalErrorHandler(error: ErrorType) {
+//    // Trick to get the userInfo data (note that ErrorType always can be casted to NSError)
+//    let nserror =  ((error as Any) as? NSError) ?? (error as NSError)
+//    
+//    if nserror.code == NSURLErrorNotConnectedToInternet {
+//        // No internet connection, do something
+//        DEBUGLog("No internet access")
+//    } else if nserror.domain == Alamofire.Error.Domain {
+//        if nserror.code == Alamofire.Error.Code.StatusCodeValidationFailed.rawValue {
+//            // HTTP status code error (401, 404, etc)
+//            DEBUGLog("Service error")
+//        } else {
+//            // Some error with the response
+//            DEBUGLog("Response error")
+//        }
+//    }
+//    
+//    CLSNSLogv("Service call error: %@", getVaList([nserror]))
+//    Crashlytics.sharedInstance().recordError(nserror)
+//    
+//    Crashlytics.sharedInstance().recordError(Error.errorWithCode(.JSONSerializationFailed, failureReason: (error as? CustomStringConvertible)?.description ?? ""), withAdditionalUserInfo: ["json": JSONStringify(value)])
+//}

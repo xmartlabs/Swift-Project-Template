@@ -2,8 +2,8 @@
 //  RepositoryController.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL ( http://xmartlabs.com )
-//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
+//  Created by XLAuthorName ( XLAuthorWebsite )
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
 
@@ -33,9 +33,9 @@ public class RepositoryController: UIViewController {
         descriptionLabel.text = repository.desc
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .Center
-        starImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")
-        forkImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")
-        issueImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")
+        starImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")!)
+        forkImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")!)
+        issueImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")!)
         starLabel.text = String(repository.stargazersCount ?? 0)
         issueLabel.text = String(repository.openIssues ?? 0)
         forkLabel.text = String(repository.forksCount ?? 0)

@@ -5,14 +5,14 @@ import Foundation
 let templateProjectName = "XLProjectName"
 let templateBundleDomain = "XLOrganizationIdentifier"
 let templateAuthor = "XLAuthorName"
-let templateAuthorEmail = "XLAuthorEmail"
+let templateAuthorWebsite = "XLAuthorWebsite"
 let templateUserName = "XLUserName"
 let templateOrganizationName = "XLOrganizationName"
 
 var projectName = "MyProject"
 var bundleDomain = "com.xmartlabs"
 var author = "Xmartlabs SRL"
-var authorEmail = "swift@xmartlabs.com"
+var authorWebsite = "https://xmartlabs.com"
 var userName = "xmartlabs"
 var organizationName = "Xmartlabs SRL"
 
@@ -53,7 +53,7 @@ extension NSURL {
     newContent = newContent.stringByReplacingOccurrencesOfString(templateBundleDomain, withString: bundleDomain)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthor, withString: author)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateUserName, withString: userName)
-    newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthorEmail, withString: authorEmail)
+    newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthorWebsite, withString: authorWebsite)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateOrganizationName, withString: organizationName)
     try! newContent.writeToURL(self, atomically: true, encoding: NSUTF8StringEncoding)
   }
@@ -110,7 +110,7 @@ checkThatProjectForlderCanBeCreated(newProjectFolderURL)
 
 bundleDomain = prompt("Bundle domain", defaultValue: bundleDomain)
 author       = prompt("Author", defaultValue: author)
-authorEmail  = prompt("Author Email", defaultValue: authorEmail)
+authorWebsite  = prompt("Author Website", defaultValue: authorWebsite)
 userName     = prompt("Github username", defaultValue: userName)
 organizationName = prompt("Organization Name", defaultValue: organizationName)
 
@@ -143,5 +143,5 @@ print(shell("git", "init").output)
 print(shell("git", "add", ".").output)
 print(shell("git", "commit", "-m", "'Initial commit'").output)
 print(shell("git", "remote", "add", "origin", "git@github.com:\(userName)/\(projectName).git").output)
-//print(shell("pod", "install", "--project-directory=\(projectName)").output)
+print(shell("pod", "install", "--project-directory=\(projectName)").output)
 print(shell("open", "\(projectName)/\(projectName).xcworkspace").output)

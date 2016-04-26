@@ -2,7 +2,7 @@
 //  RepositoriesController.swift
 //  XLProjectName
 //
-//  Created by Xmartlabs SRL on 3/21/16. ( http://xmartlabs.com )
+//  Created by XLAuthorName ( XLAuthorWebsite )
 //  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
