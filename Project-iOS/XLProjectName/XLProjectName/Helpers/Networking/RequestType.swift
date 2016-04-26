@@ -10,9 +10,9 @@ import Foundation
 import Opera
 import Alamofire
 
-extension RequestType {
-    
+extension RouteType {
+
     var baseURL: NSURL { return Constants.Network.baseUrl }
     var manager: Alamofire.Manager { return MyManager.singleton  }
-    
+
 }
