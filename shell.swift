@@ -54,7 +54,7 @@ extension NSURL {
     newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthor, withString: author)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateUserName, withString: userName)
     newContent = newContent.stringByReplacingOccurrencesOfString(templateAuthorEmail, withString: authorEmail)
-    //newContent = newContent.stringByReplacingOccurrencesOfString(templateOrganizationName, withString: organizationName)
+    newContent = newContent.stringByReplacingOccurrencesOfString(templateOrganizationName, withString: organizationName)
     try! newContent.writeToURL(self, atomically: true, encoding: NSUTF8StringEncoding)
   }
 }
@@ -143,5 +143,5 @@ print(shell("git", "init").output)
 print(shell("git", "add", ".").output)
 print(shell("git", "commit", "-m", "'Initial commit'").output)
 print(shell("git", "remote", "add", "origin", "git@github.com:\(userName)/\(projectName).git").output)
-print(shell("pod", "install", "--project-directory=\(projectName)").output)
+//print(shell("pod", "install", "--project-directory=\(projectName)").output)
 print(shell("open", "\(projectName)/\(projectName).xcworkspace").output)

@@ -55,7 +55,7 @@ class RepositoriesController: XLTableViewController {
         return filters
     }()
 
-    lazy var viewModel: PaginationViewModel<Repository>  = { [unowned self] in
+    lazy var viewModel: PaginationViewModel<PaginationRequest<Repository>>  = { [unowned self] in
         return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.User.Repositories(username: self.user.username), filter: self.filters))
     }()
 

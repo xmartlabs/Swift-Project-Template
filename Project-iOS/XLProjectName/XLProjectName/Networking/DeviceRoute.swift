@@ -13,7 +13,7 @@ import Opera
 
 extension Route {
     
-    enum Device: RequestType {
+    enum Device: RouteType {
 
         case Update(token: String)
         case Remove

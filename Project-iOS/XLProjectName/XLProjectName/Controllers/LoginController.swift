@@ -2,7 +2,7 @@
 //  MainViewController.swift
 //  XLProjectName
 //
-//  Created by Federico Ojeda on 3/31/16.
+//  Created by Xmartlabs SRL ( http://xmartlabs.com )
 //  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 

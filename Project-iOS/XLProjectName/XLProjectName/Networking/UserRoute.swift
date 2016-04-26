@@ -12,7 +12,7 @@ import Opera
 
 extension Route {
 
-    enum User: RequestType, URLRequestSetup {
+    enum User: RouteType, URLRequestSetup {
 
         case Login(username: String, password: String)
         case GetInfo(username: String)

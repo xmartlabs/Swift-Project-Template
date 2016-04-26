@@ -12,7 +12,7 @@ import Opera
 
 extension Route {
     
-    enum Repository: RequestType {
+    enum Repository: RouteType {
         
         case GetInfo(owner: String, repo: String)
         case Search()
