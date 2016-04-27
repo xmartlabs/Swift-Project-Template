@@ -5,9 +5,9 @@ before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-- cd Project-iOS && carthage update --platform iOS
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+- cd Project-iOS && carthage update --platform iOS && cd XLProjectName && pod install
 
 script:
-- xctool clean build -project Project-iOS/XLProjectName.xcodeproj -scheme XLProjectName -sdk iphonesimulator
-- xctool test -project Project-iOS/XLProjectName.xcodeproj -scheme XLProjectName -sdk iphonesimulator
+- xctool clean build -project XLProjectName.xcodeproj -scheme XLProjectName -sdk iphonesimulator
+- xctool test -project XLProjectName.xcodeproj -scheme XLProjectName -sdk iphonesimulator
