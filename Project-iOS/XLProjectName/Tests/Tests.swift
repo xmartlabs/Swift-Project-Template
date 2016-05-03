@@ -7,7 +7,6 @@
 //
 
 import XCTest
-@testable import XLProjectName
 
 class Tests: XCTestCase {
     

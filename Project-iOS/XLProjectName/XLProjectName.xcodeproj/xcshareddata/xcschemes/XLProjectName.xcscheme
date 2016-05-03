@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2867E83A1C74C7D400FCEBBD"
+               BlueprintIdentifier = "289AB3EB1CD3266F008DB4B6"
                BuildableName = "UnitTests.xctest"
                BlueprintName = "UnitTests"
                ReferencedContainer = "container:XLProjectName.xcodeproj">
@@ -45,6 +45,16 @@
                BlueprintIdentifier = "2867E8451C74C7D400FCEBBD"
                BuildableName = "UITests.xctest"
                BlueprintName = "UITests"
+               ReferencedContainer = "container:XLProjectName.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "28C69D2A1CD8E35600F839D6"
+               BuildableName = "Tests.xctest"
+               BlueprintName = "Tests"
                ReferencedContainer = "container:XLProjectName.xcodeproj">
             </BuildableReference>
          </TestableReference>
