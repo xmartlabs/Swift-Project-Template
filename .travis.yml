@@ -9,5 +9,5 @@ before_install:
 - cd Project-iOS/XLProjectName && pod install
 
 script:
-- xctool clean build -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator
-- xcodebuild test -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=9.3'
+- xctool clean build -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator | xcpretty
+- xcodebuild test -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=9.3' | xcpretty
