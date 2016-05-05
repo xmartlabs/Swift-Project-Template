@@ -13,13 +13,13 @@ pod 'Decodable'
 pod 'KeychainAccess', '~> 2.0'
 pod 'AsyncSwift', '~> 1.0'
 pod 'DynamicColor', '~> 2.0'
-pod 'Eureka', :git => 'git@github.com:xmartlabs/Eureka.git', :branch => 'master'
+pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka.git', :branch => 'master'
 
 pod 'RxAlamofire', '~> 2.2'
 pod 'RxCocoa', '~> 2.0'
 pod 'RxSwift', '~> 2.0'
-pod 'XLSwiftKit', :git => 'git@github.com:xmartlabs/XLSwiftKit.git', :branch => 'master'
-pod 'Opera', :git => 'git@github.com:xmartlabs/Opera.git', :branch => 'master'
+pod 'XLSwiftKit', :git => 'https://github.com/xmartlabs/XLSwiftKit.git', :branch => 'master'
+pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'master'
 pod 'RealmSwift'
 pod 'WebLinking'
 #pod 'Intercom'
@@ -36,7 +36,7 @@ def testing_pods
 end
 
 target :unit_tests do
-  link_with 'UnitTests'
+  link_with 'Tests'
   testing_pods
 end
 

@@ -139,9 +139,15 @@ for fileURL in directories.reverse() {
   fileURL.renameIfNeeded()
 }
 
+print("git init\n")
 print(shell("git", "init").output)
+print("git add .\n")
 print(shell("git", "add", ".").output)
+print("git commit -m 'Initial commit'\n")
 print(shell("git", "commit", "-m", "'Initial commit'").output)
+print("git remote add origin git@github.com:\(userName)/\(projectName).git\n")
 print(shell("git", "remote", "add", "origin", "git@github.com:\(userName)/\(projectName).git").output)
+print("pod install --project-directory=\(projectName)\n")
 print(shell("pod", "install", "--project-directory=\(projectName)").output)
+print("open \(projectName)/\(projectName).xcworkspace\n")
 print(shell("open", "\(projectName)/\(projectName).xcworkspace").output)
