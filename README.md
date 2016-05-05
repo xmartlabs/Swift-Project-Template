@@ -31,16 +31,17 @@ iOS project has the following configuration:
 ##### Usage
 
 Clone the repository:
+
 ```shell
- git clone git@github.com:xmartlabs/Swift-Project-Template.git
- ```
+git clone git@github.com:xmartlabs/Swift-Project-Template.git
+```
 Run `shell.swift` script from there:
 
 ```swift
 swift -target x86_64-apple-macosx10.11 Swift-Project-Template/shell.swift
 ```
 
-Answer the questions:
+Answer some questions:
 
 <img src="readme-image.png" width="500"/>
 
