@@ -42,6 +42,4 @@ public class RepositoryController: UIViewController {
         bottomLabel.text = "written in \(repository.language ?? "an unknown language"), by \(repository.company ?? "an unknown company")"
         
     }
-    
-    
 }

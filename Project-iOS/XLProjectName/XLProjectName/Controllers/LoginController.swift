@@ -117,13 +117,13 @@ class LoginController: FormViewController {
             return
         }
         
-        Route.User.Login(username: username, password: password).request
+        Route.User.Login(username: username, password: password)
             .rx_anyObject()
             .doOnError() { [weak self] error in
-                 self?.showError("Error", message: (error as? NetworkError).debugDescription ?? "Sorry user login does not work correctly")
+                 self?.showError("Error", message: (error as? Error).debugDescription ?? "Sorry user login does not work correctly")
             }
             .flatMap() { _ in
-                return Route.User.GetInfo(username: username).request.rx_object()
+                return Route.User.GetInfo(username: username).rx_object()
             }
             .subscribeNext() { [weak self] (user: User) in
                 self?.showError("Great", message: "You have been successfully logged in")
@@ -139,7 +139,7 @@ class LoginController: FormViewController {
             return
         }
         
-        Route.Repository.GetInfo(owner: owner, repo: repo).request
+        Route.Repository.GetInfo(owner: owner, repo: repo)
             .rx_object()
             .doOnError() { [weak self] error in
                 self?.showError("Error", message: (error as NSError).localizedDescription)
@@ -157,7 +157,7 @@ class LoginController: FormViewController {
             return
         }
         
-        Route.User.GetInfo(username: user).request
+        Route.User.GetInfo(username: user)
             .rx_object()
             .doOnError() { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")

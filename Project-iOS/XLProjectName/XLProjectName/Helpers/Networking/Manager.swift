@@ -7,42 +7,27 @@
 //
 
 import Foundation
+import Opera
 import Alamofire
+import KeychainAccess
 
-class MyManager: Alamofire.Manager {
-    
-    static let singleton = MyManager()
-    
-    override init?(session: NSURLSession, delegate: Manager.SessionDelegate, serverTrustPolicyManager: ServerTrustPolicyManager? = nil) {
-        super.init(session: session, delegate: delegate, serverTrustPolicyManager: serverTrustPolicyManager)
-    }
-    
-    override init(configuration: NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration(), delegate: Alamofire.Manager.SessionDelegate = SessionDelegate(), serverTrustPolicyManager: Alamofire.ServerTrustPolicyManager? = nil)
-    {
-        super.init(configuration: configuration, delegate: delegate, serverTrustPolicyManager: serverTrustPolicyManager)
-    }
-    
-    override func request(URLRequest: URLRequestConvertible) -> Alamofire.Request {
-        let result = super.request(URLRequest)
-        debugPrint(result)
-        return result
-    }
-    
-    override func request(
-                          method: Alamofire.Method,
-                        _ URLString: URLStringConvertible,
-                          parameters: [String: AnyObject]? = nil,
-                          encoding: ParameterEncoding = .URL,
-                          headers: [String: String]? = nil)
-        -> Request {
+class NetworkManager: RxManager {
 
-        let result = super.request(method, URLString, parameters: parameters, encoding: encoding, headers: headers)
-        debugPrint(result)
-        return result
+    static let singleton = NetworkManager(manager: Alamofire.Manager.sharedInstance)
+
+    override init(manager: Alamofire.Manager) {
+        super.init(manager: manager)
+        observers = [Logger()]
     }
 }
 
 final class Route {}
+
+struct Logger: Opera.ObserverType {
+    func willSendRequest(alamoRequest: Alamofire.Request, requestConvertible: URLRequestConvertible) {
+        debugPrint(alamoRequest)
+    }
+}
 
 //public static func generalErrorHandler(error: ErrorType) {
 //    // Trick to get the userInfo data (note that ErrorType always can be casted to NSError)

@@ -42,7 +42,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
 //            return
 //        }
         
-        Route.User.Followers(username: user.username).request
+        Route.User.Followers(username: user.username)
             .rx_collection()
             .subscribeNext() { [weak self] (followers: [User]) in
                 self?.user.followers.removeAll()
@@ -94,7 +94,7 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         if let image = followerImages[follower.username] {
             cell.imageView?.image = image
         } else if let avatar = follower.avatarUrl {
-            MyManager.singleton.request(.GET, avatar)
+            NetworkManager.singleton.manager.request(.GET, avatar)
                 .validate()
                 .rx_image()
                 .observeOn(MainScheduler.instance)

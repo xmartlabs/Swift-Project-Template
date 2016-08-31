@@ -13,6 +13,6 @@ import Alamofire
 extension RouteType {
 
     var baseURL: NSURL { return Constants.Network.baseUrl }
-    var manager: Alamofire.Manager { return MyManager.singleton  }
-
+    var manager: ManagerType { return NetworkManager.singleton  }
+    var retryCount: Int { return 0 }
 }

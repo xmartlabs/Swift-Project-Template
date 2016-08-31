@@ -3,45 +3,51 @@ source 'https://github.com/CocoaPods/Specs'
 platform :ios, '8.0'
 use_frameworks!
 
-# Add Application pods here
-pod 'Alamofire', '~> 3.0'
-pod 'AlamofireImage', '~> 2.0'
-pod 'R.swift', '~> 2.0'
-pod 'SwiftDate', '~> 3.0'
-pod 'Device', '~> 0.0'
-pod 'Decodable'
-pod 'KeychainAccess', '~> 2.0'
-pod 'AsyncSwift', '~> 1.0'
-pod 'DynamicColor', '~> 2.0'
-pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka.git', :branch => 'master'
+def app_pods
+    pod 'Alamofire', '~> 3.0'
+    pod 'AlamofireImage', '~> 2.0'
+    pod 'R.swift', '~> 2.0'
+    pod 'SwiftDate', '~> 3.0'
+    pod 'Device', '~> 1.0'
+    pod 'Decodable', '~> 0.0'
+    pod 'KeychainAccess', '~> 2.0'
+    pod 'AsyncSwift', '~> 1.0'
+    pod 'DynamicColor', '~> 2.0'
+    pod 'Eureka', :git => 'https://github.com/xmartlabs/Eureka.git', :branch => 'master'
 
-pod 'RxAlamofire', '~> 2.2'
-pod 'RxCocoa', '~> 2.0'
-pod 'RxSwift', '~> 2.0'
-pod 'XLSwiftKit', :git => 'https://github.com/xmartlabs/XLSwiftKit.git', :branch => 'master'
-pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'master'
-pod 'RealmSwift'
-pod 'WebLinking'
-#pod 'Intercom'
+    pod 'RxAlamofire', '~> 2.2'
+    pod 'RxCocoa', '~> 2.0'
+    pod 'RxSwift', '~> 2.0'
+    pod 'XLSwiftKit', :git => 'https://github.com/xmartlabs/XLSwiftKit.git', :branch => 'master'
+    pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'master'
+    pod 'RealmSwift', '~> 1.0'
+    pod 'WebLinking', '~> 1.0'
 
-# Swift type modelling the success/failure of arbitrary operations. This is a Swift µframework providing Result<Value, Error>.
-pod 'Result'
+    # Swift type modelling the success/failure of arbitrary operations. This is a Swift framework providing Result<Value, Error>.
+    pod 'Result'
 
-pod 'Fabric'
-pod 'Crashlytics'
+    pod 'Fabric'
+    pod 'Crashlytics'
+end
 
 def testing_pods
     pod 'Quick', '~> 0.9'
-    pod 'Nimble', '~> 3.1'
+    pod 'Nimble', '~> 4.0'
 end
 
-target :unit_tests do
-  link_with 'Tests'
-  testing_pods
+target 'XLProjectName' do
+    app_pods
 end
 
-target :ui_tests do
-    link_with 'UITests'
+target 'XLProjectName-Staging' do
+    app_pods
+end
+
+target 'Tests' do
+    testing_pods
+end
+
+target 'UITests' do
     testing_pods
 end
 
