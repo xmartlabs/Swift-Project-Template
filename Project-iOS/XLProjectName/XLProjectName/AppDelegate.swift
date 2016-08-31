@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import Fabric
 import Crashlytics
-//import Intercom
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         setupCrashlytics()
-        
+        setupNetworking()
+        stylizeEurekaRows()
         
         // Register the supported push notifications interaction types.
         // Shows alert view askying for allowed push notification types
@@ -63,15 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate {
     
-    func setupCrashlytics() {
-        Fabric.with([Crashlytics.self])
-        Fabric.sharedSDK().debug = Constants.Debug.crashlytics
-    }
-    
-}
-
-extension AppDelegate {
-    
     // MARK: Requesting A Device Token
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
@@ -88,8 +78,8 @@ extension AppDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         // pass device token to Intercom
         //Intercom.setDeviceToken(deviceToken)
-        let deviceTokenStr = "\(deviceToken)"
-        Route.Device.Update(token: deviceTokenStr).request.resume()
+//        let deviceTokenStr = "\(deviceToken)"
+//        Route.Device.Update(token: deviceTokenStr).request.resume()
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {

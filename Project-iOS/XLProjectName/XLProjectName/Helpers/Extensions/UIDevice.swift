@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import KeychainAccess
-import Crashlytics
 
 extension UIDevice {
     

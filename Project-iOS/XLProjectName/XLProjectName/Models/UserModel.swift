@@ -21,7 +21,6 @@ final class User: Object {
     dynamic var avatarUrlString: String?
     
     let followers = List<User>()
-    let repositories = List<Repository>()
     
     var avatarUrl: NSURL? {
         return NSURL(string: self.avatarUrlString ?? "")
