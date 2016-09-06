@@ -10,7 +10,7 @@ import Foundation
 import Decodable
 import SwiftDate
 
-extension NSDate: Decodable  {
+extension NSDate: Decodable {
     
     public class func decode(json: AnyObject) throws -> Self {
         let string = try String.decode(json)

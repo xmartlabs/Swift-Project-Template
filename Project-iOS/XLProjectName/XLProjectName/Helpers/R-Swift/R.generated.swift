@@ -5,7 +5,7 @@ import Foundation
 import Rswift
 import UIKit
 
-/// This `R` struct is code generateted, and contains references to static resources.
+/// This `R` struct is code generated, and contains references to static resources.
 struct R {
   /// This `R.color` struct is generated, and contains static references to 0 color palettes.
   struct color {
@@ -32,79 +32,22 @@ struct R {
     private init() {}
   }
   
-  /// This `R.reuseIdentifier` struct is generated, and contains static references to 2 reuse identifiers.
+  /// This `R.reuseIdentifier` struct is generated, and contains static references to 0 reuse identifiers.
   struct reuseIdentifier {
-    /// Reuse identifier `Cell`.
-    static let cell: ReuseIdentifier<UITableViewCell> = ReuseIdentifier(identifier: "Cell")
-    /// Reuse identifier `cellIdentifier`.
-    static let cellIdentifier: ReuseIdentifier<UITableViewCell> = ReuseIdentifier(identifier: "cellIdentifier")
-    
     private init() {}
   }
   
-  /// This `R.segue` struct is generated, and contains static references to 2 view controllers.
+  /// This `R.segue` struct is generated, and contains static references to 0 view controllers.
   struct segue {
-    /// This struct is generated for `LoginController`, and contains static references to 3 segues.
-    struct loginController {
-      /// Segue identifier `PushToRepoController`.
-      static let pushToRepoController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, RepositoryController> = StoryboardSegueIdentifier(identifier: "PushToRepoController")
-      /// Segue identifier `PushToSearchRepositoriesController`.
-      static let pushToSearchRepositoriesController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, SearchRepositoriesController> = StoryboardSegueIdentifier(identifier: "PushToSearchRepositoriesController")
-      /// Segue identifier `PushToUserController`.
-      static let pushToUserController: StoryboardSegueIdentifier<UIStoryboardSegue, LoginController, UserController> = StoryboardSegueIdentifier(identifier: "PushToUserController")
-      
-      /// Optionally returns a typed version of segue `PushToRepoController`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func pushToRepoController(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, LoginController, RepositoryController>? {
-        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToRepoController, segue: segue)
-      }
-      
-      /// Optionally returns a typed version of segue `PushToSearchRepositoriesController`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func pushToSearchRepositoriesController(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, LoginController, SearchRepositoriesController>? {
-        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToSearchRepositoriesController, segue: segue)
-      }
-      
-      /// Optionally returns a typed version of segue `PushToUserController`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func pushToUserController(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, LoginController, UserController>? {
-        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.loginController.pushToUserController, segue: segue)
-      }
-      
-      private init() {}
-    }
-    
-    /// This struct is generated for `UserController`, and contains static references to 1 segues.
-    struct userController {
-      /// Segue identifier `showUserRepositories`.
-      static let showUserRepositories: StoryboardSegueIdentifier<UIStoryboardSegue, UserController, RepositoriesController> = StoryboardSegueIdentifier(identifier: "showUserRepositories")
-      
-      /// Optionally returns a typed version of segue `showUserRepositories`.
-      /// Returns nil if either the segue identifier, the source, destination, or segue types don't match.
-      /// For use inside `prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)`.
-      static func showUserRepositories(segue segue: UIStoryboardSegue) -> TypedStoryboardSegueInfo<UIStoryboardSegue, UserController, RepositoriesController>? {
-        return TypedStoryboardSegueInfo(segueIdentifier: R.segue.userController.showUserRepositories, segue: segue)
-      }
-      
-      private init() {}
-    }
-    
     private init() {}
   }
   
-  /// This `R.storyboard` struct is generated, and contains static references to 4 storyboards.
+  /// This `R.storyboard` struct is generated, and contains static references to 2 storyboards.
   struct storyboard {
     /// Storyboard `LaunchScreen`.
     static let launchScreen = _R.storyboard.launchScreen()
     /// Storyboard `Main`.
     static let main = _R.storyboard.main()
-    /// Storyboard `SearchRepository`.
-    static let searchRepository = _R.storyboard.searchRepository()
-    /// Storyboard `VCTemplates`.
-    static let vCTemplates = _R.storyboard.vCTemplates()
     
     /// `UIStoryboard(name: "LaunchScreen", bundle: ...)`
     static func launchScreen(_: Void) -> UIStoryboard {
@@ -114,16 +57,6 @@ struct R {
     /// `UIStoryboard(name: "Main", bundle: ...)`
     static func main(_: Void) -> UIStoryboard {
       return UIStoryboard(resource: R.storyboard.main)
-    }
-    
-    /// `UIStoryboard(name: "SearchRepository", bundle: ...)`
-    static func searchRepository(_: Void) -> UIStoryboard {
-      return UIStoryboard(resource: R.storyboard.searchRepository)
-    }
-    
-    /// `UIStoryboard(name: "VCTemplates", bundle: ...)`
-    static func vCTemplates(_: Void) -> UIStoryboard {
-      return UIStoryboard(resource: R.storyboard.vCTemplates)
     }
     
     private init() {}
@@ -138,7 +71,8 @@ struct R {
 }
 
 struct _R {
-  static let hostingBundle = NSBundle(identifier: "XLOrganizationIdentifier.XLProjectName") ?? NSBundle.mainBundle()
+  static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(NSLocale.init) ?? NSLocale.currentLocale()
+  static let hostingBundle = NSBundle(identifier: "XLOrganizationIdentifier.XLProjectName.Staging") ?? NSBundle.mainBundle()
   
   struct nib {
     private init() {}
@@ -159,22 +93,6 @@ struct _R {
       
       let bundle = _R.hostingBundle
       let name = "Main"
-      
-      private init() {}
-    }
-    
-    struct searchRepository: StoryboardResourceWithInitialControllerType {
-      typealias InitialController = SearchRepositoriesController
-      
-      let bundle = _R.hostingBundle
-      let name = "SearchRepository"
-      
-      private init() {}
-    }
-    
-    struct vCTemplates: StoryboardResourceType {
-      let bundle = _R.hostingBundle
-      let name = "VCTemplates"
       
       private init() {}
     }

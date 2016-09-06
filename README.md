@@ -6,6 +6,8 @@ Create your iOS Base project in just a few seconds by executing a script and ans
 
 Swift Project Template provides us with a base iOS project template along with and a swift script to make naming customizations on it.
 
+Currently you can find the project template under the [master](/tree/master) branch and a more complete example project (including more example files) under the [ExampleProject](/tree/ExampleProject) branch.
+
 iOS project has the following configuration:
 
 * Targets
