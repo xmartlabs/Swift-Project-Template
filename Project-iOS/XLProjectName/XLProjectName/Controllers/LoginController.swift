@@ -61,20 +61,23 @@ class LoginController: FormViewController {
     func loginTapped() {
         let writtenUsername = getTextFromRow(RowTags.LogInUsername)
         let writtenPassword = getPasswordFromRow(RowTags.LogInPassword)
-        guard let username = writtenUsername, let password = writtenPassword where !username.isEmpty && !password.isEmpty else {
+        guard let username = writtenUsername, password = writtenPassword where !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password")
             return
         }
-        
+
+        LoadingIndicator.show()
         Route.User.Login(username: username, password: password)
             .rx_anyObject()
             .doOnError { [weak self] (error: ErrorType) in
+                LoadingIndicator.hide()
                 self?.showError("Error", message: (error as? Error)?.debugDescription ?? "Sorry user login does not work correctly")
             }
             .flatMap() { _ in
                 return Route.User.GetInfo(username: username).rx_object()
             }
             .subscribeNext() { [weak self] (user: User) in
+                LoadingIndicator.hide()
                 self?.showError("Great", message: "You have been successfully logged in")
             }
             .addDisposableTo(disposeBag)
