@@ -72,7 +72,7 @@ struct R {
 
 struct _R {
   static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(NSLocale.init) ?? NSLocale.currentLocale()
-  static let hostingBundle = NSBundle(identifier: "XLOrganizationIdentifier.XLProjectName.Staging") ?? NSBundle.mainBundle()
+  static let hostingBundle = NSBundle(identifier: "XLOrganizationIdentifier.XLProjectName") ?? NSBundle.mainBundle()
   
   struct nib {
     private init() {}

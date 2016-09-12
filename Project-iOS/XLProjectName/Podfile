@@ -15,6 +15,7 @@ def app_pods
     pod 'Eureka', '~> 1.0'
     pod 'Fabric', '~> 1.0'
     pod 'KeychainAccess', '~> 2.0'
+    pod 'NVActivityIndicatorView', '~> 2.10'
     pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'master'
     pod 'R.swift', '~> 2.0'
     pod 'RealmSwift', '~> 1.0'
