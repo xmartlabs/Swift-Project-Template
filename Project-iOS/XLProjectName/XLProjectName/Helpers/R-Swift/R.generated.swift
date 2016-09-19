@@ -9,37 +9,37 @@ import UIKit
 struct R {
   /// This `R.color` struct is generated, and contains static references to 0 color palettes.
   struct color {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.file` struct is generated, and contains static references to 0 files.
   struct file {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.font` struct is generated, and contains static references to 0 fonts.
   struct font {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.image` struct is generated, and contains static references to 0 images.
   struct image {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.nib` struct is generated, and contains static references to 0 nibs.
   struct nib {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.reuseIdentifier` struct is generated, and contains static references to 0 reuse identifiers.
   struct reuseIdentifier {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.segue` struct is generated, and contains static references to 0 view controllers.
   struct segue {
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.storyboard` struct is generated, and contains static references to 2 storyboards.
@@ -59,23 +59,23 @@ struct R {
       return UIStoryboard(resource: R.storyboard.main)
     }
     
-    private init() {}
+    fileprivate init() {}
   }
   
   /// This `R.string` struct is generated, and contains static references to 0 localization tables.
   struct string {
-    private init() {}
+    fileprivate init() {}
   }
   
-  private init() {}
+  fileprivate init() {}
 }
 
 struct _R {
-  static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(NSLocale.init) ?? NSLocale.currentLocale()
-  static let hostingBundle = NSBundle(identifier: "XLOrganizationIdentifier.XLProjectName") ?? NSBundle.mainBundle()
+  static let applicationLocale = hostingBundle.preferredLocalizations.first.flatMap(Locale.init) ?? Locale.current
+  static let hostingBundle = Bundle(identifier: "XLOrganizationIdentifier.XLProjectName") ?? Bundle.main
   
   struct nib {
-    private init() {}
+    fileprivate init() {}
   }
   
   struct storyboard {
@@ -85,7 +85,7 @@ struct _R {
       let bundle = _R.hostingBundle
       let name = "LaunchScreen"
       
-      private init() {}
+      fileprivate init() {}
     }
     
     struct main: StoryboardResourceWithInitialControllerType {
@@ -94,11 +94,11 @@ struct _R {
       let bundle = _R.hostingBundle
       let name = "Main"
       
-      private init() {}
+      fileprivate init() {}
     }
     
-    private init() {}
+    fileprivate init() {}
   }
   
-  private init() {}
+  fileprivate init() {}
 }

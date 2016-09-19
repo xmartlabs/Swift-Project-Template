@@ -22,8 +22,8 @@ final class User: Object {
     
     let followers = List<User>()
     
-    var avatarUrl: NSURL? {
-        return NSURL(string: self.avatarUrlString ?? "")
+    var avatarUrl: URL? {
+        return URL(string: self.avatarUrlString ?? "")
     }
     
     /**
@@ -45,7 +45,7 @@ final class User: Object {
 
 extension User: Decodable, OperaDecodable {
 
-    static func decode(j: AnyObject) throws -> User {
+    static func decode(_ j: AnyObject) throws -> User {
         return try User(id: j => "id",
                  email: j =>? "email",
        avatarUrlString: j =>? "avatar_url",

@@ -10,12 +10,12 @@ import Foundation
 import Decodable
 import SwiftDate
 
-extension NSDate: Decodable {
+extension Date: Decodable {
     
-    public class func decode(json: AnyObject) throws -> Self {
+    public static func decode(_ json: AnyObject) throws -> Date {
         let string = try String.decode(json)
         guard let date = string.toDate(DateFormat.ISO8601Format(.Full)) else {
-            throw TypeMismatchError(expectedType: NSDate.self, receivedType: String.self, object: json)
+            throw TypeMismatchError(expectedType: Date.self, receivedType: String.self, object: json)
         }
         return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
     }

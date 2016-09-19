@@ -18,10 +18,10 @@ extension RouteType {
 }
 
 extension URLRequestParametersSetup {
-    public func urlRequestParametersSetup(urlRequest: NSMutableURLRequest, parameters: [String: AnyObject]?) -> [String: AnyObject]? {
+    public func urlRequestParametersSetup(_ urlRequest: NSMutableURLRequest, parameters: [String: AnyObject]?) -> [String: AnyObject]? {
         var params = parameters ?? [:]
         if let token = SessionController.sharedInstance.token {
-            params[Constants.Network.AuthTokenName] = token
+            params[Constants.Network.AuthTokenName] = token as AnyObject?
         }
         return params
     }
@@ -29,7 +29,7 @@ extension URLRequestParametersSetup {
 
 extension URLRequestSetup {
 
-    func urlRequestSetup(urlRequest: NSMutableURLRequest) {
+    func urlRequestSetup(_ urlRequest: NSMutableURLRequest) {
         // setup url
     }
 }

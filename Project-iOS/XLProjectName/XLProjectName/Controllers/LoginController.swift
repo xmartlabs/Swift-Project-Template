@@ -14,7 +14,7 @@ import Opera
 
 class LoginController: FormViewController {
 
-    private struct RowTags {
+    fileprivate struct RowTags {
         static let LogInUsername = "log in username"
         static let LogInPassword = "log in password"
     }
@@ -26,7 +26,7 @@ class LoginController: FormViewController {
         setUpSections()
     }
 
-    private func setUpSections() {
+    fileprivate func setUpSections() {
         form +++ Section(header: "Advanced usage", footer: "Please enter your credentials for advanced usage")
                 <<< NameRow(RowTags.LogInUsername) {
                     $0.title = "Username:"
@@ -44,13 +44,13 @@ class LoginController: FormViewController {
                     }
     }
     
-    private func getTextFromRow(tag: String) -> String? {
+    fileprivate func getTextFromRow(_ tag: String) -> String? {
         let textRow: NameRow = form.rowByTag(tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
     }
     
-    private func getPasswordFromRow(tag: String) -> String? {
+    fileprivate func getPasswordFromRow(_ tag: String) -> String? {
         let textRow: PasswordRow = form.rowByTag(tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
@@ -61,15 +61,15 @@ class LoginController: FormViewController {
     func loginTapped() {
         let writtenUsername = getTextFromRow(RowTags.LogInUsername)
         let writtenPassword = getPasswordFromRow(RowTags.LogInPassword)
-        guard let username = writtenUsername, password = writtenPassword where !username.isEmpty && !password.isEmpty else {
+        guard let username = writtenUsername, let password = writtenPassword , !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password")
             return
         }
 
         LoadingIndicator.show()
-        Route.User.Login(username: username, password: password)
+        Route.User.login(username: username, password: password)
             .rx_anyObject()
-            .doOnError { [weak self] (error: ErrorType) in
+            .doOnError { [weak self] (error: Error) in
                 LoadingIndicator.hide()
                 self?.showError("Error", message: (error as? Error)?.debugDescription ?? "Sorry user login does not work correctly")
             }

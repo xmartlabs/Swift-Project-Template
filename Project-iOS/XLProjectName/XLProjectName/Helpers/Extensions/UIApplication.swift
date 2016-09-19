@@ -13,7 +13,7 @@ extension UIApplication {
     
     static func requestPermissionToShowPushNotification() {
         
-        let app = UIApplication.sharedApplication()
+        let app = UIApplication.shared
 
         /**
             Starting in iOS 8, you can optionally create actionable notifications by registering custom actions for
@@ -27,7 +27,7 @@ extension UIApplication {
         //  If you do not request any interaction types, the system pushes all notifications to your app silently.
         
         
-        let settings = UIUserNotificationSettings(forTypes: [.Badge, .Sound, .Alert], categories: nil)
+        let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
         
         /**
         *   The first time an app calls the registerUserNotificationSettings: method, iOS prompts the user to

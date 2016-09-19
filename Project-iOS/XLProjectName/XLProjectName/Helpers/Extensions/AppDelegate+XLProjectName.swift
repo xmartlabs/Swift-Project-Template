@@ -21,15 +21,15 @@ extension AppDelegate {
 
     // MARK: Alamofire notifications
     func setupNetworking() {
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.defaultCenter().addObserver(
             self,
             selector: #selector(AppDelegate.requestDidComplete(_:)),
             name: Alamofire.Notifications.Task.DidComplete,
             object: nil)
     }
 
-    func requestDidComplete(notification: NSNotification) {
-        guard let task = notification.object as? NSURLSessionTask, response = task.response as? NSHTTPURLResponse else {
+    func requestDidComplete(_ notification: Notification) {
+        guard let task = notification.object as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
             DEBUGLog("Request object not a task")
             return
         }

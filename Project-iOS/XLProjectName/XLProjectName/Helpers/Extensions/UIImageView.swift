@@ -12,7 +12,7 @@ import AlamofireImage
 
 
 extension UIImageView {
-    public func setImageWithURL(url: String, filter: ImageFilter? = nil, placeholder: UIImage? = nil, completion: (Response<UIImage, NSError> -> Void)? = nil) {
+    public func setImageWithURL(_ url: String, filter: ImageFilter? = nil, placeholder: UIImage? = nil, completion: ((Response<UIImage, NSError>) -> Void)? = nil) {
         af_setImageWithURL(NSURL(string: url)!, placeholderImage: placeholder, filter: filter, imageTransition: .CrossDissolve(0.3), completion: {
             (response: Response<UIImage, NSError>) in
             if let error = response.result.error {

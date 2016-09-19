@@ -16,8 +16,8 @@ import RealmSwift
 
 class SessionController {
     static let sharedInstance = SessionController()
-    private let keychain = Keychain(service: Constants.Keychain.serviceIdentifier)
-    private init() { }
+    fileprivate let keychain = Keychain(service: Constants.Keychain.serviceIdentifier)
+    fileprivate init() { }
 
     // MARK: - Session variables
     var token: String? {
@@ -73,7 +73,7 @@ class SessionController {
     }
 
     // MARK: - User observable
-    private var userObserverToken: NotificationToken?
+    fileprivate var userObserverToken: NotificationToken?
 
     lazy var userObservable: Observable<User> = {
         return Observable.create() { [unowned self] (subscriber: AnyObserver<User>) in
