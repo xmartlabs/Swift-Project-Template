@@ -29,7 +29,7 @@ extension AppDelegate {
     }
 
     func requestDidComplete(_ notification: Notification) {
-        guard let task = notification.object as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
+        guard let task = notification.userInfo?[Notification.Key.Task] as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
             DEBUGLog("Request object not a task")
             return
         }
