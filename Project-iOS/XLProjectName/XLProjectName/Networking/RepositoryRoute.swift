@@ -17,10 +17,10 @@ extension Route {
         case GetInfo(owner: String, repo: String)
         case Search()
 
-        var method: Alamofire.Method {
+        var method: Alamofire.HTTPMethod {
             switch self {
             case .GetInfo, .Search:
-                return .GET
+                return .get
             }
         }
         

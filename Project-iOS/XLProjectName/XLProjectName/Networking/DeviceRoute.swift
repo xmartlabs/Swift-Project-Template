@@ -19,14 +19,14 @@ extension Route {
         case Remove
         case Get
         
-        var method: Alamofire.Method {
+        var method: Alamofire.HTTPMethod {
             switch self {
             case .Remove:
-                return .DELETE
+                return .delete
             case .Get:
-                return .GET
+                return .get
             case .Update:
-                return .POST
+                return .post
             }
         }
         
@@ -41,11 +41,11 @@ extension Route {
             }
         }
         
-        var parameters: [String: AnyObject]? {
+        var parameters: [String: Any]? {
             switch self {
             case .Update(let token):
-                var parameters = [String: AnyObject]()
-                let device = UIDevice.currentDevice()
+                var parameters = [String: Any]()
+                let device = UIDevice.current
                 parameters["deviceToken"] = token
                 parameters["device_type"] = "iOS"
                 parameters["device_name"] = device.systemName

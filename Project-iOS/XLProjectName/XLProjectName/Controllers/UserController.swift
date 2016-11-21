@@ -34,26 +34,27 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        repositoriesButton.addTarget(self, action: #selector(UserController.seeRepositories(_:)), forControlEvents: .TouchUpInside)
+        repositoriesButton.addTarget(self, action: #selector(UserController.seeRepositories(buton:)), for: .touchUpInside)
         
-        followersTable.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        followersTable.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         
 //        guard let username = user.username else {
 //            return
 //        }
         
-        Route.User.Followers(username: user.username)
+        Route.User.followers(username: user.username)
             .rx_collection()
-            .subscribeNext() { [weak self] (followers: [User]) in
+            .do(onNext: { [weak self] (followers: [User]) in
                 self?.user.followers.removeAll()
-                self?.user.followers.appendContentsOf(followers)
+                self?.user.followers.append(objectsIn: followers)
                 self?.followersTable.reloadData()
                 self?.adjustTableHeight()
-            }
+            })
+            .subscribe()
             .addDisposableTo(disposeBag)
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = user.username
         nameLabel.text = user.company ?? "Unknown"
@@ -62,15 +63,15 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         followersTable.delegate = self
         followersTable.dataSource = self
         if let avatar = user?.avatarUrl {
-            avatarImageView.af_setImageWithURL(avatar)
+            avatarImageView.af_setImage(withURL: avatar)
         }
         for label in [nameLabel, emailLabel, companyLabel] {
-            label.adjustsFontSizeToFitWidth = true
-            label.minimumScaleFactor = 0.7
+            label?.adjustsFontSizeToFitWidth = true
+            label?.minimumScaleFactor = 0.7
         }
     }
     
-    public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return user?.followers.count ?? 0
     }
     
@@ -78,12 +79,12 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         return 1
     }
     
-    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    public func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return rowHeight
     }
 
-    public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let _cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let _cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         guard let cell = _cell else { return UITableViewCell() }
         
@@ -94,22 +95,23 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         if let image = followerImages[follower.username] {
             cell.imageView?.image = image
         } else if let avatar = follower.avatarUrl {
-            NetworkManager.singleton.manager.request(.GET, avatar)
-                .validate()
-                .rx_image()
-                .observeOn(MainScheduler.instance)
-                .subscribeNext() { [weak self] image in
-                    self?.followerImages[follower.username] = image
-                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                }
-                .addDisposableTo(disposeBag)
+
+//            NetworkManager.singleton.manager.request(.get, avatar)
+//                .validate()
+//                .rx_image()
+//                .observeOn(MainScheduler.instance)
+//                .subscribeNext() { [weak self] image in
+//                    self?.followerImages[follower.username] = image
+//                    tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//                }
+//                .addDisposableTo(disposeBag)
         }
         return cell
     }
     
     // Mark: Actions
     func seeRepositories(buton: UIButton) {
-        self.performSegueWithIdentifier(R.segue.userController.showUserRepositories, sender: user)
+        self.performSegue(withIdentifier: R.segue.userController.showUserRepositories, sender: user)
     }
     
     // Mark: Helpers
@@ -118,9 +120,8 @@ public class UserController: UIViewController, UITableViewDataSource, UITableVie
         guard let followersCount = user?.followers.count else { return }
         tableHeightConstraint.constant = min(view.frame.height - followersTable.frame.origin.y, CGFloat(followersCount) * rowHeight)
     }
-    
-    
-    public override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        (segue.destinationViewController as? RepositoriesController)?.user = sender as? User
+
+    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        (segue.destination as? RepositoriesController)?.user = sender as? User
     }
 }

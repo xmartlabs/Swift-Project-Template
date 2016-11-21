@@ -38,7 +38,7 @@ struct RepositoriesFilter {
 extension RepositoriesFilter : FilterType {
 
     var parameters: [String : AnyObject]? {
-        return ["type": type.rawValue, "sort": sort.rawValue]
+        return ["type": type.rawValue as AnyObject, "sort": sort.rawValue as AnyObject]
     }
 }
 
@@ -56,19 +56,19 @@ class RepositoriesController: XLTableViewController {
     }()
 
     lazy var viewModel: PaginationViewModel<PaginationRequest<Repository>>  = { [unowned self] in
-        return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.User.Repositories(username: self.user.username), filter: self.filters))
+        return PaginationViewModel(paginationRequest: PaginationRequest(route: Route.User.repositories(username: self.user.username), filter: self.filters))
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        emptyStateView.hidden = true
+        emptyStateView.isHidden = true
 
         let searchBar = self.searchBar
         let tableView = self.tableView
 
-        searchBar.scopeButtonTitles = ["Created", "Updated", "Pushed", "FullName"]
-        searchBar.selectedScopeButtonIndex = 1
+        searchBar?.scopeButtonTitles = ["Created", "Updated", "Pushed", "FullName"]
+        searchBar?.selectedScopeButtonIndex = 1
 
 //        rx_sentMessage(#selector(RepositoriesController.viewWillAppear(_:)))
 //            .map { _ in false }
@@ -77,27 +77,28 @@ class RepositoriesController: XLTableViewController {
         
         
     
-        tableView.rx_reachedBottom
+        tableView?.rx_reachedBottom
             .bindTo(viewModel.loadNextPageTrigger)
             .addDisposableTo(disposeBag)
 
         viewModel.loading
-            .drive(activityIndicatorView.rx_animating)
+            .drive(activityIndicatorView.rx.isAnimating)
             .addDisposableTo(disposeBag)
 
         viewModel.elements.asDriver()
-            .drive(tableView.rx_itemsWithCellIdentifier("Cell")) { _, repository, cell in
+            .drive((tableView?.rx.items(cellIdentifier: "Cell"))!) { _, repository, cell in
                 cell.textLabel?.text = repository.name
                 cell.detailTextLabel?.text = "🌟\(repository.stargazersCount)"
             }
             .addDisposableTo(disposeBag)
 
-        searchBar.rx_text
+        searchBar?.rx.text
             .skip(1)
+            .map { $0?.value ?? "" }
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
 
-        searchBar.rx_selectedScopeButtonIndex
+        searchBar?.rx.selectedScopeButtonIndex
             .map { [weak self] index in
                 var filters = self?.filters
                 filters?.sort = RepositoriesFilter.RepositorySort.values[index]
@@ -116,24 +117,24 @@ class RepositoriesController: XLTableViewController {
 
         let refreshControl = UIRefreshControl()
         refreshControl.rx_valueChanged
-            .filter { refreshControl.refreshing }
+            .filter { refreshControl.isRefreshing }
             .map { true }
             .bindTo(viewModel.refreshTrigger)
             .addDisposableTo(disposeBag)
-        tableView.addSubview(refreshControl)
+        tableView?.addSubview(refreshControl)
 
         viewModel.firstPageLoading
-            .filter { $0 == false && refreshControl.refreshing }
-            .driveNext { _ in refreshControl.endRefreshing() }
+            .filter { $0 == false && refreshControl.isRefreshing }
+            .drive(onNext: { _ in refreshControl.endRefreshing() })
             .addDisposableTo(disposeBag)
 
         viewModel.emptyState
             .filter { $0 }
-            .driveNext { [weak self] _ in self?.showEmptyStateView() }
+            .drive(onNext: { [weak self] _ in self?.showEmptyStateView() })
             .addDisposableTo(disposeBag)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         Observable.just(false).bindTo(viewModel.refreshTrigger).addDisposableTo(disposeBag)
     }
@@ -143,7 +144,7 @@ class RepositoriesController: XLTableViewController {
     }
 
     private func showEmptyStateView() {
-        emptyStateView.hidden = false
+        emptyStateView.isHidden = false
         tableView.backgroundView = emptyStateView
     }
 }

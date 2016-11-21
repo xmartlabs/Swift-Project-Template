@@ -1,6 +1,6 @@
 //
-//  ExampleObject.swift
-//  XLProjectName
+//  ExampleObjsonsonect.swift
+//  XLProjsonectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
 //  Copyright © 2016 XLOrganizationName. All rights reserved.
@@ -21,10 +21,9 @@ final class User: Object {
     dynamic var avatarUrlString: String?
     
     let followers = List<User>()
-    let repositories = List<Repository>()
     
-    var avatarUrl: NSURL? {
-        return NSURL(string: self.avatarUrlString ?? "")
+    var avatarUrl: URL? {
+        return URL(string: self.avatarUrlString ?? "")
     }
     
     /**
@@ -46,12 +45,12 @@ final class User: Object {
 
 extension User: Decodable, OperaDecodable {
 
-    static func decode(j: AnyObject) throws -> User {
-        return try User(id: j => "id",
-                 email: j =>? "email",
-       avatarUrlString: j =>? "avatar_url",
-               company: j =>? "name",
-              username: j => "login")
+    static func decode(_ json: Any) throws -> User {
+        return try User(id: json => "id",
+                 email: json =>? "email",
+       avatarUrlString: json =>? "avatar_url",
+               company: json =>? "name",
+              username: json => "login")
     }
     
 }

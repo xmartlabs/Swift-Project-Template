@@ -14,7 +14,7 @@ import Opera
 
 class LoginController: FormViewController {
 
-    private struct RowTags {
+    fileprivate struct RowTags {
         static let LogInUsername = "log in username"
         static let LogInPassword = "log in password"
         static let RepoOwner = "see repository owner"
@@ -29,22 +29,20 @@ class LoginController: FormViewController {
         setUpSections()
     }
 
-    private func setUpSections() {
+    fileprivate func setUpSections() {
         form +++ Section(header: "Advanced usage", footer: "Please enter your credentials for advanced usage")
-                <<< NameRow() {
+                <<< NameRow(RowTags.LogInUsername) {
                     $0.title = "Username:"
                     $0.placeholder = "insert username here.."
-                    $0.tag = RowTags.LogInUsername
                 }
-                <<< PasswordRow() {
+                <<< PasswordRow(RowTags.LogInPassword) {
                     $0.title = "Password:"
                     $0.placeholder = "insert password here.."
-                    $0.tag = RowTags.LogInPassword
                 }
                 <<< ButtonRow() {
                     $0.title = "Log in"
                     }
-                    .onCellSelection { [weak self] _,_ in
+                    .onCellSelection { [weak self] _, _ in
                         self?.loginTapped()
                     }
             +++ Section(header: "Repositories", footer: "Enter repository url")
@@ -67,7 +65,7 @@ class LoginController: FormViewController {
             +++ Section()
                 <<< ButtonRow() {
                     $0.title = "Search Repositories"
-                    $0.presentationMode = PresentationMode.SegueName(segueName: R.segue.loginController.pushToSearchRepositoriesController.identifier, completionCallback: nil)
+                    $0.presentationMode = PresentationMode.segueName(segueName: R.segue.loginController.pushToSearchRepositoriesController.identifier, onDismiss: nil)
                 }
             
             
@@ -85,24 +83,24 @@ class LoginController: FormViewController {
                    self?.seeProfileTapped()
                 }
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        super.prepareForSegue(segue, sender: sender)
-        if let destinationVC = segue.destinationViewController as? UserController {
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        if let destinationVC = segue.destination as? UserController {
             destinationVC.user = sender as? User
-        } else if let destinationVC = segue.destinationViewController as? RepositoryController {
+        } else if let destinationVC = segue.destination as? RepositoryController {
             destinationVC.repository = sender as? Repository
         }
     }
     
-    private func getTextFromRow(tag: String) -> String? {
-        let textRow : NameRow = form.rowByTag(tag)!
+    fileprivate func getTextFromRow(_ tag: String) -> String? {
+        let textRow: NameRow = form.rowBy(tag: tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
     }
     
-    private func getPasswordFromRow(tag: String) -> String? {
-        let textRow : PasswordRow = form.rowByTag(tag)!
+    fileprivate func getPasswordFromRow(_ tag: String) -> String? {
+        let textRow: PasswordRow = form.rowBy(tag: tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
     }
@@ -112,59 +110,65 @@ class LoginController: FormViewController {
     func loginTapped() {
         let writtenUsername = getTextFromRow(RowTags.LogInUsername)
         let writtenPassword = getPasswordFromRow(RowTags.LogInPassword)
-        guard let username = writtenUsername, let password = writtenPassword where !username.isEmpty && !password.isEmpty else {
+        guard let username = writtenUsername, let password = writtenPassword , !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password")
             return
         }
-        
-        Route.User.Login(username: username, password: password)
+
+        LoadingIndicator.show()
+        Route.User.login(username: username, password: password)
             .rx_anyObject()
-            .doOnError() { [weak self] error in
-                 self?.showError("Error", message: (error as? Error).debugDescription ?? "Sorry user login does not work correctly")
-            }
+            .do(onError: { [weak self] (error: Error) in
+                LoadingIndicator.hide()
+                self?.showError("Error", message: error.localizedDescription)
+            })
             .flatMap() { _ in
-                return Route.User.GetInfo(username: username).rx_object()
+                return Route.User.getInfo(username: username).rx_object()
             }
-            .subscribeNext() { [weak self] (user: User) in
+            .do(onNext: { [weak self] (user: User) in
+                LoadingIndicator.hide()
                 self?.showError("Great", message: "You have been successfully logged in")
-            }
+            })
+            .subscribe()
             .addDisposableTo(disposeBag)
     }
     
     func seeRepoTapped() {
         let writtenOwner = getTextFromRow(RowTags.RepoOwner)
         let writtenRepo = getTextFromRow(RowTags.RepoName)
-        guard let repo = writtenRepo, let owner = writtenOwner where !repo.isEmpty && !owner.isEmpty else {
+        guard let repo = writtenRepo, let owner = writtenOwner , !repo.isEmpty && !owner.isEmpty else {
             showError("Please enter the repository and organization name")
             return
         }
         
         Route.Repository.GetInfo(owner: owner, repo: repo)
             .rx_object()
-            .doOnError() { [weak self] error in
+            .do(onNext: { [weak self] (repository: Repository) in
+                self?.performSegue(withIdentifier: R.segue.loginController.pushToRepoController, sender: repository)
+            },onError:{ [weak self] error in
                 self?.showError("Error", message: (error as NSError).localizedDescription)
-            }
-            .subscribeNext() { [weak self] (repository: Repository) in
-                self?.performSegueWithIdentifier(R.segue.loginController.pushToRepoController, sender: repository)
-            }
+            })
+
+            .subscribe()
             .addDisposableTo(disposeBag)
     }
     
     func seeProfileTapped() {
         let writtenUsername = getTextFromRow(RowTags.SeeProfileUsername)
-        guard let user = writtenUsername where !user.isEmpty else {
+        guard let user = writtenUsername, !user.isEmpty else {
             showError("Please enter the username")
             return
         }
         
-        Route.User.GetInfo(username: user)
+        Route.User.getInfo(username: user)
             .rx_object()
-            .doOnError() { [weak self] _ in
+            .do(onNext: { [weak self] (user: User) in
+                self?.performSegue(withIdentifier: R.segue.loginController.pushToUserController, sender: user)
+            },
+            onError: { [weak self] _ in
                 self?.showError("Error", message: "Sorry user login does not work correctly")
-            }
-            .subscribeNext() { [weak self] (user: User) in
-                self?.performSegueWithIdentifier(R.segue.loginController.pushToUserController, sender: user)
-            }
+            })
+            .subscribe()
             .addDisposableTo(disposeBag)
     }
 }

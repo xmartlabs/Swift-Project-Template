@@ -24,7 +24,7 @@ final class Repository: Object {
     dynamic var stargazersCount: Int = Int.min
     dynamic var forksCount: Int = Int.min
     dynamic var urlString: String = ""
-    dynamic var createdAt: NSDate = NSDate()
+    dynamic var createdAt: Date = Date()
 
     // do not save this properties, notice that it is returned by ignoredProperties method
     dynamic var tempId: String = ""
@@ -59,7 +59,7 @@ final class Repository: Object {
         return ["tempId"]
     }
     
-    convenience init(id: Int, name: String, desc: String?, company: String?, language: String?, openIssues: Int, stargazersCount: Int, forksCount: Int, urlString: String, createdAt: NSDate) {
+    convenience init(id: Int, name: String, desc: String?, company: String?, language: String?, openIssues: Int, stargazersCount: Int, forksCount: Int, urlString: String, createdAt: Date) {
         self.init()
         self.id = id
         self.name = name
@@ -77,16 +77,16 @@ final class Repository: Object {
 extension Repository: Decodable, OperaDecodable {
 
 
-    static func decode(j: AnyObject) throws -> Repository {
-        return try Repository(   id: j => "id",
-                               name: j => "name",
-                               desc: j =>? "description",
-                            company: j =>? ["owner", "login"],
-                           language: j =>? "language",
-                         openIssues: j => "open_issues_count",
-                    stargazersCount: j => "stargazers_count",
-                         forksCount: j => "forks_count",
-                          urlString: j => "name",
-                          createdAt: j => "created_at")
+    static func decode(_ json: Any) throws -> Repository {
+        return try Repository(   id: json => "id",
+                               name: json => "name",
+                               desc: json =>? "description",
+                            company: json =>? ["owner", "login"],
+                           language: json =>? "language",
+                         openIssues: json => "open_issues_count",
+                    stargazersCount: json => "stargazers_count",
+                         forksCount: json => "forks_count",
+                          urlString: json => "name",
+                          createdAt: json => "created_at")
     }
 }

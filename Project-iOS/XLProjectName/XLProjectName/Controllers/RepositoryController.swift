@@ -27,18 +27,18 @@ public class RepositoryController: UIViewController {
         super.viewDidLoad()
     }
     
-    public override func viewWillAppear(animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         titleLabel.text = repository.name
         descriptionLabel.text = repository.desc
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .Center
-        starImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")!)
-        forkImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")!)
-        issueImage.af_setImageWithURL(NSURL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")!)
-        starLabel.text = String(repository.stargazersCount ?? 0)
-        issueLabel.text = String(repository.openIssues ?? 0)
-        forkLabel.text = String(repository.forksCount ?? 0)
+        descriptionLabel.textAlignment = .center
+        starImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")!)
+        forkImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")!)
+        issueImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")!)
+        starLabel.text = String(repository.stargazersCount)
+        issueLabel.text = String(repository.openIssues)
+        forkLabel.text = String(repository.forksCount)
         bottomLabel.text = "written in \(repository.language ?? "an unknown language"), by \(repository.company ?? "an unknown company")"
         
     }
