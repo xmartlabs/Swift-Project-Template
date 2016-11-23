@@ -20,7 +20,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OL3-4M-c0W">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="fxw-fV-OT5">
-                                    <rect key="frame" x="0.0" y="64" width="150" height="44"/>
+                                    <rect key="frame" x="0.0" y="64" width="0.0" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <textInputTraits key="textInputTraits"/>
                                 </searchBar>
@@ -41,7 +41,7 @@
                                         <rect key="frame" x="0.0" y="136" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="b9N-Py-2tD" id="y4r-Pd-Jqq">
-                                            <frame key="frameInset" width="375" height="43.5"/>
+                                            <frame key="frameInset" width="375" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cnD-kM-p67">
@@ -75,7 +75,7 @@
                     <navigationItem key="navigationItem" title="Search Github Repositories" id="grv-Jg-Arn"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="UH4-b7-2Yh" id="yTB-K9-0rb"/>
-                        <outlet property="searchBar" destination="fxw-fV-OT5" id="tAz-Vg-cBK"/>
+                        <outlet property="searchBar" destination="fxw-fV-OT5" id="CBf-IB-9FY"/>
                         <outlet property="tableView" destination="OL3-4M-c0W" id="Tet-GY-e9L"/>
                     </connections>
                 </viewController>

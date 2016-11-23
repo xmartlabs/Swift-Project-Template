@@ -538,7 +538,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "'XLOrganizationName'";
 				TargetAttributes = {
 					2841F1D91CCFF55600D609CE = {
@@ -1054,6 +1054,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 046B1680671D3D24701E8B4E /* Pods-XLProjectName-Staging.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "$(SRCROOT)/XLProjectName/Supporting Files/Info-Staging.plist";
@@ -1070,6 +1071,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9C9526B7C0B8808A67721699 /* Pods-XLProjectName-Staging.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -1095,8 +1097,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1139,8 +1143,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1159,6 +1165,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1167,6 +1174,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AC9E911CC8B746EFE8866092 /* Pods-XLProjectName.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6F2G55XL63;
@@ -1184,6 +1192,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6AF246A8383CE6E2620C22C3 /* Pods-XLProjectName.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 6F2G55XL63;
@@ -1201,6 +1210,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 20C3863EDAF6B64F5C07C53A /* Pods-Tests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -1217,6 +1227,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6AF4BCE310ECE9EF72052552 /* Pods-Tests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -1233,6 +1244,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9FDCBEAA30C082EB645948C0 /* Pods-UITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -1248,6 +1260,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0A1759BFE439013D1F0FBED3 /* Pods-UITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				INFOPLIST_FILE = UITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

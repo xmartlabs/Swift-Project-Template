@@ -43,9 +43,12 @@ class SearchRepositoriesController: XLTableViewController {
         viewModel.loading
             .drive(activityIndicatorView.rx.isAnimating)
             .addDisposableTo(disposeBag)
+
         
-        
-        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.asDriver()) { elements, loading, searchText in return loading || searchText?.isEmpty ?? true ? [] : elements }
+        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.orEmpty.asDriver()) {
+            elements, loading, searchText in
+                return loading || searchText.isEmpty ? [] : elements
+            }
             .asDriver()
             .drive(tableView.rx.items(cellIdentifier: "Cell")) { _, repository, cell in
                 cell.textLabel?.text = repository.name
@@ -53,9 +56,8 @@ class SearchRepositoriesController: XLTableViewController {
             }
             .addDisposableTo(disposeBag)
         
-        searchBar.rx.text
+        searchBar.rx.text.orEmpty
             .skip(1)
-            .map{ $0?.value ?? ""}
             .bindTo(viewModel.queryTrigger)
             .addDisposableTo(disposeBag)
         
@@ -72,7 +74,9 @@ class SearchRepositoriesController: XLTableViewController {
             .drive(onNext: { _ in refreshControl.endRefreshing() })
             .addDisposableTo(disposeBag)
         
-        Driver.combineLatest(viewModel.emptyState, searchBar.rx.text.asDriver()) { $0 ||  $1?.isEmpty ?? true }
+        Driver.combineLatest(viewModel.emptyState, searchBar.rx.text.asDriver()) {
+                $0 ||  $1?.isEmpty ?? true
+            }
             .drive(onNext: { [weak self] state in
                 self?.emptyStateLabel.isHidden = !state
                 self?.emptyStateLabel.text = (self?.searchBar.text?.isEmpty ?? true) ? ControllerConstants.NoTextMessage : ControllerConstants.NoRepositoriesMessage
