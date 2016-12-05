@@ -50,3 +50,6 @@ Pods/
 # Carthage/Checkouts
 
 Carthage/Build
+
+# Remove R.swift generated file
+**/R.generated.swift

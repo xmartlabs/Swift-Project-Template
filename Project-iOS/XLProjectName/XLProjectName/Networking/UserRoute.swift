@@ -19,12 +19,12 @@ extension Route {
         case followers(username: String)
         case repositories(username: String)
         
-        var method: Alamofire.Method {
+        var method: Alamofire.HTTPMethod {
             switch self {
             case .login:
-                return .GET
+                return .get
             case .getInfo, .followers, .repositories:
-                return .GET
+                return .get
             }
         }
         
@@ -43,7 +43,7 @@ extension Route {
         
         // MARK: - CustomUrlRequestSetup
         
-        func urlRequestSetup(_ request: NSMutableURLRequest) {
+        func urlRequestSetup(_ request: inout URLRequest) {
             if case let .login(username, password) = self {
                 let utf8 = "\(username):\(password)".data(using: String.Encoding.utf8)
                 let base64 = utf8?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))

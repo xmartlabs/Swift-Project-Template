@@ -21,10 +21,10 @@ extension AppDelegate {
 
     // MARK: Alamofire notifications
     func setupNetworking() {
-        NotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(AppDelegate.requestDidComplete(_:)),
-            name: Alamofire.Notifications.Task.DidComplete,
+            name: Alamofire.Notification.Name.Task.DidComplete,
             object: nil)
     }
 
@@ -53,11 +53,11 @@ extension AppDelegate {
 
         EmailRow.defaultRowInitializer = {
             $0.placeholder = NSLocalizedString("E-mail Address", comment: "")
-            $0.placeholderColor = .grayColor()
+            $0.placeholderColor = .gray
         }
 
         EmailRow.defaultCellSetup = { cell, _ in
-            cell.layoutMargins = UIEdgeInsetsZero
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.contentView.layoutMargins.left = genericHorizontalMargin
             cell.height = { 58 }
         }

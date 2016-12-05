@@ -68,12 +68,12 @@ class LoadingIndicatorManager {
     // MARK: - Helpers
 
     fileprivate func showActivity(_ data: ActivityData) {
-        presenter.startActivityAnimating(LoadingIndicator.size, message: data.message, type: LoadingIndicator.type, color: LoadingIndicator.color, padding: nil)
+        presenter.startAnimating(LoadingIndicator.size, message: data.message, type: LoadingIndicator.type, color: LoadingIndicator.color, padding: nil)
         hideActivityTimer = scheduleTimer(data.minimumVisibleTime, selector: #selector(LoadingIndicatorManager.hideActivityTimerFired(_:)), data: nil)
     }
 
     fileprivate func hideActivity() {
-        presenter.stopActivityAnimating()
+        presenter.stopAnimating()
         showActivityTimer?.invalidate()
         showActivityTimer = nil
     }
