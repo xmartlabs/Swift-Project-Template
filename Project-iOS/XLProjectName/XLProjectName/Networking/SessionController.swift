@@ -78,13 +78,13 @@ class SessionController {
     lazy var userObservable: Observable<User> = {
         return Observable.create() { [unowned self] (subscriber: AnyObserver<User>) in
             let realm = RealmManager.sharedInstance.defaultRealm
-            let userResult = realm.objects(User.self)
-            self.userObserverToken = userResult.addNotificationBlock { _ in
+            let userResult = realm?.objects(User.self)
+            self.userObserverToken = userResult?.addNotificationBlock { _ in
                 if let user = self.user {
                     subscriber.onNext(user)
                 }
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }()
 

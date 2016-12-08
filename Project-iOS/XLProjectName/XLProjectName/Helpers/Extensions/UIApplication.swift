@@ -26,7 +26,6 @@ extension UIApplication {
         */
         //  If you do not request any interaction types, the system pushes all notifications to your app silently.
         
-        
         let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
         
         /**

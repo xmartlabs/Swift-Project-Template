@@ -1,13 +1,14 @@
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8
+env:
+  - DESTINATION="OS=10.0,name=iPhone 6s" SCHEME="XLProjectName" SDK=iphonesimulator10.0
 
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
-- if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
 - carthage update --platform iOS
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- xctool clean build  -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator
-- xctool test -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator
+- xcodebuild clean build -workspace XLProjectName/XLProjectName.xcworkspace -scheme "$SCHEME" -sdk "$SDK"
+- xcodebuild test -workspace XLProjectName/XLProjectName.xcworkspace -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" | xcpretty -c

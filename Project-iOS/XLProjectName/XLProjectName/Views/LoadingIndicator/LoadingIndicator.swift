@@ -13,7 +13,7 @@ import UIKit
 class LoadingIndicator {
 
     static let size = CGSize(width: 30, height: 30)
-    static let type = NVActivityIndicatorType.BallPulse
+    static let type = NVActivityIndicatorType.ballPulse
     static let color = UIColor.white
     static let minimumVisibleTime = TimeInterval(0.2)
     static let displayTimeThreshold = TimeInterval(0.1)

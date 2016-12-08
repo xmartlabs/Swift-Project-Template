@@ -57,7 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
 
 extension AppDelegate {
@@ -91,7 +90,6 @@ extension AppDelegate {
         Crashlytics.sharedInstance().recordError(error)
     }
     
-    
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         
         if application.applicationState == .active {
@@ -106,7 +104,6 @@ extension AppDelegate {
         // otherwise do nothing, it should be managed by didFinishLaunchingWithOptions.
     }
 
-    
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
     }

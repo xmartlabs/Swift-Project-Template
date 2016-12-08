@@ -45,13 +45,13 @@ class LoginController: FormViewController {
     }
     
     fileprivate func getTextFromRow(_ tag: String) -> String? {
-        let textRow: NameRow = form.rowByTag(tag)!
+        let textRow: NameRow = form.rowBy(tag: tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
     }
     
     fileprivate func getPasswordFromRow(_ tag: String) -> String? {
-        let textRow: PasswordRow = form.rowByTag(tag)!
+        let textRow: PasswordRow = form.rowBy(tag: tag)!
         let textEntered = textRow.cell.textField.text
         return textEntered
     }
@@ -61,7 +61,7 @@ class LoginController: FormViewController {
     func loginTapped() {
         let writtenUsername = getTextFromRow(RowTags.LogInUsername)
         let writtenPassword = getPasswordFromRow(RowTags.LogInPassword)
-        guard let username = writtenUsername, let password = writtenPassword , !username.isEmpty && !password.isEmpty else {
+        guard let username = writtenUsername, let password = writtenPassword, !username.isEmpty && !password.isEmpty else {
             showError("Please enter the username and password")
             return
         }
@@ -69,17 +69,17 @@ class LoginController: FormViewController {
         LoadingIndicator.show()
         Route.User.login(username: username, password: password)
             .rx_anyObject()
-            .doOnError { [weak self] (error: Error) in
+            .do(onError: { [weak self] (error: Error) in
                 LoadingIndicator.hide()
-                self?.showError("Error", message: (error as? Error)?.debugDescription ?? "Sorry user login does not work correctly")
-            }
+                self?.showError("Error", message: (error as? OperaError)?.debugDescription ?? "Sorry user login does not work correctly")
+            })
             .flatMap() { _ in
-                return Route.User.GetInfo(username: username).rx_object()
+                return Route.User.getInfo(username: username).rx_object()
             }
-            .subscribeNext() { [weak self] (user: User) in
+            .subscribe(onNext: { [weak self] (user: User) in
                 LoadingIndicator.hide()
                 self?.showError("Great", message: "You have been successfully logged in")
-            }
+            })
             .addDisposableTo(disposeBag)
     }
 }
