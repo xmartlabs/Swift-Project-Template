@@ -21,15 +21,15 @@ extension AppDelegate {
 
     // MARK: Alamofire notifications
     func setupNetworking() {
-        NSNotificationCenter.defaultCenter().addObserver(
+        NotificationCenter.default.addObserver(
             self,
             selector: #selector(AppDelegate.requestDidComplete(_:)),
-            name: Alamofire.Notifications.Task.DidComplete,
+            name: Alamofire.Notification.Name.Task.DidComplete,
             object: nil)
     }
 
-    func requestDidComplete(notification: NSNotification) {
-        guard let task = notification.object as? NSURLSessionTask, response = task.response as? NSHTTPURLResponse else {
+    func requestDidComplete(_ notification: Notification) {
+        guard let task = notification.userInfo?[Notification.Key.Task] as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
             DEBUGLog("Request object not a task")
             return
         }
@@ -53,11 +53,11 @@ extension AppDelegate {
 
         EmailRow.defaultRowInitializer = {
             $0.placeholder = NSLocalizedString("E-mail Address", comment: "")
-            $0.placeholderColor = .grayColor()
+            $0.placeholderColor = .gray
         }
 
         EmailRow.defaultCellSetup = { cell, _ in
-            cell.layoutMargins = UIEdgeInsetsZero
+            cell.layoutMargins = UIEdgeInsets.zero
             cell.contentView.layoutMargins.left = genericHorizontalMargin
             cell.height = { 58 }
         }

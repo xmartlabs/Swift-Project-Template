@@ -51,3 +51,6 @@ Project-iOS/Pods
 
 Carthage/Build
 Project-iOS/XLProjectName/Podfile.lock
+
+# Remove R.swift generated file
+**/R.generated.swift

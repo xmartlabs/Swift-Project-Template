@@ -13,15 +13,15 @@ import UIKit
 class LoadingIndicator {
 
     static let size = CGSize(width: 30, height: 30)
-    static let type = NVActivityIndicatorType.BallPulse
-    static let color = UIColor.whiteColor()
-    static let minimumVisibleTime = NSTimeInterval(0.2)
-    static let displayTimeThreshold = NSTimeInterval(0.1)
+    static let type = NVActivityIndicatorType.ballPulse
+    static let color = UIColor.white
+    static let minimumVisibleTime = TimeInterval(0.2)
+    static let displayTimeThreshold = TimeInterval(0.1)
 
     static func show(
-        message message: String? = nil,
-        minimumVisibleTime: NSTimeInterval = LoadingIndicator.minimumVisibleTime,
-        displayTimeThreshold: NSTimeInterval = LoadingIndicator.displayTimeThreshold) {
+        message: String? = nil,
+        minimumVisibleTime: TimeInterval = LoadingIndicator.minimumVisibleTime,
+        displayTimeThreshold: TimeInterval = LoadingIndicator.displayTimeThreshold) {
 
         LoadingIndicatorManager.sharedInstance.show(message: message, minimumVisibleTime: minimumVisibleTime, displayTimeThreshold: displayTimeThreshold)
     }

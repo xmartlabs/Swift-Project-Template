@@ -15,11 +15,11 @@ class RealmManager: AnyObject {
 
     static let sharedInstance = RealmManager()
 
-    private(set) var defaultRealm: Realm!
+    fileprivate(set) var defaultRealm: Realm!
 
-    private var config = Realm.Configuration()
+    fileprivate var config = Realm.Configuration()
 
-    private init() {
+    fileprivate init() {
 //        config.schemaVersion = 1
 //        config.migrationBlock = { migration, oldSchemaVersion in
 //             Perform migrations when needed
@@ -57,12 +57,12 @@ class RealmManager: AnyObject {
 
 extension Object {
 
-    private func realmInst() -> Realm {
+    fileprivate func realmInst() -> Realm {
         return self.realm ?? RealmManager.sharedInstance.defaultRealm
     }
 
     /** Must be called from main thread */
-    func save(update: Bool = true) throws {
+    func save(_ update: Bool = true) throws {
         let realm = self.realmInst()
         try realm.write() {
             realm.add(self, update: update)
@@ -70,7 +70,7 @@ extension Object {
     }
 
     /** Must be called from main thread */
-    static func save(objects: [Object], update: Bool = true) throws {
+    static func save(_ objects: [Object], update: Bool = true) throws {
         guard let first = objects.first else {
             return
         }

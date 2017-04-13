@@ -14,14 +14,14 @@ import RxSwift
 
 class NetworkManager: RxManager {
 
-    static let singleton = NetworkManager(manager: Alamofire.Manager.sharedInstance)
+    static let singleton = NetworkManager(manager: SessionManager.default)
 
-    override init(manager: Alamofire.Manager) {
+    override init(manager: Alamofire.SessionManager) {
         super.init(manager: manager)
         observers = [Logger()]
     }
 
-    override func rx_response(requestConvertible: URLRequestConvertible) -> Observable<OperaResult> {
+    override func rx_response(_ requestConvertible: URLRequestConvertible) -> Observable<OperaResult> {
         let response = super.rx_response(requestConvertible)
         return SessionController.sharedInstance.refreshToken().flatMap { _ in response }
     }
@@ -30,7 +30,7 @@ class NetworkManager: RxManager {
 final class Route {}
 
 struct Logger: Opera.ObserverType {
-    func willSendRequest(alamoRequest: Alamofire.Request, requestConvertible: URLRequestConvertible) {
+    func willSendRequest(_ alamoRequest: Alamofire.Request, requestConvertible: URLRequestConvertible) {
         debugPrint(alamoRequest)
     }
 }

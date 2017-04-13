@@ -8,10 +8,10 @@
 
 import Foundation
 
-extension NSDate {
+extension Date {
 
     func dblog() -> String {
-        return Constants.Formatters.debugConsoleDateFormatter.stringFromDate(self)
+        return Constants.Formatters.debugConsoleDateFormatter.string(from: self)
     }
 
 }

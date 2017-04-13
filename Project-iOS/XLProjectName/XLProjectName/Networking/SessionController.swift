@@ -16,8 +16,8 @@ import RealmSwift
 
 class SessionController {
     static let sharedInstance = SessionController()
-    private let keychain = Keychain(service: Constants.Keychain.serviceIdentifier)
-    private init() { }
+    fileprivate let keychain = Keychain(service: Constants.Keychain.serviceIdentifier)
+    fileprivate init() { }
 
     // MARK: - Session variables
     var token: String? {
@@ -73,18 +73,18 @@ class SessionController {
     }
 
     // MARK: - User observable
-    private var userObserverToken: NotificationToken?
+    fileprivate var userObserverToken: NotificationToken?
 
     lazy var userObservable: Observable<User> = {
         return Observable.create() { [unowned self] (subscriber: AnyObserver<User>) in
             let realm = RealmManager.sharedInstance.defaultRealm
-            let userResult = realm.objects(User.self)
-            self.userObserverToken = userResult.addNotificationBlock { _ in
+            let userResult = realm?.objects(User.self)
+            self.userObserverToken = userResult?.addNotificationBlock { _ in
                 if let user = self.user {
                     subscriber.onNext(user)
                 }
             }
-            return NopDisposable.instance
+            return Disposables.create()
         }
     }()
 

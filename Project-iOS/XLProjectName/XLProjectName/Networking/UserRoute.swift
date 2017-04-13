@@ -14,39 +14,39 @@ extension Route {
 
     enum User: RouteType, URLRequestSetup {
 
-        case Login(username: String, password: String)
-        case GetInfo(username: String)
-        case Followers(username: String)
-        case Repositories(username: String)
+        case login(username: String, password: String)
+        case getInfo(username: String)
+        case followers(username: String)
+        case repositories(username: String)
         
-        var method: Alamofire.Method {
+        var method: Alamofire.HTTPMethod {
             switch self {
-            case .Login:
-                return .GET
-            case .GetInfo, .Followers, .Repositories:
-                return .GET
+            case .login:
+                return .get
+            case .getInfo, .followers, .repositories:
+                return .get
             }
         }
         
         var path: String {
             switch self {
-            case .Login(_, _):
+            case .login(_, _):
                 return ""
-            case .GetInfo(let user):
+            case .getInfo(let user):
                 return "users/\(user)"
-            case .Followers(let user):
+            case .followers(let user):
                 return "users/\(user)/followers"
-            case .Repositories(let user):
+            case .repositories(let user):
                 return "users/\(user)/repos"
             }
         }
         
         // MARK: - CustomUrlRequestSetup
         
-        func urlRequestSetup(request: NSMutableURLRequest) {
-            if case let .Login(username, password) = self {
-                let utf8 = "\(username):\(password)".dataUsingEncoding(NSUTF8StringEncoding)
-                let base64 = utf8?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
+        func urlRequestSetup(_ request: inout URLRequest) {
+            if case let .login(username, password) = self {
+                let utf8 = "\(username):\(password)".data(using: String.Encoding.utf8)
+                let base64 = utf8?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                 
                 guard let encodedString = base64 else {
                     return

@@ -1,36 +1,36 @@
 source 'https://github.com/CocoaPods/Specs'
 
-platform :ios, '8.0'
+platform :ios, '9.0'
 use_frameworks!
 
 # Add Application pods here
 def app_pods
-    pod 'Alamofire', '~> 3.0'
-    pod 'AlamofireImage', '~> 2.0'
-    pod 'AsyncSwift', '~> 1.0'
-    pod 'Crashlytics', '~> 3.0'
-    pod 'Device', '~> 1.0'
-    pod 'Decodable', '~> 0.0'
-    pod 'DynamicColor', '~> 2.0'
-    pod 'Eureka', '~> 1.0'
-    pod 'Fabric', '~> 1.0'
-    pod 'KeychainAccess', '~> 2.0'
-    pod 'NVActivityIndicatorView', '~> 2.10'
-    pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'master'
-    pod 'R.swift', '~> 2.0'
-    pod 'RealmSwift', '~> 1.0'
-    pod 'Result', '~> 2.0'
-    pod 'RxAlamofire', '~> 2.2'
-    pod 'RxCocoa', '~> 2.0'
-    pod 'RxSwift', '~> 2.0'
-    pod 'SwiftDate', '~> 3.0'
-    pod 'WebLinking', '~> 1.0'
-    pod 'XLSwiftKit', '~> 1.0'
+    pod 'Alamofire', '~> 4.0'
+    pod 'AlamofireImage', '~> 3.0'
+    pod 'AsyncSwift', '~> 2.0'
+    pod 'Crashlytics'
+    pod 'Device', '~> 2.0'
+    pod 'Decodable', '~> 0.5'
+    pod 'DynamicColor', '~> 3.0'
+    pod 'Eureka', '~> 2.0.0-beta.1'
+    pod 'Fabric', '~> 1.6'
+    pod 'KeychainAccess', '~> 3.0'
+    pod 'NVActivityIndicatorView', '~> 3.0'
+    pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'Swift3'
+    pod 'R.swift', '~> 3.0'
+    pod 'RealmSwift', '~> 2.0'
+    pod 'Result', '~> 3.0'
+    pod 'RxAlamofire', '~> 3.0'
+    pod 'RxCocoa', '~> 3.0'
+    pod 'RxSwift', '~> 3.0'
+    pod 'SwiftDate', '~> 4.0'
+    pod 'WebLinking', :git => 'https://github.com/kylef/WebLinking.swift', :branch => 'master'
+    pod 'XLSwiftKit', '~> 2.0'
 end
 
 def testing_pods
-    pod 'Quick', '~> 0.9'
-    pod 'Nimble', '~> 4.0'
+    pod 'Quick', '~> 1.0'
+    pod 'Nimble', '~> 5.0'
 end
 
 target 'XLProjectName' do

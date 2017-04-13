@@ -13,7 +13,7 @@ import XLSwiftKit
 struct Constants {
 
 	struct Network {
-        static let baseUrl = NSURL(string: "https://api.github.com")!
+        static let baseUrl = URL(string: "https://api.github.com")!
         static let AuthTokenName = "Authorization"
         static let SuccessCode = 200
         static let successRange = 200..<300
@@ -30,10 +30,10 @@ struct Constants {
     
     struct Formatters {
         
-        static let debugConsoleDateFormatter: NSDateFormatter = {
-            let formatter = NSDateFormatter()
+        static let debugConsoleDateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-            formatter.timeZone = NSTimeZone(name: "UTC")!
+            formatter.timeZone = TimeZone(identifier: "UTC")!
             return formatter
         }()
         
