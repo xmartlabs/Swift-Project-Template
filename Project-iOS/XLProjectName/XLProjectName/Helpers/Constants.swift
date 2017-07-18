@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Opera
+import OperaSwift
 import XLSwiftKit
 
 struct Constants {

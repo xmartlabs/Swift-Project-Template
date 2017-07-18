@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Opera
+import OperaSwift
 import Alamofire
 import KeychainAccess
 import RxSwift
@@ -18,18 +18,18 @@ class NetworkManager: RxManager {
 
     override init(manager: Alamofire.SessionManager) {
         super.init(manager: manager)
-        observers = [Logger()]
+        observers = [Logger() as OperaSwift.ObserverType]
     }
 
-    override func rx_response(_ requestConvertible: URLRequestConvertible) -> Observable<OperaResult> {
-        let response = super.rx_response(requestConvertible)
-        return SessionController.sharedInstance.refreshToken().flatMap { _ in response }
+    override func response(_ requestConvertible: URLRequestConvertible) -> PrimitiveSequence<SingleTrait, OperaResult> {
+        let response = super.response(requestConvertible)
+        return response
     }
 }
 
 final class Route {}
 
-struct Logger: Opera.ObserverType {
+struct Logger: OperaSwift.ObserverType {
     func willSendRequest(_ alamoRequest: Alamofire.Request, requestConvertible: URLRequestConvertible) {
         debugPrint(alamoRequest)
     }

@@ -9,7 +9,7 @@
 import Foundation
 import Decodable
 import RealmSwift
-import Opera
+import OperaSwift
 
 final class User: Object {
     

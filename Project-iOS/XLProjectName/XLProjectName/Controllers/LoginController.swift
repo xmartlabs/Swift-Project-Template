@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import XLSwiftKit
 import Eureka
-import Opera
+import OperaSwift
 
 class LoginController: FormViewController {
 
