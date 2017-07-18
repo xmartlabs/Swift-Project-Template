@@ -61,6 +61,8 @@
 		8F0759A71D774FC10012D681 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A61D774FC10012D681 /* RealmManager.swift */; };
 		8F0759A81D774FC10012D681 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A61D774FC10012D681 /* RealmManager.swift */; };
 		B23A40F01C972C2B004AB8DC /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23A40EF1C972C2B004AB8DC /* NSDate.swift */; };
+		ECD86FE11F1EC24200AE1AF0 /* URLRequestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD86FE01F1EC24200AE1AF0 /* URLRequestSetup.swift */; };
+		ECD86FE21F1EC24200AE1AF0 /* URLRequestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD86FE01F1EC24200AE1AF0 /* URLRequestSetup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +151,7 @@
 		AC9E911CC8B746EFE8866092 /* Pods-XLProjectName.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLProjectName.debug.xcconfig"; path = "Pods/Target Support Files/Pods-XLProjectName/Pods-XLProjectName.debug.xcconfig"; sourceTree = "<group>"; };
 		B23A40EF1C972C2B004AB8DC /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
 		DEE523F7CE6A0E56FCF7A0A5 /* Pods_XLProjectName.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XLProjectName.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECD86FE01F1EC24200AE1AF0 /* URLRequestSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLRequestSetup.swift; sourceTree = "<group>"; };
 		F5CE8DAF3DF9D8499BA58B7A /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -213,6 +216,7 @@
 				28A6B9D71CB6271800682BCE /* Manager.swift */,
 				281BF19F1C7B8EEF00809E3F /* UserRoute.swift */,
 				8F0759A01D774B390012D681 /* SessionController.swift */,
+				ECD86FE01F1EC24200AE1AF0 /* URLRequestSetup.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -885,6 +889,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2841F1DC1CCFF55600D609CE /* UIApplication.swift in Sources */,
+				ECD86FE21F1EC24200AE1AF0 /* URLRequestSetup.swift in Sources */,
 				2841F1DD1CCFF55600D609CE /* NSDate.swift in Sources */,
 				2841F1E01CCFF55600D609CE /* XLTableViewController.swift in Sources */,
 				2841F1E11CCFF55600D609CE /* Manager.swift in Sources */,
@@ -913,6 +918,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28FEB24C1C9875F60027D470 /* UIApplication.swift in Sources */,
+				ECD86FE11F1EC24200AE1AF0 /* URLRequestSetup.swift in Sources */,
 				B23A40F01C972C2B004AB8DC /* NSDate.swift in Sources */,
 				2817316B1C9C4BDA006237C7 /* XLTableViewController.swift in Sources */,
 				28A6B9D81CB6271800682BCE /* Manager.swift in Sources */,
