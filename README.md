@@ -23,11 +23,11 @@ iOS project has the following configuration:
   * Crashlytics integration.
   * `travis.yml` file.
   * `podfile` containing most used libraries by us.
-    - Realm, Decodable, Alamofire, RxSwift, Eureka, Opera and many others.
+    - Realm, Decodable, Alamofire, RxSwift, Eureka, OperaSwift and many others.
 
 * Networking
   * `Alamofire` networking library.
-  * `Opera` network abstraction layer integrated along with some examples.
+  * `OperaSwift` network abstraction layer integrated along with some examples.
 
 
 ##### Usage
