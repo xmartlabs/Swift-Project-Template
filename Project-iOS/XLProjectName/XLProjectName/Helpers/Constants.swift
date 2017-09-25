@@ -3,11 +3,11 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright (c) 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2016 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
-import Opera
+import OperaSwift
 import XLSwiftKit
 
 struct Constants {

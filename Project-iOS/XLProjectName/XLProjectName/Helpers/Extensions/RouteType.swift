@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import Opera
+import OperaSwift
 import Alamofire
 
 extension RouteType {
@@ -29,7 +29,7 @@ extension URLRequestParametersSetup {
 
 extension URLRequestSetup {
 
-    func urlRequestSetup(_ urlRequest: NSMutableURLRequest) {
+    func urlRequestSetup(urlRequest: NSMutableURLRequest) {
         // setup url
     }
 }

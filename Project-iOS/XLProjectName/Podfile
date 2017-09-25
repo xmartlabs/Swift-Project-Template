@@ -16,7 +16,7 @@ def app_pods
     pod 'Fabric', '~> 1.6'
     pod 'KeychainAccess', '~> 3.0'
     pod 'NVActivityIndicatorView', '~> 3.0'
-    pod 'Opera', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'Swift3'
+    pod 'OperaSwift', '~> 2.0'
     pod 'R.swift', '~> 3.0'
     pod 'RealmSwift', '~> 2.0'
     pod 'Result', '~> 3.0'
