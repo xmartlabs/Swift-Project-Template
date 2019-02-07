@@ -3,12 +3,11 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
 import RxSwift
-import XLSwiftKit
 import Eureka
 import OperaSwift
 
@@ -80,6 +79,6 @@ class LoginController: FormViewController {
                 LoadingIndicator.hide()
                 self.showError("Great", message: "You have been successfully logged in")
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
     }
 }

@@ -1,52 +1,51 @@
-source 'https://github.com/CocoaPods/Specs'
-
-platform :ios, '9.0'
-use_frameworks!
+platform :ios, '10.0'
 
 # Add Application pods here
 def app_pods
-    pod 'Alamofire', '~> 4.0'
-    pod 'AlamofireImage', '~> 3.0'
+    pod 'Alamofire', '~> 4.8'
+    pod 'AlamofireImage', '~> 3.5'
     pod 'AsyncSwift', '~> 2.0'
     pod 'Crashlytics'
-    pod 'Device', '~> 2.0'
-    pod 'Decodable', '~> 0.5'
-    pod 'DynamicColor', '~> 3.0'
-    pod 'Eureka', '~> 2.0.0-beta.1'
-    pod 'Fabric', '~> 1.6'
-    pod 'KeychainAccess', '~> 3.0'
-    pod 'NVActivityIndicatorView', '~> 3.0'
-    pod 'OperaSwift', '~> 2.0'
-    pod 'R.swift', '~> 3.0'
-    pod 'RealmSwift', '~> 2.0'
-    pod 'Result', '~> 3.0'
-    pod 'RxAlamofire', '~> 3.0'
-    pod 'RxCocoa', '~> 3.0'
-    pod 'RxSwift', '~> 3.0'
-    pod 'SwiftDate', '~> 4.0'
-    pod 'WebLinking', :git => 'https://github.com/kylef/WebLinking.swift', :branch => 'master'
-    pod 'XLSwiftKit', '~> 2.0'
+    pod 'Device', '~> 3.1'
+    pod 'DynamicColor', '~> 4.0'
+    pod 'Eureka', '~> 4.3'
+    pod 'Fabric', '~> 1.9'
+    pod 'KeychainAccess', '~> 3.1'
+    pod 'NVActivityIndicatorView', '~> 4.6'
+    pod 'OperaSwift', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'migration/swift4_2'
+    pod 'R.swift', '~> 5.0.2'
+    pod 'RealmSwift', '~> 3.0'
+    pod 'Result', '~> 4.0'
+    pod 'RxAlamofire', '~> 4.0'
+    pod 'RxCocoa', '~> 4.0'
+    pod 'RxSwift', '~> 4.0'
+    pod 'SwiftDate', '~> 5.0'
+    pod 'WebLinking', '~> 2.0'
 end
 
 def testing_pods
     pod 'Quick', '~> 1.0'
-    pod 'Nimble', '~> 5.0'
+    pod 'Nimble', '~> 7.0'
 end
 
 target 'XLProjectName' do
-    app_pods
+  use_frameworks!
+  app_pods
 end
 
 target 'XLProjectName-Staging' do
-    app_pods
+  use_frameworks!
+  app_pods
 end
 
 target 'Tests' do
+  use_frameworks!
   testing_pods
 end
 
 target 'UITests' do
-    testing_pods
+  use_frameworks!
+  testing_pods
 end
 
 post_install do |installer|

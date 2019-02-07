@@ -3,13 +3,17 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
 extension UIApplication {
+    
+    static var bundleIdentifier: String {
+        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    }
     
     static func requestPermissionToShowPushNotification() {
         

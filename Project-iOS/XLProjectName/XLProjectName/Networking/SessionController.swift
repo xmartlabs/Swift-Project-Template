@@ -79,7 +79,7 @@ class SessionController {
         return Observable.create() { [unowned self] (subscriber: AnyObserver<User>) in
             let realm = RealmManager.sharedInstance.defaultRealm
             let userResult = realm?.objects(User.self)
-            self.userObserverToken = userResult?.addNotificationBlock { _ in
+            self.userObserverToken = userResult?.observe { _ in
                 if let user = self.user {
                     subscriber.onNext(user)
                 }
@@ -89,6 +89,6 @@ class SessionController {
     }()
 
     deinit {
-        userObserverToken?.stop()
+        userObserverToken?.invalidate()
     }
 }
