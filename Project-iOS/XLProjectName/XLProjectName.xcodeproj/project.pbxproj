@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2802F26E220DD7E4002C5505 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2802F26D220DD7E4002C5505 /* UserNotifications.framework */; };
+		2802F26F220DD7F0002C5505 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2802F26D220DD7E4002C5505 /* UserNotifications.framework */; };
 		280CC7E62205015300D5BE92 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CC7E52205015300D5BE92 /* UIViewController.swift */; };
 		280CC7E72205015300D5BE92 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 280CC7E52205015300D5BE92 /* UIViewController.swift */; };
 		281731691C9C4BBC006237C7 /* XLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 281731681C9C4BBC006237C7 /* XLViewController.swift */; };
@@ -106,6 +108,7 @@
 		1B77B342E79076394024D90C /* Pods-XLProjectName.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-XLProjectName.debug.xcconfig"; path = "Target Support Files/Pods-XLProjectName/Pods-XLProjectName.debug.xcconfig"; sourceTree = "<group>"; };
 		1E4C95CC93DE76F4FD2956FD /* Pods_UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F69C49E5F5FEA4AF553B1D9 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2802F26D220DD7E4002C5505 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		280CC7E52205015300D5BE92 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		281731681C9C4BBC006237C7 /* XLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLViewController.swift; sourceTree = "<group>"; };
 		2817316A1C9C4BDA006237C7 /* XLTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XLTableViewController.swift; sourceTree = "<group>"; };
@@ -155,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2802F26E220DD7E4002C5505 /* UserNotifications.framework in Frameworks */,
 				5F0B7ED05117091079A4EA5C /* Pods_XLProjectName_Staging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +167,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2802F26F220DD7F0002C5505 /* UserNotifications.framework in Frameworks */,
 				834F641C0FA53F9DE62A593D /* Pods_XLProjectName.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +341,7 @@
 		2E82DB69CE8E114B033D890A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2802F26D220DD7E4002C5505 /* UserNotifications.framework */,
 				F5CE8DAF3DF9D8499BA58B7A /* Pods.framework */,
 				1F69C49E5F5FEA4AF553B1D9 /* Pods_Tests.framework */,
 				1E4C95CC93DE76F4FD2956FD /* Pods_UITests.framework */,
@@ -383,7 +389,6 @@
 				005F83B609C91A1CA4E8B53A /* Pods-XLProjectName-Staging.debug.xcconfig */,
 				E756D9F7B9EC8D77DEC6302B /* Pods-XLProjectName-Staging.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -720,7 +725,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/XLProjectName/Helpers/R-Swift/R.generated.swift\"\n";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/XLProjectName/Helpers/R.generated.swift\"\n";
 		};
 		283020B61C8752C300E6EBC2 /* Fabric */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -770,13 +775,15 @@
 			files = (
 			);
 			inputPaths = (
+				"$TEMP_DIR/rswift-lastrun",
 			);
 			name = "R-Swift";
 			outputPaths = (
+				$SRCROOT/XLProjectName/Helpers/R.generated.swift,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"$PODS_ROOT/R.swift/rswift\" \"$SRCROOT/XLProjectName/Helpers/R-Swift\"\n\n";
+			shellScript = "\"$PODS_ROOT/R.swift/rswift\" generate \"$SRCROOT/XLProjectName/Helpers/R.generated.swift\"\n";
 		};
 		2841F1FD1CCFF55600D609CE /* Warn for TODO and FIXME comments */ = {
 			isa = PBXShellScriptBuildPhase;

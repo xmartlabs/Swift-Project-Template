@@ -72,7 +72,7 @@ class LoginController: FormViewController {
                 LoadingIndicator.hide()
                 self?.showError("Error", message: (error as? OperaError)?.debugDescription ?? "Sorry user login does not work correctly")
             })
-            .flatMap() { data -> PrimitiveSequence<SingleTrait,Any> in
+            .flatMap() { data -> Single<Any> in
                 return Route.User.getInfo(username: username).rx.any()
             }
             .subscribe { (user) in

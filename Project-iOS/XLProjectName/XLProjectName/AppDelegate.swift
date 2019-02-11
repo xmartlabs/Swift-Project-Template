@@ -8,11 +8,13 @@
 
 import UIKit
 import Crashlytics
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var disposeBag = DisposeBag()
     
     /// true if app was able to get pushn notification token
     static var didRegisteredPush = false
@@ -77,7 +79,7 @@ extension AppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // pass device token to Intercom
         //Intercom.setDeviceToken(deviceToken)
-//        let deviceTokenStr = "\(deviceToken)"
+        let deviceTokenStr = "\(deviceToken)"
 //        Route.Device.Update(token: deviceTokenStr).request.resume()
     }
     
