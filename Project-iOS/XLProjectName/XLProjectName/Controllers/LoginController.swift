@@ -41,6 +41,12 @@ class LoginController: FormViewController {
                     .onCellSelection { [weak self] _, _ in
                         self?.loginTapped()
                     }
+        
+            +++ Section()
+                <<< ButtonRow() {
+                    $0.title = "Search Repositories"
+//                    $0.presentationMode = PresentationMode.segueName(segueName:   .loginController.pushToSearchRepositoriesController.identifier, onDismiss: nil)
+            }
     }
     
     fileprivate func getTextFromRow(_ tag: String) -> String? {
@@ -80,5 +86,13 @@ class LoginController: FormViewController {
                 self.showError("Great", message: "You have been successfully logged in")
             }
             .disposed(by: disposeBag)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+//        if let destinationVC = segue.destination as? UserController {
+//            destinationVC.user = sender as? User
+//        }
     }
 }

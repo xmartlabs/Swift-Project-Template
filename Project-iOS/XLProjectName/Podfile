@@ -1,4 +1,5 @@
 platform :ios, '10.0'
+use_frameworks!
 
 # Add Application pods here
 def app_pods
@@ -29,30 +30,26 @@ def testing_pods
 end
 
 target 'XLProjectName' do
-  use_frameworks!
   app_pods
 end
 
 target 'XLProjectName-Staging' do
-  use_frameworks!
   app_pods
 end
 
 target 'Tests' do
-  use_frameworks!
   testing_pods
 end
 
 target 'UITests' do
-  use_frameworks!
   testing_pods
 end
 
-post_install do |installer|
-    puts 'Removing static analyzer support'
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['OTHER_CFLAGS'] = "$(inherited) -Qunused-arguments -Xanalyzer -analyzer-disable-all-checks"
-        end
-    end
-end
+#post_install do |installer|
+#    puts 'Removing static analyzer support'
+#    installer.pods_project.targets.each do |target|
+#        target.build_configurations.each do |config|
+#            config.build_settings['OTHER_CFLAGS'] = "$(inherited) -Qunused-arguments -Xanalyzer -analyzer-disable-all-checks"
+#        end
+#    end
+#end

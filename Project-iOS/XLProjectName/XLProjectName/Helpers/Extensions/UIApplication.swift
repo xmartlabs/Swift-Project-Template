@@ -12,8 +12,16 @@ import UserNotifications
 
 extension UIApplication {
     
-    static var bundleIdentifier: String {
+    static var applicationVersionNumber: String {
         return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    }
+    
+    static var applicationBuildNumber: String {
+        return Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+    }
+    
+    static var bundleIdentifier: String {
+        return Bundle.main.bundleIdentifier!
     }
     
     static func requestPermissionToShowPushNotification() {

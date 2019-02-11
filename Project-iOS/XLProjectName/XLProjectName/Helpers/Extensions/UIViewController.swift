@@ -3,7 +3,7 @@
 //  File.swift
 //  XLProjectName
 //
-//  Created by Martin Barreto on 2/1/19.
+//  Created by XLAuthorName ( XLAuthorWebsite )
 //  Copyright © 2019 'XLOrganizationName'. All rights reserved.
 //
 

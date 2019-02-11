@@ -57,7 +57,7 @@ extension AppDelegate {
         }
 
         EmailRow.defaultCellSetup = { cell, _ in
-            cell.layoutMargins = UIEdgeInsets.zero
+            cell.layoutMargins = .zero
             cell.contentView.layoutMargins.left = genericHorizontalMargin
             cell.height = { 58 }
         }

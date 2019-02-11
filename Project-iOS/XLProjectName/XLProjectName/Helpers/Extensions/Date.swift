@@ -1,5 +1,5 @@
 //
-//  NSDate.swift
+//  Date.swift
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )

@@ -80,7 +80,7 @@ extension AppDelegate {
         // pass device token to Intercom
         //Intercom.setDeviceToken(deviceToken)
         let deviceTokenStr = "\(deviceToken)"
-//        Route.Device.Update(token: deviceTokenStr).request.resume()
+        Route.Device.Update(token: deviceTokenStr).rx.any().subscribe().disposed(by: disposeBag)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

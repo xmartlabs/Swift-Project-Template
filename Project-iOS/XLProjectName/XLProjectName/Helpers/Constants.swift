@@ -22,7 +22,7 @@ struct Constants {
     }
 
     struct Keychain {
-        static let serviceIdentifier = UIApplication.bundleIdentifier
+        static let serviceIdentifier = UIApplication.applicationVersionNumber
         static let sessionToken = "session_token"
         static let deviceToken = "device_token"
     }
