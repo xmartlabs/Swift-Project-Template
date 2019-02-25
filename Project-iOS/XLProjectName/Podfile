@@ -22,6 +22,7 @@ def app_pods
     pod 'RxSwift', '~> 4.0'
     pod 'SwiftDate', '~> 5.0'
     pod 'WebLinking', '~> 2.0'
+    pod 'SwiftyUserDefaults', '~> 3.0'
 end
 
 def testing_pods
@@ -44,12 +45,3 @@ end
 target 'UITests' do
   testing_pods
 end
-
-#post_install do |installer|
-#    puts 'Removing static analyzer support'
-#    installer.pods_project.targets.each do |target|
-#        target.build_configurations.each do |config|
-#            config.build_settings['OTHER_CFLAGS'] = "$(inherited) -Qunused-arguments -Xanalyzer -analyzer-disable-all-checks"
-#        end
-#    end
-#end

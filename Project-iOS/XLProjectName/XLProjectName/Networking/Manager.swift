@@ -20,11 +20,6 @@ class NetworkManager: RxManager {
         super.init(manager: manager)
         observers = [Logger() as OperaSwift.ObserverType]
     }
-
-    override func response(_ requestConvertible: URLRequestConvertible) -> Single<OperaResult> {
-        let response = super.response(requestConvertible)
-        return SessionController.sharedInstance.refreshToken().flatMap{ _ in response }.asSingle()
-    }
 }
 
 final class Route {}

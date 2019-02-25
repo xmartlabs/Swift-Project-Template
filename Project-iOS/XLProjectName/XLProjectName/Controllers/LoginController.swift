@@ -45,7 +45,7 @@ class LoginController: FormViewController {
             +++ Section()
                 <<< ButtonRow() {
                     $0.title = "Search Repositories"
-//                    $0.presentationMode = PresentationMode.segueName(segueName:   .loginController.pushToSearchRepositoriesController.identifier, onDismiss: nil)
+                    $0.presentationMode = PresentationMode.segueName(segueName: R.segue.loginController.pushToSearchRepositoriesController.identifier, onDismiss: nil)
             }
     }
     

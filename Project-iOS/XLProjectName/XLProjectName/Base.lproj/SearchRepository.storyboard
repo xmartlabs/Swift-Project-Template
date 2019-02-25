@@ -34,7 +34,7 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UH4-b7-2Yh">
-                                            <rect key="frame" x="290" y="12" width="20" height="20"/>
+                                            <rect key="frame" x="177.5" y="12" width="20" height="20"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -81,9 +81,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Search Github Repositories" id="grv-Jg-Arn"/>
                     <connections>
-                        <outlet property="activityIndicatorView" destination="UH4-b7-2Yh" id="yTB-K9-0rb"/>
-                        <outlet property="searchBar" destination="fxw-fV-OT5" id="tAz-Vg-cBK"/>
-                        <outlet property="tableView" destination="OL3-4M-c0W" id="Tet-GY-e9L"/>
+                        <outlet property="activityIndicatorView" destination="UH4-b7-2Yh" id="V3k-Ai-1PU"/>
+                        <outlet property="searchBar" destination="fxw-fV-OT5" id="5VQ-eB-f8r"/>
+                        <outlet property="tableView" destination="OL3-4M-c0W" id="jEd-CJ-n8O"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNf-xc-b2l" userLabel="First Responder" sceneMemberID="firstResponder"/>
