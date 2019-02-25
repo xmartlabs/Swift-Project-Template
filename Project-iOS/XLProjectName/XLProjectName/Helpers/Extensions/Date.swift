@@ -1,9 +1,9 @@
 //
-//  NSDate.swift
+//  Date.swift
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation

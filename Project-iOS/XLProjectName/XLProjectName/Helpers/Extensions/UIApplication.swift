@@ -3,30 +3,42 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
 import UIKit
+import UserNotifications
 
 extension UIApplication {
+    
+    static var applicationVersionNumber: String {
+        return Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    }
+    
+    static var applicationBuildNumber: String {
+        return Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+    }
+    
+    static var bundleIdentifier: String {
+        return Bundle.main.bundleIdentifier!
+    }
     
     static func requestPermissionToShowPushNotification() {
         
         let app = UIApplication.shared
 
-        /**
-            Starting in iOS 8, you can optionally create actionable notifications by registering custom actions for
-            a notification type. When an actionable notification arrives, the system creates a button for each
-            registered action and adds those buttons to the notification interface. 
-            These action buttons give the user a quick way to perform tasks related to the notification. 
-            For example, a remote notification for a meeting invite might offer actions to accept or decline the meeting.
-            When the user taps one of your action buttons, the system notifies your app, giving you an opportunity to
-            perform the corresponding task.
-        */
-        //  If you do not request any interaction types, the system pushes all notifications to your app silently.
+     
         
-        let settings = UIUserNotificationSettings(types: [.badge, .sound, .alert], categories: nil)
+        
+        
+        /*  The first time your app makes this authorization request, the system prompts the user to grant or deny the request and records the user’s response. Subsequent authorization requests don't prompt the user. */
+        let unCenter = UNUserNotificationCenter.current()
+        unCenter.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+            //Parse errors and track state
+        }
+        
+        
         
         /**
         *   The first time an app calls the registerUserNotificationSettings: method, iOS prompts the user to
@@ -45,7 +57,7 @@ extension UIApplication {
             remote notifications for your app.
         */
 
-        app.registerUserNotificationSettings(settings)
+        //app.registerUserNotificationSettings(settings)
         app.registerForRemoteNotifications()
     }
 }

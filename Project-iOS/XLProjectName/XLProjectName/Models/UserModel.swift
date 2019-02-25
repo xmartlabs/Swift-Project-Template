@@ -3,21 +3,20 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
-import Decodable
 import RealmSwift
 import OperaSwift
 
 final class User: Object {
     
-    dynamic var id: Int = Int.min
-    dynamic var email: String?
-    dynamic var company: String?
-    dynamic var username: String = ""
-    dynamic var avatarUrlString: String?
+    @objc dynamic var id: Int = Int.min
+    @objc dynamic var email: String?
+    @objc dynamic var company: String?
+    @objc dynamic var username: String = ""
+    @objc dynamic var avatarUrlString: String?
     
     let followers = List<User>()
     
@@ -42,14 +41,13 @@ final class User: Object {
     }
 }
 
-extension User: Decodable, OperaDecodable {
-
-    static func decode(_ data: Any) throws -> User {
-        return try User(id: data => "id",
-                 email: data =>? "email",
-       avatarUrlString: data =>? "avatar_url",
-               company: data =>? "name",
-              username: data => "login")
-    }
+extension User: Decodable {
     
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case email
+        case avatarUrlString = "avatar_url"
+        case company = "name"
+        case username = "login"
+    }
 }

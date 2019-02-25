@@ -3,12 +3,11 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
 import OperaSwift
-import XLSwiftKit
 
 struct Constants {
 
@@ -23,7 +22,7 @@ struct Constants {
     }
 
     struct Keychain {
-        static let serviceIdentifier = UIApplication.bundleIdentifier
+        static let serviceIdentifier = UIApplication.applicationVersionNumber
         static let sessionToken = "session_token"
         static let deviceToken = "device_token"
     }

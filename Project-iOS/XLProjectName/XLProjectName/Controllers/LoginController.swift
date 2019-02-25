@@ -3,12 +3,11 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
 import RxSwift
-import XLSwiftKit
 import Eureka
 import OperaSwift
 
@@ -42,6 +41,12 @@ class LoginController: FormViewController {
                     .onCellSelection { [weak self] _, _ in
                         self?.loginTapped()
                     }
+        
+            +++ Section()
+                <<< ButtonRow() {
+                    $0.title = "Search Repositories"
+                    $0.presentationMode = PresentationMode.segueName(segueName: R.segue.loginController.pushToSearchRepositoriesController.identifier, onDismiss: nil)
+            }
     }
     
     fileprivate func getTextFromRow(_ tag: String) -> String? {
@@ -73,13 +78,21 @@ class LoginController: FormViewController {
                 LoadingIndicator.hide()
                 self?.showError("Error", message: (error as? OperaError)?.debugDescription ?? "Sorry user login does not work correctly")
             })
-            .flatMap() { data -> PrimitiveSequence<SingleTrait,Any> in
+            .flatMap() { data -> Single<Any> in
                 return Route.User.getInfo(username: username).rx.any()
             }
             .subscribe { (user) in
                 LoadingIndicator.hide()
                 self.showError("Great", message: "You have been successfully logged in")
             }
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+//        if let destinationVC = segue.destination as? UserController {
+//            destinationVC.user = sender as? User
+//        }
     }
 }

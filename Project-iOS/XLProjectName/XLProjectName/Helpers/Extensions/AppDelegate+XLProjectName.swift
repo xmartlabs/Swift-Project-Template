@@ -28,7 +28,7 @@ extension AppDelegate {
             object: nil)
     }
 
-    func requestDidComplete(_ notification: Notification) {
+    @objc func requestDidComplete(_ notification: Notification) {
         guard let task = notification.userInfo?[Notification.Key.Task] as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
             DEBUGLog("Request object not a task")
             return
@@ -57,7 +57,7 @@ extension AppDelegate {
         }
 
         EmailRow.defaultCellSetup = { cell, _ in
-            cell.layoutMargins = UIEdgeInsets.zero
+            cell.layoutMargins = .zero
             cell.contentView.layoutMargins.left = genericHorizontalMargin
             cell.height = { 58 }
         }

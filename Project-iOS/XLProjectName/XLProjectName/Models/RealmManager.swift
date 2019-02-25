@@ -11,7 +11,7 @@ import UIKit
 import Crashlytics
 import RealmSwift
 
-class RealmManager: AnyObject {
+class RealmManager {
 
     static let sharedInstance = RealmManager()
 
@@ -30,7 +30,7 @@ class RealmManager: AnyObject {
 
         do {
             defaultRealm = try Realm(configuration: config)
-            DEBUGLog("Realm DB path: \(config.fileURL)")
+            DEBUGLog("Realm DB path: \(String(describing: config.fileURL))")
         } catch {
             let nserror = error as NSError
             Crashlytics.sharedInstance().recordError(nserror)

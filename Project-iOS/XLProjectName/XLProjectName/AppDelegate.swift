@@ -3,21 +3,23 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
 import Crashlytics
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private var disposeBag = DisposeBag()
     
     /// true if app was able to get pushn notification token
     static var didRegisteredPush = false
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setupCrashlytics()
         setupNetworking()
@@ -77,8 +79,8 @@ extension AppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // pass device token to Intercom
         //Intercom.setDeviceToken(deviceToken)
-//        let deviceTokenStr = "\(deviceToken)"
-//        Route.Device.Update(token: deviceTokenStr).request.resume()
+        let deviceTokenStr = "\(deviceToken)"
+        Route.Device.Update(token: deviceTokenStr).rx.any().subscribe().disposed(by: disposeBag)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

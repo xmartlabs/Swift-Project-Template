@@ -3,7 +3,7 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 XLOrganizationName. All rights reserved.
+//  Copyright © 2019 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
@@ -19,11 +19,6 @@ class NetworkManager: RxManager {
     override init(manager: Alamofire.SessionManager) {
         super.init(manager: manager)
         observers = [Logger() as OperaSwift.ObserverType]
-    }
-
-    override func response(_ requestConvertible: URLRequestConvertible) -> Single<OperaResult> {
-        let response = super.response(requestConvertible)
-        return SessionController.sharedInstance.refreshToken().flatMap{ _ in response }.asSingle()
     }
 }
 

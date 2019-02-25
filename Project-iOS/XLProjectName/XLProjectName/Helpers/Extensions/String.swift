@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import XLSwiftKit
 
-extension String: ParametrizedString {
+extension String {
 
     public var parameterFormat: String { return "{i}" }
 
