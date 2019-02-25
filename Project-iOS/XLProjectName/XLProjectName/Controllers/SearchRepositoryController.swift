@@ -30,17 +30,11 @@ class SearchRepositoriesController: XLTableViewController {
         tableView.backgroundView = emptyStateLabel
         tableView.keyboardDismissMode = .onDrag
         
-        rx.sentMessage(#selector(SearchRepositoriesController.viewWillAppear(_:)))
-            .skip(1)
-            .map { _ in false }
-            .bind(to: viewModel.refreshTrigger)
-            .disposed(by: disposeBag)
-        
         tableView.rx.reachedBottom
             .bind(to: viewModel.loadNextPageTrigger)
             .disposed(by: disposeBag)
         
-        viewModel.loading
+        viewModel.loading.asDriver()
             .drive(activityIndicatorView.rx.isAnimating)
             .disposed(by: disposeBag)
         
@@ -53,16 +47,16 @@ class SearchRepositoriesController: XLTableViewController {
             }
             .disposed(by: disposeBag)
         
-        searchBar.rx.text
-            .skip(1)
+        searchBar.rx.text.asDriver()
             .map{ $0 ?? ""}
-            .bind(to: viewModel.queryTrigger)
+            .filter { !$0.isEmpty }
+            .debounce(0.5)
+            .drive(viewModel.queryTrigger)
             .disposed(by: disposeBag)
         
         let refreshControl = UIRefreshControl()
         refreshControl.rx.valueChanged
             .filter { refreshControl.isRefreshing }
-            .map { true }
             .bind(to: viewModel.refreshTrigger)
             .disposed(by: disposeBag)
         tableView.addSubview(refreshControl)

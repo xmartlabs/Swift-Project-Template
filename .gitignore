@@ -49,6 +49,9 @@ Project-iOS/Pods
 # Add this line if you want to avoid checking in source code from Carthage dependencies.
 # Carthage/Checkouts
 
+Project-iOS/Cartfile.resolved
+Project-iOS/Carthage
+
 Carthage/Build
 Project-iOS/XLProjectName/Podfile.lock
 
