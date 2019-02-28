@@ -12,7 +12,7 @@
         <!--Networking Examples-->
         <scene sceneID="kQz-kn-hVZ">
             <objects>
-                <viewController id="oOM-qU-Vra" customClass="LoginController" customModule="XLProjectName" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oOM-qU-Vra" customClass="LoginController" customModule="XLProjectName" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="tbR-v9-2c6"/>
                         <viewControllerLayoutGuide type="bottom" id="d2b-Hd-gsX"/>
@@ -31,10 +31,10 @@
             </objects>
             <point key="canvasLocation" x="801" y="444"/>
         </scene>
-        <!--SearchRepositories-->
+        <!--SearchRepositoriesController-->
         <scene sceneID="hae-4c-I2W">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="SearchRepositories" storyboardName="SearchRepository" referencedIdentifier="SearchRepositories" id="SMS-nA-uC5" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="SearchRepositorySegue" storyboardName="SearchRepository" referencedIdentifier="SearchRepositoriesController" id="SMS-nA-uC5" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WHn-1b-EGe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1663" y="207"/>

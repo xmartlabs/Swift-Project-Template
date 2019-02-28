@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Privacy</key>
+	<dict>
+		<key>TermsOfUse</key>
+		<string>https://dev.yourwebsite.com/terms</string>
+		<key>PrivacyPolicy</key>
+		<string>https://dev.yourwebsite.com/privacy</string>
+	</dict>
+	<key>LogIn</key>
+	<dict>
+		<key>MinUsernameLength</key>
+		<integer>3</integer>
+		<key>MinPasswordLength</key>
+		<string>6</string>
+	</dict>
+	<key>Network</key>
+	<dict>
+		<key>Server</key>
+		<dict>
+			<key>BaseURL</key>
+			<string>https://dev.yourwebsite.com/api</string>
+			<key>User</key>
+			<dict>
+				<key>UserProfile</key>
+				<string>users/%@</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Rating</key>
+	<dict>
+		<key>CompWonTarget</key>
+		<integer>1</integer>
+		<key>EntryCountTarget</key>
+		<integer>6</integer>
+		<key>AppStoreId</key>
+		<string>12345678910</string>
+	</dict>
+	<key>AppStore</key>
+	<false/>
+	<key>Debug</key>
+	<true/>
+	<key>Test</key>
+	<true/>
+</dict>
+</plist>

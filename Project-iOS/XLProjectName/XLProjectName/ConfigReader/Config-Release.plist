@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DeepLink</key>
+	<dict>
+		<key>Hosts</key>
+		<array>
+			<string>yourwebsite1.com</string>
+			<string>https://yourwebsite2.com/</string>
+		</array>
+		<key>ShareProfilePath</key>
+		<string>user</string>
+		<key>ResetPasswordPath</key>
+		<string>passwordReset</string>
+	</dict>
+	<key>Privacy</key>
+	<dict>
+		<key>TermsOfUse</key>
+		<string>https://yourwebsite.com/terms</string>
+		<key>PrivacyPolicy</key>
+		<string>https://yourwebsite.com/privacy</string>
+	</dict>
+	<key>LogIn</key>
+	<dict>
+		<key>MinUsernameLength</key>
+		<integer>3</integer>
+		<key>MinPasswordLength</key>
+		<string>6</string>
+	</dict>
+	<key>Network</key>
+	<dict>
+		<key>Server</key>
+		<dict>
+			<key>BaseURL</key>
+			<string>https://api.yoururl.com</string>
+			<key>User</key>
+			<dict>
+				<key>UserProfile</key>
+				<string>users/%@</string>
+			</dict>
+		</dict>
+	</dict>
+	<key>Rating</key>
+	<dict>
+		<key>NumberOfActionsBeforeShown</key>
+		<string>50</string>
+		<key>AppStoreId</key>
+		<string>123456789</string>
+	</dict>
+	<key>Instabug</key>
+	<dict>
+		<key>Token</key>
+		<string>12345678910</string>
+	</dict>
+	<key>AppStore</key>
+	<true/>
+	<key>Debug</key>
+	<false/>
+	<key>Test</key>
+	<false/>
+</dict>
+</plist>

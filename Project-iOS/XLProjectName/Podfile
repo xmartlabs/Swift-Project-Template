@@ -23,6 +23,8 @@ def app_pods
     pod 'SwiftDate', '~> 5.0'
     pod 'WebLinking', '~> 2.0'
     pod 'SwiftyUserDefaults', '~> 3.0'
+    pod 'Swinject', '~> 2.5'
+    pod 'SwinjectStoryboard', '~> 2.1'
 end
 
 def testing_pods
