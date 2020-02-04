@@ -42,4 +42,57 @@ struct Constants {
         static let crashlytics = false
         static let jsonResponse = false
     }
+
+// MARK: - Text Styles
+    enum TextStyle {
+
+        case body(alignment: NSTextAlignment)
+        case title
+
+        func getFont() -> UIFont {
+            switch self {
+            case .body:
+                return UIFont.inteloRegularFont(size: 16)
+            case .title:
+                return UIFont.inteloBoldFont(size: 24)
+            }
+        }
+
+        var textAttributes: [NSAttributedString.Key: Any]? {
+            switch self {
+            case let .body(alignment):
+                let font = getFont()
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 20 - font.lineHeight
+                paragraphStyle.alignment = alignment
+                return [NSAttributedString.Key.paragraphStyle: paragraphStyle]
+            case .title:
+                return [NSAttributedString.Key.kern: -0.53]
+            default:
+                return nil
+            }
+        }
+    }
+
+}
+
+// MARK: - Colors
+extension UIColor {
+    static var primaryColor: UIColor {
+        return UIColor(r: 0, g: 0, b: 0)
+    }
+}
+
+// MARK: - Errors
+enum BaseError: Error {
+    case networkError(error: NSError)
+}
+
+extension BaseiError {
+    var errorDescription: String {
+        switch self {
+        case .networkError(let networkError):
+            return "No internet connection"
+        }
+    }
 }
