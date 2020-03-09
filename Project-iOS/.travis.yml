@@ -7,7 +7,7 @@ before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - carthage update --platform iOS
-- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+- gem install xcpretty --no-ri --no-document --quiet
 
 script:
 - xcodebuild clean build -workspace XLProjectName/XLProjectName.xcworkspace -scheme "$SCHEME" -sdk "$SDK"
