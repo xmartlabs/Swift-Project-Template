@@ -15,7 +15,6 @@ def app_pods
     pod 'NVActivityIndicatorView', '~> 4.6'
     pod 'OperaSwift', :git => 'https://github.com/xmartlabs/Opera.git', :branch => 'migration/swift4_2'
     pod 'R.swift', '~> 5.0.2'
-    pod 'RealmSwift', '~> 3.0'
     pod 'Result', '~> 4.0'
     pod 'RxAlamofire', '~> 4.0'
     pod 'RxCocoa', '~> 4.0'
