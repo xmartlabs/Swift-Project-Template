@@ -15,7 +15,7 @@ extension Route {
     enum Repository: RouteType {
         
         case GetInfo(owner: String, repo: String)
-        case Search()
+        case Search
         
         var method: Alamofire.HTTPMethod {
             switch self {

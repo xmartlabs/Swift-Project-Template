@@ -7,30 +7,22 @@
 //
 
 import Foundation
-import RealmSwift
 import OperaSwift
 
-final class User: Object {
+final class User {
     
-    @objc dynamic var id: Int = Int.min
-    @objc dynamic var email: String?
-    @objc dynamic var company: String?
-    @objc dynamic var username: String = ""
-    @objc dynamic var avatarUrlString: String?
+    var id: Int = Int.min
+    var email: String?
+    var company: String?
+    var username: String = ""
+    var avatarUrlString: String?
     
-    let followers = List<User>()
+    let followers: [User] = []
     
     var avatarUrl: URL? {
         return URL(string: self.avatarUrlString ?? "")
     }
     
-    /**
-     Return property names that should be ignored by Realm. Realm will not persist these properties.
-     */
-    override static func ignoredProperties() -> [String] {
-        return []
-    }
-
     convenience init(id: Int, email: String?, avatarUrlString: String?, company: String?, username: String) {
         self.init()
         self.id = id

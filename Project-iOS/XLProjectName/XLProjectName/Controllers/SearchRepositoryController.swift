@@ -22,7 +22,7 @@ class SearchRepositoriesController: XLTableViewController {
     }()
     
     lazy var viewModel: PaginationViewModel<PaginationRequest<Repository>>  = { [unowned self] in
-        return PaginationViewModel<PaginationRequest<Repository>>(paginationRequest: PaginationRequest(route: Route.Repository.Search(), collectionKeyPath: "items"))
+        return PaginationViewModel<PaginationRequest<Repository>>(paginationRequest: PaginationRequest(route: Route.Repository.Search, collectionKeyPath: "items"))
         }()
     
     override func viewDidLoad() {

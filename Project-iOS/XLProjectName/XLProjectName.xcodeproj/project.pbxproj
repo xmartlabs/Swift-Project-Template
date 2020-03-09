@@ -74,8 +74,6 @@
 		8F0759A21D774B390012D681 /* SessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A01D774B390012D681 /* SessionController.swift */; };
 		8F0759A41D774C5C0012D681 /* AppDelegate+XLProjectName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A31D774C5C0012D681 /* AppDelegate+XLProjectName.swift */; };
 		8F0759A51D774C5C0012D681 /* AppDelegate+XLProjectName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A31D774C5C0012D681 /* AppDelegate+XLProjectName.swift */; };
-		8F0759A71D774FC10012D681 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A61D774FC10012D681 /* RealmManager.swift */; };
-		8F0759A81D774FC10012D681 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0759A61D774FC10012D681 /* RealmManager.swift */; };
 		9616C1BCD4F5360B7CC53FF0 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F69C49E5F5FEA4AF553B1D9 /* Pods_Tests.framework */; };
 		B23A40F01C972C2B004AB8DC /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23A40EF1C972C2B004AB8DC /* Date.swift */; };
 		ECD86FE11F1EC24200AE1AF0 /* URLRequestSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECD86FE01F1EC24200AE1AF0 /* URLRequestSetup.swift */; };
@@ -164,7 +162,6 @@
 		8F0759991D7742CA0012D681 /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		8F0759A01D774B390012D681 /* SessionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionController.swift; sourceTree = "<group>"; };
 		8F0759A31D774C5C0012D681 /* AppDelegate+XLProjectName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppDelegate+XLProjectName.swift"; sourceTree = "<group>"; };
-		8F0759A61D774FC10012D681 /* RealmManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		980760A0B862481A619477C5 /* Pods_XLProjectName.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_XLProjectName.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59AB4F28BF2461768D1A1FA /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B23A40EF1C972C2B004AB8DC /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = Date.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -324,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				28C282481C7798B0003ECA4F /* UserModel.swift */,
-				8F0759A61D774FC10012D681 /* RealmManager.swift */,
 				2853E6102211CB1900837E3E /* RepositoryModel.swift */,
 			);
 			path = Models;
@@ -526,7 +522,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "'XLOrganizationName'";
 				TargetAttributes = {
 					2841F1D91CCFF55600D609CE = {
@@ -550,7 +546,7 @@
 			};
 			buildConfigurationList = 2867E8221C74C7D400FCEBBD /* Build configuration list for PBXProject "XLProjectName" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -636,8 +632,6 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XLProjectName/Pods-XLProjectName-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
@@ -655,16 +649,12 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-				"${BUILT_PRODUCTS_DIR}/WebLinking/WebLinking.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
@@ -681,12 +671,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebLinking.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -697,8 +685,6 @@
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			inputFileListPaths = (
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-XLProjectName-Staging/Pods-XLProjectName-Staging-frameworks.sh",
@@ -717,16 +703,12 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxAlamofire/RxAlamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyUserDefaults/SwiftyUserDefaults.framework",
-				"${BUILT_PRODUCTS_DIR}/WebLinking/WebLinking.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
@@ -743,12 +725,10 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAlamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyUserDefaults.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebLinking.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -922,16 +902,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-UITests/Pods-UITests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
@@ -968,16 +944,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Tests/Pods-Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
 				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
@@ -1013,7 +985,6 @@
 				2841F1E71CCFF55600D609CE /* UserModel.swift in Sources */,
 				8F07599B1D7742CA0012D681 /* UIImageView.swift in Sources */,
 				2841F1E81CCFF55600D609CE /* XLViewController.swift in Sources */,
-				8F0759A81D774FC10012D681 /* RealmManager.swift in Sources */,
 				465910B01D80A5000022374B /* String.swift in Sources */,
 				4653B7F61D7A14A0002A6660 /* LoadingIndicator.swift in Sources */,
 				8F0759931D7728360012D681 /* Helpers.swift in Sources */,
@@ -1049,7 +1020,6 @@
 				28C2824A1C7798B0003ECA4F /* UserModel.swift in Sources */,
 				8F07599A1D7742CA0012D681 /* UIImageView.swift in Sources */,
 				281731691C9C4BBC006237C7 /* XLViewController.swift in Sources */,
-				8F0759A71D774FC10012D681 /* RealmManager.swift in Sources */,
 				465910AF1D80A5000022374B /* String.swift in Sources */,
 				4653B7F51D7A14A0002A6660 /* LoadingIndicator.swift in Sources */,
 				8F0759921D7728360012D681 /* Helpers.swift in Sources */,
@@ -1212,7 +1182,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1260,7 +1230,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

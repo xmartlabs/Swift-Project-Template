@@ -21,7 +21,6 @@ def app_pods
     pod 'RxCocoa', '~> 4.0'
     pod 'RxSwift', '~> 4.0'
     pod 'SwiftDate', '~> 5.0'
-    pod 'WebLinking', '~> 2.0'
     pod 'SwiftyUserDefaults', '~> 3.0'
 end
 
