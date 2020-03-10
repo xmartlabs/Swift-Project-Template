@@ -129,30 +129,19 @@ open class PaginationViewModel<PaginationRequest: PaginationRequestType>
         
         
         let refreshTrigger = self.refreshTrigger.map { _ in
-                return LoadActionInput.page(page: fistPageValue)
-            }
+            return LoadActionInput.page(page: fistPageValue)
+        }
             
-//        refreshTrigger.bind(to: self.loadAction.inputs)
-//            .disposed(by: disposeBag)
         
-        let queryObservable = self.queryTrigger.map { LoadActionInput.query(query: $0) }
+        let queryObservable = self.queryTrigger.map {
+            LoadActionInput.query(query: $0)
+        }
             
-//        queryObservable.bind(to: self.loadAction.inputs)
-//            .disposed(by: disposeBag)
-//
-        
-        let filterObservable = self.filterTrigger.map { LoadActionInput.filter(filter: $0) }
-        
-//        filterObservable
-//            .bind(to: self.loadAction.inputs)
-//            .disposed(by: disposeBag)
-//
+        let filterObservable = self.filterTrigger.map {
+            LoadActionInput.filter(filter: $0)
+        }
         
         let loadNextPageObservable = self.loadNextPageTrigger.withLatestFrom(loadAction.elements).flatMap { $0.nextPage.map { return Observable.of(LoadActionInput.page(page: $0)) } ?? Observable.empty() }
-
-//        loadNextPageObservable.bind(to: self.loadAction.inputs)
-//            .disposed(by: disposeBag)
-//
         
         let newInputTrigger = Observable.merge(queryObservable, filterObservable, loadNextPageObservable, refreshTrigger)
         newInputTrigger
@@ -180,7 +169,7 @@ extension PaginationViewModel {
     /// Emits items indicating when first page request starts and completes.
     public var firstPageLoading: Driver<Bool> {
         let fistPageValue = (self.paginationRequest as? PaginationRequestTypeSettings)?.firstPageParameterValue ?? Default.firstPageParameterValue
-        return fullloading.asDriver().filter { $0.1 == fistPageValue }.map { $0.0 }
+        return fullloading.asDriver().map { return $0.1 == fistPageValue ? $0.0 : false  }
     }
     
     /// Emits items to show/hide a empty state view

@@ -22,7 +22,7 @@ class SearchRepositoriesController: XLTableViewController {
     
     lazy var viewModel: PaginationViewModel<PaginationRequest<Repository>>  = { [unowned self] in
         return PaginationViewModel<PaginationRequest<Repository>>(paginationRequest: PaginationRequest(route: Route.Repository.Search, collectionKeyPath: "items"))
-        }()
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +38,9 @@ class SearchRepositoriesController: XLTableViewController {
             .disposed(by: disposeBag)
         
         
-        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.asDriver()) { elements, loading, searchText in return loading || searchText?.isEmpty ?? true ? [] : elements }
-            .asDriver()
+        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.asDriver()) { elements, loading, searchText in
+            return loading || searchText?.isEmpty ?? true ? [] : elements
+        }
             .drive(tableView.rx.items(cellIdentifier: "Cell")) { _, repository, cell in
                 cell.textLabel?.text = repository.name
                 cell.detailTextLabel?.text = "🌟\(repository.stargazersCount)"
