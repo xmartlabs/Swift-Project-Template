@@ -3,11 +3,10 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
-import OperaSwift
 import Alamofire
 import KeychainAccess
 import RxSwift
@@ -18,13 +17,13 @@ class NetworkManager: RxManager {
 
     override init(manager: Alamofire.SessionManager) {
         super.init(manager: manager)
-        observers = [Logger() as OperaSwift.ObserverType]
+        observers = [Logger() as ObserverType]
     }
 }
 
 final class Route {}
 
-struct Logger: OperaSwift.ObserverType {
+struct Logger: ObserverType {
     func willSendRequest(_ alamoRequest: Alamofire.Request, requestConvertible: URLRequestConvertible) {
         debugPrint(alamoRequest)
     }

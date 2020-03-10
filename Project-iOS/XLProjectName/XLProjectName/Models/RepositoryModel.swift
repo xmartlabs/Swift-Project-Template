@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftDate
-import OperaSwift
 
 
 final class Repository {

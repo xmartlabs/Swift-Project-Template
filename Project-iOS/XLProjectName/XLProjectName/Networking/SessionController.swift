@@ -10,7 +10,6 @@ import Foundation
 import Alamofire
 import Crashlytics
 import KeychainAccess
-import OperaSwift
 import RxSwift
 
 class SessionController {

@@ -3,17 +3,16 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
 import Alamofire
-import OperaSwift
 
 
 extension Route {
     
-    enum Device: RouteType {
+    enum Device: OperaRouteType {
         
         case Update(token: String)
         case Remove
