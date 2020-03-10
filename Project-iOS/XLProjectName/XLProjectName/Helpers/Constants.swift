@@ -88,7 +88,7 @@ enum BaseError: Error {
     case networkError(error: NSError)
 }
 
-extension BaseiError {
+extension BaseError {
     var errorDescription: String {
         switch self {
         case .networkError(let networkError):
