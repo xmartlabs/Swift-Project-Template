@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 
-final class Route {}
+struct Route {}
 
 extension Route {
     struct User {

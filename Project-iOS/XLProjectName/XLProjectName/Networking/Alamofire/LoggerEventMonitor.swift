@@ -11,12 +11,13 @@ import Alamofire
 
 class LoggerEventMonitor: EventMonitor {
     
-    
     func requestDidResume(_ request: Request) {
         debugPrint(request)
     }
     
     func request(_ request: Request, didCompleteTask task: URLSessionTask, with error: AFError?) {
-        debugPrint(error);
+        if Constants.Debug.crashlytics {
+            debugPrint(error.debugDescription);
+        }
     }
 }

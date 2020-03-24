@@ -19,3 +19,4 @@ class XLProjectNameRequestAdapter: RequestAdapter {
         completion(Result.success(urlRequest))
     }
 }
+

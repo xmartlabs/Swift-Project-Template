@@ -43,7 +43,14 @@ extension Reactive where Base: PaginationRequestType {
                   case .failure(let error):
                     single(.error(error))
                   case .success(let value):
-                    single(.success(value))
+                    let previousPage = response.response?.linkPagePrameter((self as? WebLinkingSettings)?.prevRelationName ?? Default.prevRelationName,
+                                                         pageParameterName: (self as? WebLinkingSettings)?
+                                                           .relationPageParamName ?? Default.relationPageParamName)
+                    let nextPage = response.response?.linkPagePrameter((self as? WebLinkingSettings)?.nextRelationName ?? Default.nextRelationName,
+                                                         pageParameterName: (self as? WebLinkingSettings)?
+                                                           .relationPageParamName ?? Default.relationPageParamName)
+                    let baseResponse = Base.Response(elements: value.elements, previousPage: previousPage, nextPage: nextPage, page: myPage)
+                    single(.success(baseResponse))
                 }
             }
             return Disposables.create {
@@ -52,22 +59,4 @@ extension Reactive where Base: PaginationRequestType {
         }
     }
 }
-//        return NetworkManager.singleton.rx.object(route: self.base).map { (response: Base.Response) -> Base.Response in
-//           let response = Base.Response.init(
-//               elements: response.elements,
-//               previousPage:
-//                   .linkPagePrameter((self as? WebLinkingSettings)?
-//                       .prevRelationName ?? Default.prevRelationName,
-//                                     pageParameterName: (self as? WebLinkingSettings)?
-//                                       .relationPageParamName ?? Default.relationPageParamName),
-//               nextPage: serialized.response?
-//                   .linkPagePrameter((self as? WebLinkingSettings)?
-//                       .nextRelationName ?? Default.nextRelationName,
-//                                     pageParameterName: (self as? WebLinkingSettings)?
-//                                       .relationPageParamName ?? Default.relationPageParamName),
-//               page: myPage
-//           )
-//        }
-    
-
 

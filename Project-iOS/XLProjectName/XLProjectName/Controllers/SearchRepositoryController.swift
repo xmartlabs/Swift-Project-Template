@@ -50,7 +50,7 @@ class SearchRepositoriesController: XLTableViewController {
         searchBar.rx.text.asDriver()
             .map{ $0 ?? ""}
             .filter { !$0.isEmpty }
-            .debounce(0.5)
+            .debounce(RxTimeInterval.milliseconds(500))
             .drive(viewModel.queryTrigger)
             .disposed(by: disposeBag)
         

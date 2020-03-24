@@ -29,7 +29,7 @@ import Alamofire
 public enum OperaError: Error {
     case afError(error: AFError)
     case unknownError
-    
+
     
     var afError: AFError? {
         if case OperaError.afError(let afError) = self {
