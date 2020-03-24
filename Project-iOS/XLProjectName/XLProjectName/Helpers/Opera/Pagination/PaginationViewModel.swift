@@ -28,9 +28,9 @@ import RxSwift
 import RxCocoa
 import Action
 
-/// Reactive View Model helper to load list of OperaDecodable items.
+/// Reactive View Model helper to load list of Decodable items.
 open class PaginationViewModel<PaginationRequest: PaginationRequestType>
-    where PaginationRequest.Response.Element: OperaDecodable {
+    where PaginationRequest.Response.Element: Decodable {
     
     
     private enum LoadActionInput {

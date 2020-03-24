@@ -38,15 +38,13 @@ struct Default {
 
 public protocol BasePaginationRequestType: URLRequestConvertible {
     /// Route
-    var route: OperaRouteType { get }
+    var route: RouteType { get }
     /// Page, represent request page parameter
     var page: String { get }
     /// Query string
     var query: String? { get }
     /// Filters
     var filter: FilterType? { get }
-    /// keyPath to get the parseable json array.
-    var collectionKeyPath: String? { get }
 }
 
 /**
@@ -57,7 +55,7 @@ public protocol BasePaginationRequestType: URLRequestConvertible {
  */
 public protocol PaginationRequestType: BasePaginationRequestType {
 
-    associatedtype Response: PaginationResponseType
+    associatedtype Response: PaginationResponseType, Decodable
 
     /**
      Creates a new PaginationRequestType equals to self but updating the page value.
@@ -98,17 +96,15 @@ public protocol PaginationRequestType: BasePaginationRequestType {
      - parameter page:              page
      - parameter query:             query string
      - parameter filter:            filters
-     - parameter collectionKeyPath: location within json response
         to get array of items to parse using the JSON parsing library.
      
      - returns: The new PaginationRequestType instance.
      */
     init(
-        route: OperaRouteType,
+        route: RouteType,
         page: String?,
         query: String?,
-        filter: FilterType?,
-        collectionKeyPath: String?
+        filter: FilterType?
     )
 }
 
@@ -157,8 +153,7 @@ extension PaginationRequestType {
             route: route,
             page: page,
             query: query,
-            filter: filter,
-            collectionKeyPath: collectionKeyPath
+            filter: filter
         )
     }
 
@@ -168,8 +163,7 @@ extension PaginationRequestType {
             page: (self as? PaginationRequestTypeSettings)?
                 .firstPageParameterValue ?? Default.firstPageParameterValue,
             query: query,
-            filter: filter,
-            collectionKeyPath: collectionKeyPath
+            filter: filter
         )
     }
 
@@ -179,8 +173,7 @@ extension PaginationRequestType {
             page: (self as? PaginationRequestTypeSettings)?
                 .firstPageParameterValue ?? Default.firstPageParameterValue,
             query: query,
-            filter: filter,
-            collectionKeyPath: collectionKeyPath
+            filter: filter
         )
     }
 

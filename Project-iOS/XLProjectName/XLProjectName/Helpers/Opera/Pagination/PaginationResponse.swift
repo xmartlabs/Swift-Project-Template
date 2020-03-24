@@ -27,12 +27,18 @@ import Foundation
 /**
  *  PaginationResponse is a generic type that adopts PaginationResponseType
  */
-public struct PaginationResponse<E>: PaginationResponseType {
-
+public struct PaginationResponse<E: Decodable>: PaginationResponseType, Decodable {
+    
     public let elements: [E]
-    public let previousPage: String?
-    public let nextPage: String?
-    public let page: String?
+    public var previousPage: String? = nil
+    public var nextPage: String? = nil
+    public var page: String? = nil
+    
+    enum CodingKeys: String, CodingKey {
+        case elements = "items"
+    }
+    
+    
 
     public init(elements: [E], previousPage: String?, nextPage: String?, page: String?) {
         self.elements = elements

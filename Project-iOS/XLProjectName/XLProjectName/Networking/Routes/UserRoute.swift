@@ -9,41 +9,24 @@
 import Foundation
 import Alamofire
 
+protocol CustomUrlRequestSetup {
+    func urlRequestSetup(_ request: inout URLRequest)
+}
+
+final class Route {}
+
 extension Route {
-
-    enum User: OperaRouteType, URLRequestSetup {
-
-        case login(username: String, password: String)
-        case getInfo(username: String)
-        case followers(username: String)
-        case repositories(username: String)
+    struct User {
         
-        var method: Alamofire.HTTPMethod {
-            switch self {
-            case .login:
-                return .get
-            case .getInfo, .followers, .repositories:
-                return .get
-            }
-        }
-        
-        var path: String {
-            switch self {
-            case .login(_, _):
-                return ""
-            case .getInfo(let user):
-                return "users/\(user)"
-            case .followers(let user):
-                return "users/\(user)/followers"
-            case .repositories(let user):
-                return "users/\(user)/repos"
-            }
-        }
-        
-        // MARK: - CustomUrlRequestSetup
-        
-        func urlRequestSetup(_ request: inout URLRequest) {
-            if case let .login(username, password) = self {
+        struct Login: RouteType, CustomUrlRequestSetup  {
+            let username: String
+            let password: String
+            
+            let method = Alamofire.HTTPMethod.get
+            let path = ""
+            
+            // MARK: - CustomUrlRequestSetup
+            func urlRequestSetup(_ request: inout URLRequest) {
                 let utf8 = "\(username):\(password)".data(using: String.Encoding.utf8)
                 let base64 = utf8?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                 
@@ -53,6 +36,27 @@ extension Route {
                 
                 request.setValue("Basic \(encodedString)", forHTTPHeaderField: "Authorization")
             }
+        }
+        
+        struct GetInfo: RouteType  {
+            let username: String
+            
+            let method = Alamofire.HTTPMethod.get
+            var path: String { return  "users/\(username)" }
+        }
+        
+        struct Followers: RouteType {
+            let username: String
+            
+            let method = Alamofire.HTTPMethod.get
+            var path: String { return  "users/\(username)/followers" }
+        }
+        
+        struct Repositories: RouteType {
+            let username: String
+            
+            let method = Alamofire.HTTPMethod.get
+            var path: String { return  "users/\(username)/repos" }
         }
     }
 }

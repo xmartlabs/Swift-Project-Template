@@ -36,7 +36,7 @@ import Foundation
     a specific route/request which may have specific configuration
     hold by its associated values.
  */
-public protocol OperaRouteType: URLRequestConvertible {
+public protocol RouteType: URLRequestConvertible {
 
     /// HTTP method
     var method: HTTPMethod { get }
@@ -68,7 +68,7 @@ public protocol URLRequestParametersSetup {
 
 }
 
-extension OperaRouteType {
+extension RouteType {
 
     /// The URL request.
     public func asURLRequest() throws -> URLRequest {
@@ -96,109 +96,29 @@ extension OperaRouteType {
         return nil
     }
 
-    public func getJsonFromPath(path: String, bundle: Bundle? = nil) -> Data? {
-        guard let path = (bundle ?? Bundle.main).path(forResource: path, ofType: "json") else {
-            return nil
+}
+
+
+extension RouteType {
+
+    var baseURL: URL { return Constants.Network.baseUrl }
+    var manager: ManagerType { return NetworkManager.singleton  }
+    var retryCount: Int { return 0 }
+}
+
+extension URLRequestParametersSetup {
+    public func urlRequestParametersSetup(_ urlRequest: NSMutableURLRequest, parameters: [String: AnyObject]?) -> [String: AnyObject]? {
+        var params = parameters ?? [:]
+        if let token = SessionController.sharedInstance.token {
+            params[Constants.Network.AuthTokenName] = token as AnyObject?
         }
-
-        do {
-            let jsonData = try NSData(
-                contentsOfFile: path,
-                options: NSData.ReadingOptions.mappedIfSafe
-            ) as Data
-            return jsonData
-        } catch {
-            return nil
-        }
+        return params
     }
 }
 
-public enum DecodingError: Error {
+extension URLRequestSetup {
 
-    case invalidJson(String)
-
-}
-
-// MARK: - HTTP route types
-
-public protocol GetRouteType: OperaRouteType {}
-public protocol PostRouteType: OperaRouteType {}
-public protocol OptionsRouteType: OperaRouteType {}
-public protocol HeadRouteType: OperaRouteType {}
-public protocol PutRouteType: OperaRouteType {}
-public protocol PatchRouteType: OperaRouteType {}
-public protocol DeleteRouteType: OperaRouteType {}
-public protocol TraceRouteType: OperaRouteType {}
-public protocol ConnectRouteType: OperaRouteType {}
-
-public extension GetRouteType {
-
-    var method: HTTPMethod {
-        return .get
+    func urlRequestSetup(urlRequest: NSMutableURLRequest) {
+        // setup url
     }
-
-}
-
-public extension PostRouteType {
-
-    var method: HTTPMethod {
-        return .post
-    }
-
-}
-
-public extension OptionsRouteType {
-
-    var method: HTTPMethod {
-        return .options
-    }
-
-}
-
-public extension HeadRouteType {
-
-    var method: HTTPMethod {
-        return .head
-    }
-
-}
-
-public extension PutRouteType {
-
-    var method: HTTPMethod {
-        return .put
-    }
-
-}
-
-public extension PatchRouteType {
-
-    var method: HTTPMethod {
-        return .patch
-    }
-
-}
-
-public extension DeleteRouteType {
-
-    var method: HTTPMethod {
-        return .delete
-    }
-
-}
-
-public extension TraceRouteType {
-
-    var method: HTTPMethod {
-        return .trace
-    }
-
-}
-
-public extension ConnectRouteType {
-
-    var method: HTTPMethod {
-        return .connect
-    }
-
 }

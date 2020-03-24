@@ -24,12 +24,12 @@ extension AppDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AppDelegate.requestDidComplete(_:)),
-            name: Alamofire.Notification.Name.Task.DidComplete,
+            name: Alamofire.Request.didCompleteTaskNotification,
             object: nil)
     }
 
     @objc func requestDidComplete(_ notification: Notification) {
-        guard let task = notification.userInfo?[Notification.Key.Task] as? URLSessionTask, let response = task.response as? HTTPURLResponse else {
+        guard let request = notification.request, let response = request.response  else {
             DEBUGLog("Request object not a task")
             return
         }

@@ -65,24 +65,5 @@ final class Repository {
     }
 }
 
-extension Repository: Decodable {
-    
-    
-}
-
-
-//static func decode(_ json: Any) throws -> Repository {
-//    return try Repository(   id: json => "id",
-//                             name: json => "name",
-//                             desc: json =>? "description",
-//                             company: json =>? ["owner", "login"],
-//                             language: json =>? "language",
-//                             openIssues: json => "open_issues_count",
-//                             stargazersCount: json => "stargazers_count",
-//                             forksCount: json => "forks_count",
-//                             urlString: json => "name",
-//                             createdAt: json => "created_at")
-//}
-
-extension Repository: OperaDecodable {}
+extension Repository: Decodable {}
 

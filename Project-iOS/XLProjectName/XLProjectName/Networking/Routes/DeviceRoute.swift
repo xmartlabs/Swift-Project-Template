@@ -12,7 +12,7 @@ import Alamofire
 
 extension Route {
     
-    enum Device: OperaRouteType {
+    enum Device: RouteType {
         
         case Update(token: String)
         case Remove

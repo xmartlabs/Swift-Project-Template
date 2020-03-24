@@ -11,7 +11,7 @@ import Alamofire
 
 extension Route {
     
-    enum Repository: OperaRouteType {
+    enum Repository: RouteType {
         
         case GetInfo(owner: String, repo: String)
         case Search
