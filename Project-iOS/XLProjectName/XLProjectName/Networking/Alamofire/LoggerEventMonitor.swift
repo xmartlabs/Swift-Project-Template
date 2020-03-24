@@ -17,7 +17,7 @@ class LoggerEventMonitor: EventMonitor {
     
     func request(_ request: Request, didCompleteTask task: URLSessionTask, with error: AFError?) {
         if Constants.Debug.crashlytics {
-            debugPrint(error.debugDescription);
+            error?.errorDescription.map { debugPrint($0) } 
         }
     }
 }
