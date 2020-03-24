@@ -9,10 +9,6 @@
 import Foundation
 import Alamofire
 
-protocol CustomUrlRequestSetup {
-    func urlRequestSetup(_ request: inout URLRequest)
-}
-
 final class Route {}
 
 extension Route {

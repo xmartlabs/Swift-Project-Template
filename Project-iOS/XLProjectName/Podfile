@@ -17,7 +17,6 @@ def app_pods
     pod 'KeychainAccess', '~> 4.0'
     pod 'NVActivityIndicatorView', '~> 4.0'
     pod 'R.swift', '~> 5.0.2'
-    pod 'Result', '~> 4.0'
     pod 'RxCocoa', '~> 5.0'
     pod 'RxSwift', '~> 5.0'
     pod 'SwiftDate', '~> 6.0'
@@ -31,10 +30,6 @@ def testing_pods
 end
 
 target 'XLProjectName' do
-  app_pods
-end
-
-target 'XLProjectName-Staging' do
   app_pods
 end
 

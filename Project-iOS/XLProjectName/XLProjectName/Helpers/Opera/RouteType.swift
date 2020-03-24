@@ -51,10 +51,6 @@ public protocol RouteType: URLRequestConvertible {
     var encoding: Alamofire.ParameterEncoding { get }
     /// Base url
     var baseURL: URL { get }
-    /// Manager that creates the request.
-    var manager: ManagerType { get }
-    /// Used to determine how often a request should be retried if unsuccessful
-    var retryCount: Int { get }
 }
 
 /**
@@ -62,11 +58,14 @@ public protocol RouteType: URLRequestConvertible {
     PaginationRequstType is able to make a final customization
     to request parameters dictionary before they are encoded.
  */
-public protocol URLRequestParametersSetup {
-
+protocol URLRequestParametersSetup {
     func urlRequestParametersSetup(_ urlRequest: URLRequest, parameters: [String: Any]?) -> [String: Any]?
-
 }
+
+protocol CustomUrlRequestSetup {
+    func urlRequestSetup(_ request: inout URLRequest)
+}
+
 
 extension RouteType {
 
@@ -101,9 +100,7 @@ extension RouteType {
 
 extension RouteType {
 
-    var baseURL: URL { return Constants.Network.baseUrl }
-    var manager: ManagerType { return NetworkManager.singleton  }
-    var retryCount: Int { return 0 }
+    var baseURL: URL { return Constants.Network.BASE_URL }
 }
 
 extension URLRequestParametersSetup {
@@ -113,12 +110,5 @@ extension URLRequestParametersSetup {
             params[Constants.Network.AuthTokenName] = token as AnyObject?
         }
         return params
-    }
-}
-
-extension URLRequestSetup {
-
-    func urlRequestSetup(urlRequest: NSMutableURLRequest) {
-        // setup url
     }
 }

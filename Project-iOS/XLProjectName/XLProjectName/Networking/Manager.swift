@@ -11,22 +11,13 @@ import Alamofire
 import KeychainAccess
 import RxSwift
 
-class LoggerEventMonitor: EventMonitor {
-    
-    
-    func requestDidResume(_ request: Request) {
-        debugPrint(request)
-    }
-    
-    func request(_ request: Request, didCompleteTask task: URLSessionTask, with error: AFError?) {
-        debugPrint(error);
-    }
-}
+
 
 class NetworkManager: RxManager {
 
     static let singleton: NetworkManager = {
-        return NetworkManager(session: Session(eventMonitors: [LoggerEventMonitor()]))
+        var requestInterceptor = Interceptor(adapters: [], retriers: [RetryPolicy()])
+        return NetworkManager(session: Session(interceptor: requestInterceptor, eventMonitors: [LoggerEventMonitor()]))
     }()
 
     override init(session: Alamofire.Session) {
@@ -62,7 +53,7 @@ extension Reactive where Base: NetworkManager {
     func object<T: Decodable>(route: URLRequestConvertible) -> Single<T> {
         return Single.create { subscriber in
             let req = self.base.session.request(route)
-            req.responseDecodable(decoder: self.base.decoder) { (dataResponse: DataResponse<T, AFError>) in
+            req.responseDecodable(decoder: self.base.decoder) { (dataResponse: AFDataResponse<T>) in
                 switch dataResponse.result {
                 case .failure(let error):
                     subscriber(.error(OperaError.afError(error: error)))

@@ -13,7 +13,6 @@ import Alamofire
 extension Route {
     
     enum Device: RouteType {
-        
         case Update(token: String)
         case Remove
         case Get

@@ -14,15 +14,15 @@ import RxSwift
 
 class SessionController {
     static let sharedInstance = SessionController()
-    fileprivate let keychain = Keychain(service: Constants.Keychain.serviceIdentifier)
+    fileprivate let keychain = Keychain(service: Constants.Keychain.SERVICE_IDENTIFIER)
     fileprivate init() { }
     
     var user: User?
 
     // MARK: - Session variables
     var token: String? {
-        get { return keychain[Constants.Keychain.sessionToken] }
-        set { keychain[Constants.Keychain.sessionToken] = newValue }
+        get { return keychain[Constants.Keychain.SESSION_TOKEN] }
+        set { keychain[Constants.Keychain.SESSION_TOKEN] = newValue }
     }
 
     // MARK: - Session handling

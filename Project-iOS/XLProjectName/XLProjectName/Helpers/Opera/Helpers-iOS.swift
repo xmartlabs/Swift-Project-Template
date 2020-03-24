@@ -50,7 +50,6 @@ extension Reactive where Base: UIScrollView {
                     Observable.just(()) : Observable.empty()
         }
     }
-
 }
 
 extension UIScrollView {
