@@ -3,16 +3,21 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
+
 import Foundation
-import OperaSwift
+import UIKit
 
 struct Constants {
 
 	struct Network {
-        static let baseUrl = URL(string: "https://api.github.com")!
+#if DEBUG
+        static let BASE_URL = URL(string: "https://api.github.com")!
+#else
+        static let BASE_URL = URL(string: "https://api.github.com")!
+#endif
         static let AuthTokenName = "Authorization"
         static let SuccessCode = 200
         static let successRange = 200..<300
@@ -22,9 +27,9 @@ struct Constants {
     }
 
     struct Keychain {
-        static let serviceIdentifier = UIApplication.applicationVersionNumber
-        static let sessionToken = "session_token"
-        static let deviceToken = "device_token"
+        static let SERVICE_IDENTIFIER = UIApplication.applicationVersionNumber
+        static let SESSION_TOKEN = "session_token"
+        static let DEVICE_TOKEN = "device_token"
     }
     
     struct Formatters {
@@ -39,8 +44,13 @@ struct Constants {
     }
     
     struct Debug {
+#if DEBUG
+        static let crashlytics = true
+        static let jsonResponse = true
+#else
         static let crashlytics = false
         static let jsonResponse = false
+#endif
     }
 
 // MARK: - Text Styles
@@ -52,9 +62,9 @@ struct Constants {
         func getFont() -> UIFont {
             switch self {
             case .body:
-                return UIFont.inteloRegularFont(size: 16)
+                return UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .body), size: 22)
             case .title:
-                return UIFont.inteloBoldFont(size: 24)
+                return UIFont(descriptor: UIFontDescriptor.preferredFontDescriptor(withTextStyle: .title1), size: 16)
             }
         }
 
@@ -68,8 +78,6 @@ struct Constants {
                 return [NSAttributedString.Key.paragraphStyle: paragraphStyle]
             case .title:
                 return [NSAttributedString.Key.kern: -0.53]
-            default:
-                return nil
             }
         }
     }
@@ -79,7 +87,7 @@ struct Constants {
 // MARK: - Colors
 extension UIColor {
     static var primaryColor: UIColor {
-        return UIColor(r: 0, g: 0, b: 0)
+        return UIColor(red: 0, green: 0, blue: 0, alpha: 1)
     }
 }
 
@@ -89,9 +97,10 @@ enum BaseError: Error {
 }
 
 extension BaseError {
+    
     var errorDescription: String {
         switch self {
-        case .networkError(let networkError):
+        case .networkError(_):
             return "No internet connection"
         }
     }

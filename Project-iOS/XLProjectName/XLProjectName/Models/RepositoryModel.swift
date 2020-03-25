@@ -8,30 +8,28 @@
 
 import Foundation
 import SwiftDate
-import RealmSwift
-import OperaSwift
 
 
-final class Repository: Object {
+final class Repository {
     
-    @objc dynamic var id: Int = Int.min
-    @objc dynamic var name: String = ""
-    @objc dynamic var desc: String?
-    @objc dynamic var company: String?
-    @objc dynamic var language: String?
-    @objc dynamic var openIssues: Int = .min
-    @objc dynamic var stargazersCount: Int = .min
-    @objc dynamic var forksCount: Int = .min
-    @objc dynamic var urlString: String = ""
-    @objc dynamic var createdAt: Date = Date()
+    var id: Int = Int.min
+    var name: String = ""
+    var desc: String?
+    var company: String?
+    var language: String?
+    var openIssues: Int = .min
+    var stargazersCount: Int = .min
+    var forksCount: Int = .min
+    var urlString: String = ""
+    var createdAt: Date = Date()
     
     // do not save this properties, notice that it is returned by ignoredProperties method
-    @objc dynamic var tempId: String = ""
+    var tempId: String = ""
     
     convenience public init(from decoder: Decoder) throws {
         self.init()
         enum CodingKeys: String, CodingKey {
-            case id
+            case id // primary key
             case name
             case desc = "description"
             case language
@@ -65,51 +63,7 @@ final class Repository: Object {
     var url: NSURL {
         return NSURL(string: self.urlString)!
     }
-    
-    /**
-     Set the model primary key.
-     Declaring a primary key allows objects to be looked up and updated efficiently and enforces uniqueness for each value.
-     */
-    override static func primaryKey() -> String? {
-        return "id"
-    }
-    
-    /**
-     Realm supports indexing for strings, integers, booleans and NSDate properties.
-     Indexing a property will greatly speed up queries where the property is compared
-     for equality (i.e. the = and IN operators), at the cost of slower insertions.
-     */
-    override static func indexedProperties() -> [String] {
-        return ["name", "language"]
-    }
-    
-    
-    /**
-     Return property names that should be ignored by Realm. Realm will not persist these properties.
-     */
-    override static func ignoredProperties() -> [String] {
-        return ["tempId"]
-    }
 }
 
-extension Repository: Decodable {
-    
-    
-}
-
-
-//static func decode(_ json: Any) throws -> Repository {
-//    return try Repository(   id: json => "id",
-//                             name: json => "name",
-//                             desc: json =>? "description",
-//                             company: json =>? ["owner", "login"],
-//                             language: json =>? "language",
-//                             openIssues: json => "open_issues_count",
-//                             stargazersCount: json => "stargazers_count",
-//                             forksCount: json => "forks_count",
-//                             urlString: json => "name",
-//                             createdAt: json => "created_at")
-//}
-
-extension Repository: OperaDecodable {}
+extension Repository: Decodable {}
 

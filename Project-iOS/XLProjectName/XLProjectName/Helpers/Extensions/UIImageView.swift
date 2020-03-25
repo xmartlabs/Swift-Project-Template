@@ -3,7 +3,7 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2016 'XLOrganizationName'. All rights reserved.
+//  Copyright © 2020 'XLOrganizationName'. All rights reserved.
 //
 
 import Foundation
@@ -11,13 +11,11 @@ import Alamofire
 import AlamofireImage
 
 extension UIImageView {
-    public func setImageWithURL(_ url: String, filter: ImageFilter? = nil, placeholder: UIImage? = nil, completion: ((DataResponse<UIImage>) -> Void)? = nil) {
-        af_setImage(withURL: URL(string: url)!, placeholderImage: placeholder, filter: filter, imageTransition: .crossDissolve(0.3), completion: {
-            (response: DataResponse<UIImage>) in
-            if let error = response.result.error {
-                print(error.localizedDescription)
-            }
+    public func setImageWithURL(_ url: String, filter: ImageFilter? = nil, placeholder: UIImage? = nil, completion: ((AFIDataResponse<UIImage>) -> Void)? = nil) {
+        
+        self.af.setImage(withURL: URL(string: url)!, cacheKey: nil, placeholderImage: placeholder, serializer: nil, filter: filter, progress: nil, progressQueue: DispatchQueue.main, imageTransition: .crossDissolve(0.3), runImageTransitionIfCached: false) { (response: AFIDataResponse<UIImage>) in
+            response.error.map { print($0.localizedDescription) }
             completion?(response)
-        })
+        }
     }
 }

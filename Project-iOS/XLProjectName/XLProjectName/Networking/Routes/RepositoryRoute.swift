@@ -3,19 +3,18 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import Foundation
 import Alamofire
-import OperaSwift
 
 extension Route {
     
     enum Repository: RouteType {
         
         case GetInfo(owner: String, repo: String)
-        case Search()
+        case Search
         
         var method: Alamofire.HTTPMethod {
             switch self {

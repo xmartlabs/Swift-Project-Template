@@ -3,13 +3,12 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
 import RxSwift
 import Eureka
-import OperaSwift
 
 class LoginController: FormViewController {
 
@@ -72,14 +71,13 @@ class LoginController: FormViewController {
         }
 
         LoadingIndicator.show()
-        Route.User.login(username: username, password: password)
-            .rx.any()
+        NetworkManager.singleton.login(route: Route.User.Login(username: username, password: password))
             .do(onError: { [weak self] (error: Error) in
                 LoadingIndicator.hide()
-                self?.showError("Error", message: (error as? OperaError)?.debugDescription ?? "Sorry user login does not work correctly")
+                self?.showError("Error", message: (error as? XLProjectNameError)?.localizedDescription ?? "Sorry user login does not work correctly")
             })
             .flatMap() { data -> Single<Any> in
-                return Route.User.getInfo(username: username).rx.any()
+                return NetworkManager.singleton.getInfo(route: Route.User.GetInfo(username: username))
             }
             .subscribe { (user) in
                 LoadingIndicator.hide()
@@ -91,8 +89,5 @@ class LoginController: FormViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-//        if let destinationVC = segue.destination as? UserController {
-//            destinationVC.user = sender as? User
-//        }
     }
 }

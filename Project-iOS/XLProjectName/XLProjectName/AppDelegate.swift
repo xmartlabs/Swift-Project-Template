@@ -3,7 +3,7 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import UIKit
@@ -65,7 +65,7 @@ extension AppDelegate {
     
     // MARK: Requesting A Device Token
     
-    func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
+    func application(_ application: UIApplication, didRegister notificationSettings: UNNotificationSettings) {
         // notificationSettings.types
         // notificationSettings.categories
     }
@@ -80,7 +80,9 @@ extension AppDelegate {
         // pass device token to Intercom
         //Intercom.setDeviceToken(deviceToken)
         let deviceTokenStr = "\(deviceToken)"
-        Route.Device.Update(token: deviceTokenStr).rx.any().subscribe().disposed(by: disposeBag)
+        NetworkManager.singleton.deviceUpdate(token: deviceTokenStr)
+            .subscribe()
+            .disposed(by: self.disposeBag)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

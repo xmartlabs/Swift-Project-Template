@@ -3,7 +3,7 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 
@@ -33,9 +33,9 @@ public class RepositoryController: UIViewController {
         descriptionLabel.text = repository.desc
         descriptionLabel.numberOfLines = 0
         descriptionLabel.textAlignment = .center
-        starImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")!)
-        forkImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")!)
-        issueImage.af_setImage(withURL: URL(string: "https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")!)
+        starImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/2b50.png?v5")
+        forkImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/1f374.png?v5")
+        issueImage.setImageWithURL("https://assets-cdn.github.com/images/icons/emoji/unicode/1f41b.png?v5")
         starLabel.text = String(repository.stargazersCount)
         issueLabel.text = String(repository.openIssues)
         forkLabel.text = String(repository.forksCount)

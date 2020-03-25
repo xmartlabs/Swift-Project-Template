@@ -3,7 +3,7 @@
 //  Tests
 //
 //  Created by Xmartlabs SRL ( http://xmartlabs.com )
-//  Copyright © 2019 XLOrganizationName. All rights reserved.
+//  Copyright © 2020 XLOrganizationName. All rights reserved.
 //
 
 import XCTest

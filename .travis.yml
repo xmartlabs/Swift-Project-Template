@@ -1,12 +1,12 @@
 language: objective-c
-osx_image: xcode10.1
+osx_image: xcode11.3
 
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
-- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
-- cd Project-iOS/XLProjectName && pod repo update && pod install
+- gem install xcpretty --no-document --quiet
+- cd Project-iOS/XLProjectName && bundle install && pod repo update && pod install
 
 script:
 - xctool clean build -workspace XLProjectName.xcworkspace -scheme XLProjectName -sdk iphonesimulator | xcpretty

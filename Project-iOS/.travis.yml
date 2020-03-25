@@ -1,13 +1,13 @@
 language: objective-c
-osx_image: xcode10.1
+osx_image: xcode11.3
 env:
-  - DESTINATION="OS=12.1,name=iPhone XS" SCHEME="XLProjectName" SDK=iphonesimulator12.1
+  - DESTINATION="OS=13.3,name=iPhone 11" SCHEME="XLProjectName" SDK=iphonesimulator13.2
 
 before_install:
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - carthage update --platform iOS
-- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
+- gem install xcpretty --no-document --quiet
 
 script:
 - xcodebuild clean build -workspace XLProjectName/XLProjectName.xcworkspace -scheme "$SCHEME" -sdk "$SDK"

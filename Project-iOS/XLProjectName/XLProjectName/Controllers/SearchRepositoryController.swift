@@ -3,14 +3,13 @@
 //  XLProjectName
 //
 //  Created by XLAuthorName ( XLAuthorWebsite )
-//  Copyright © 2019 'XLOrganizationName'. All rights reserved.
+//  Copyright © 2020 'XLOrganizationName'. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
-import OperaSwift
 
 class SearchRepositoriesController: XLTableViewController {
     
@@ -22,8 +21,8 @@ class SearchRepositoriesController: XLTableViewController {
     }()
     
     lazy var viewModel: PaginationViewModel<PaginationRequest<Repository>>  = { [unowned self] in
-        return PaginationViewModel<PaginationRequest<Repository>>(paginationRequest: PaginationRequest(route: Route.Repository.Search(), collectionKeyPath: "items"))
-        }()
+        return PaginationViewModel<PaginationRequest<Repository>>(paginationRequest: PaginationRequest(route: Route.Repository.Search))
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +38,9 @@ class SearchRepositoriesController: XLTableViewController {
             .disposed(by: disposeBag)
         
         
-        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.asDriver()) { elements, loading, searchText in return loading || searchText?.isEmpty ?? true ? [] : elements }
-            .asDriver()
+        Driver.combineLatest(viewModel.elements.asDriver(), viewModel.firstPageLoading, searchBar.rx.text.asDriver()) { elements, loading, searchText in
+            return loading || searchText?.isEmpty ?? true ? [] : elements
+        }
             .drive(tableView.rx.items(cellIdentifier: "Cell")) { _, repository, cell in
                 cell.textLabel?.text = repository.name
                 cell.detailTextLabel?.text = "🌟\(repository.stargazersCount)"
@@ -50,7 +50,7 @@ class SearchRepositoriesController: XLTableViewController {
         searchBar.rx.text.asDriver()
             .map{ $0 ?? ""}
             .filter { !$0.isEmpty }
-            .debounce(0.5)
+            .debounce(RxTimeInterval.milliseconds(500))
             .drive(viewModel.queryTrigger)
             .disposed(by: disposeBag)
         
