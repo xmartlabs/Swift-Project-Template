@@ -38,7 +38,7 @@ class NetworkManager: RxManager {
 }
 
 
-public typealias OperaDataResponse<Success> = DataResponse<Success, OperaError>
+public typealias OperaDataResponse<Success> = DataResponse<Success, XLProjectNameError>
 
 extension Reactive where Base: NetworkManager {
 
@@ -56,7 +56,7 @@ extension Reactive where Base: NetworkManager {
             req.responseDecodable(decoder: self.base.decoder) { (dataResponse: AFDataResponse<T>) in
                 switch dataResponse.result {
                 case .failure(let error):
-                    subscriber(.error(OperaError.afError(error: error)))
+                    subscriber(.error(XLProjectNameError.afError(error: error)))
                 case .success(let decodable):
                     subscriber(.success(decodable))
                 }
@@ -73,7 +73,7 @@ extension Reactive where Base: NetworkManager {
             req.responseJSON(completionHandler: { (dataResponse: AFDataResponse<Any>) in
                 switch dataResponse.result {
                   case .failure(let error):
-                    single(.error(OperaError.afError(error: error)))
+                    single(.error(XLProjectNameError.afError(error: error)))
                   case .success(let any):
                     single(.success(any))
                 }
@@ -90,7 +90,7 @@ extension Reactive where Base: NetworkManager {
             req.response(completionHandler: { (dataResponse: AFDataResponse<Data?>) in
                 switch dataResponse.result {
                   case .failure(let error):
-                    completable(.error(OperaError.afError(error: error)))
+                    completable(.error(XLProjectNameError.afError(error: error)))
                   case .success(_):
                     completable(.completed)
                 }

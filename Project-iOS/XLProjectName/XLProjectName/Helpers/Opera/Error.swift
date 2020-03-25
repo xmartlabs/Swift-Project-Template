@@ -26,13 +26,13 @@ import Foundation
 import Alamofire
 
 
-public enum OperaError: Error {
+public enum XLProjectNameError: Error {
     case afError(error: AFError)
     case unknownError
 
     
     var afError: AFError? {
-        if case OperaError.afError(let afError) = self {
+        if case XLProjectNameError.afError(let afError) = self {
             return afError
         }
         return nil

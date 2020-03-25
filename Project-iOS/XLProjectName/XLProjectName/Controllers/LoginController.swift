@@ -74,7 +74,7 @@ class LoginController: FormViewController {
         NetworkManager.singleton.login(route: Route.User.Login(username: username, password: password))
             .do(onError: { [weak self] (error: Error) in
                 LoadingIndicator.hide()
-                self?.showError("Error", message: (error as? OperaError)?.localizedDescription ?? "Sorry user login does not work correctly")
+                self?.showError("Error", message: (error as? XLProjectNameError)?.localizedDescription ?? "Sorry user login does not work correctly")
             })
             .flatMap() { data -> Single<Any> in
                 return NetworkManager.singleton.getInfo(route: Route.User.GetInfo(username: username))

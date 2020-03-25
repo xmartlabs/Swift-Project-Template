@@ -38,7 +38,7 @@ extension Reactive where Base: PaginationRequestType {
     var collection: Single<Base.Response> {
         let myPage = base.page
         return Single<Base.Response>.create { single in
-            let req = NetworkManager.singleton.response(route: self.base) { (response: DataResponse<Base.Response, OperaError>) in
+            let req = NetworkManager.singleton.response(route: self.base) { (response: DataResponse<Base.Response, XLProjectNameError>) in
                 switch response.result {
                   case .failure(let error):
                     single(.error(error))
