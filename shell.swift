@@ -75,7 +75,12 @@ func printErrorAndExit<T>(message: T) {
 func checkThatProjectForlderCanBeCreated(projectURL: NSURL){
     var isDirectory: ObjCBool = true
     if fileManager.fileExists(atPath: projectURL.path!, isDirectory: &isDirectory){
-        printErrorAndExit(message: "\(projectName) \(isDirectory.boolValue ? "folder already" : "file") exists in \(runScriptPathURL.path) directory, please delete it and try again")
+        let type = isDirectory.boolValue ? "folder already" : "file"
+        if let path = runScriptPathURL.path{
+            printErrorAndExit(message: "\(projectName) \(type) exists in \(path) directory, please delete it and try again")
+        }else{
+            printErrorAndExit(message: "Directory not found")
+        }
     }
 }
 
